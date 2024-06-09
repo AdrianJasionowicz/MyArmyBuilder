@@ -1,0 +1,827 @@
+2024-05-22 15:03:34 database: flush
+org.h2.message.DbException: Błąd ogólny: "org.h2.mvstore.MVStoreException: The file is locked: C:/Users/Adria/IdeaProjects/MyArmyBuilder/myarmydb.mv.db [2.2.220/7]"
+General error: "org.h2.mvstore.MVStoreException: The file is locked: C:/Users/Adria/IdeaProjects/MyArmyBuilder/myarmydb.mv.db [2.2.220/7]" [50000-220]
+	at org.h2.message.DbException.get(DbException.java:212)
+	at org.h2.message.DbException.convert(DbException.java:407)
+	at org.h2.mvstore.db.Store.lambda$new$0(Store.java:122)
+	at org.h2.mvstore.MVStore.handleException(MVStore.java:1547)
+	at org.h2.mvstore.MVStore.panic(MVStore.java:371)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:291)
+	at org.h2.mvstore.MVStore$Builder.open(MVStore.java:2036)
+	at org.h2.mvstore.db.Store.<init>(Store.java:133)
+	at org.h2.engine.Database.<init>(Database.java:324)
+	at org.h2.engine.Engine.openSession(Engine.java:92)
+	at org.h2.engine.Engine.openSession(Engine.java:222)
+	at org.h2.engine.Engine.createSession(Engine.java:201)
+	at org.h2.engine.SessionRemote.connectEmbeddedOrServer(SessionRemote.java:338)
+	at org.h2.jdbc.JdbcConnection.<init>(JdbcConnection.java:122)
+	at org.h2.Driver.connect(Driver.java:59)
+	at com.intellij.database.remote.jdbc.helpers.JdbcHelperImpl.connect(JdbcHelperImpl.java:768)
+	at com.intellij.database.remote.jdbc.impl.RemoteDriverImpl.connect(RemoteDriverImpl.java:153)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at java.rmi/sun.rmi.server.UnicastServerRef.dispatch(UnicastServerRef.java:360)
+	at java.rmi/sun.rmi.transport.Transport$1.run(Transport.java:200)
+	at java.rmi/sun.rmi.transport.Transport$1.run(Transport.java:197)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:712)
+	at java.rmi/sun.rmi.transport.Transport.serviceCall(Transport.java:196)
+	at java.rmi/sun.rmi.transport.tcp.TCPTransport.handleMessages(TCPTransport.java:587)
+	at java.rmi/sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.run0(TCPTransport.java:828)
+	at java.rmi/sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.lambda$run$0(TCPTransport.java:705)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
+	at java.rmi/sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.run(TCPTransport.java:704)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Caused by: org.h2.jdbc.JdbcSQLNonTransientException: Błąd ogólny: "org.h2.mvstore.MVStoreException: The file is locked: C:/Users/Adria/IdeaProjects/MyArmyBuilder/myarmydb.mv.db [2.2.220/7]"
+General error: "org.h2.mvstore.MVStoreException: The file is locked: C:/Users/Adria/IdeaProjects/MyArmyBuilder/myarmydb.mv.db [2.2.220/7]" [50000-220]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:566)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
+	... 34 more
+Caused by: org.h2.mvstore.MVStoreException: The file is locked: C:/Users/Adria/IdeaProjects/MyArmyBuilder/myarmydb.mv.db [2.2.220/7]
+	at org.h2.mvstore.DataUtils.newMVStoreException(DataUtils.java:996)
+	at org.h2.mvstore.SingleFileStore.lockFileChannel(SingleFileStore.java:143)
+	at org.h2.mvstore.SingleFileStore.open(SingleFileStore.java:117)
+	at org.h2.mvstore.SingleFileStore.open(SingleFileStore.java:81)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:286)
+	... 28 more
+2024-05-22 15:04:58 database: flush
+org.h2.message.DbException: Błąd ogólny: "org.h2.mvstore.MVStoreException: The file is locked: C:/Users/Adria/IdeaProjects/MyArmyBuilder/myarmydb.mv.db [2.2.220/7]"
+General error: "org.h2.mvstore.MVStoreException: The file is locked: C:/Users/Adria/IdeaProjects/MyArmyBuilder/myarmydb.mv.db [2.2.220/7]" [50000-220]
+	at org.h2.message.DbException.get(DbException.java:212)
+	at org.h2.message.DbException.convert(DbException.java:407)
+	at org.h2.mvstore.db.Store.lambda$new$0(Store.java:122)
+	at org.h2.mvstore.MVStore.handleException(MVStore.java:1547)
+	at org.h2.mvstore.MVStore.panic(MVStore.java:371)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:291)
+	at org.h2.mvstore.MVStore$Builder.open(MVStore.java:2036)
+	at org.h2.mvstore.db.Store.<init>(Store.java:133)
+	at org.h2.engine.Database.<init>(Database.java:324)
+	at org.h2.engine.Engine.openSession(Engine.java:92)
+	at org.h2.engine.Engine.openSession(Engine.java:222)
+	at org.h2.engine.Engine.createSession(Engine.java:201)
+	at org.h2.engine.SessionRemote.connectEmbeddedOrServer(SessionRemote.java:338)
+	at org.h2.jdbc.JdbcConnection.<init>(JdbcConnection.java:122)
+	at org.h2.Driver.connect(Driver.java:59)
+	at com.intellij.database.remote.jdbc.helpers.JdbcHelperImpl.connect(JdbcHelperImpl.java:768)
+	at com.intellij.database.remote.jdbc.impl.RemoteDriverImpl.connect(RemoteDriverImpl.java:153)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at java.rmi/sun.rmi.server.UnicastServerRef.dispatch(UnicastServerRef.java:360)
+	at java.rmi/sun.rmi.transport.Transport$1.run(Transport.java:200)
+	at java.rmi/sun.rmi.transport.Transport$1.run(Transport.java:197)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:712)
+	at java.rmi/sun.rmi.transport.Transport.serviceCall(Transport.java:196)
+	at java.rmi/sun.rmi.transport.tcp.TCPTransport.handleMessages(TCPTransport.java:587)
+	at java.rmi/sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.run0(TCPTransport.java:828)
+	at java.rmi/sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.lambda$run$0(TCPTransport.java:705)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
+	at java.rmi/sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.run(TCPTransport.java:704)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Caused by: org.h2.jdbc.JdbcSQLNonTransientException: Błąd ogólny: "org.h2.mvstore.MVStoreException: The file is locked: C:/Users/Adria/IdeaProjects/MyArmyBuilder/myarmydb.mv.db [2.2.220/7]"
+General error: "org.h2.mvstore.MVStoreException: The file is locked: C:/Users/Adria/IdeaProjects/MyArmyBuilder/myarmydb.mv.db [2.2.220/7]" [50000-220]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:566)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
+	... 34 more
+Caused by: org.h2.mvstore.MVStoreException: The file is locked: C:/Users/Adria/IdeaProjects/MyArmyBuilder/myarmydb.mv.db [2.2.220/7]
+	at org.h2.mvstore.DataUtils.newMVStoreException(DataUtils.java:996)
+	at org.h2.mvstore.SingleFileStore.lockFileChannel(SingleFileStore.java:143)
+	at org.h2.mvstore.SingleFileStore.open(SingleFileStore.java:117)
+	at org.h2.mvstore.SingleFileStore.open(SingleFileStore.java:81)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:286)
+	... 28 more
+2024-05-22 15:05:14 database: flush
+org.h2.message.DbException: Błąd ogólny: "org.h2.mvstore.MVStoreException: The file is locked: C:/Users/Adria/IdeaProjects/MyArmyBuilder/myarmydb.mv.db [2.2.220/7]"
+General error: "org.h2.mvstore.MVStoreException: The file is locked: C:/Users/Adria/IdeaProjects/MyArmyBuilder/myarmydb.mv.db [2.2.220/7]" [50000-220]
+	at org.h2.message.DbException.get(DbException.java:212)
+	at org.h2.message.DbException.convert(DbException.java:407)
+	at org.h2.mvstore.db.Store.lambda$new$0(Store.java:122)
+	at org.h2.mvstore.MVStore.handleException(MVStore.java:1547)
+	at org.h2.mvstore.MVStore.panic(MVStore.java:371)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:291)
+	at org.h2.mvstore.MVStore$Builder.open(MVStore.java:2036)
+	at org.h2.mvstore.db.Store.<init>(Store.java:133)
+	at org.h2.engine.Database.<init>(Database.java:324)
+	at org.h2.engine.Engine.openSession(Engine.java:92)
+	at org.h2.engine.Engine.openSession(Engine.java:222)
+	at org.h2.engine.Engine.createSession(Engine.java:201)
+	at org.h2.engine.SessionRemote.connectEmbeddedOrServer(SessionRemote.java:338)
+	at org.h2.jdbc.JdbcConnection.<init>(JdbcConnection.java:122)
+	at org.h2.Driver.connect(Driver.java:59)
+	at com.intellij.database.remote.jdbc.helpers.JdbcHelperImpl.connect(JdbcHelperImpl.java:768)
+	at com.intellij.database.remote.jdbc.impl.RemoteDriverImpl.connect(RemoteDriverImpl.java:153)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at java.rmi/sun.rmi.server.UnicastServerRef.dispatch(UnicastServerRef.java:360)
+	at java.rmi/sun.rmi.transport.Transport$1.run(Transport.java:200)
+	at java.rmi/sun.rmi.transport.Transport$1.run(Transport.java:197)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:712)
+	at java.rmi/sun.rmi.transport.Transport.serviceCall(Transport.java:196)
+	at java.rmi/sun.rmi.transport.tcp.TCPTransport.handleMessages(TCPTransport.java:587)
+	at java.rmi/sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.run0(TCPTransport.java:828)
+	at java.rmi/sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.lambda$run$0(TCPTransport.java:705)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
+	at java.rmi/sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.run(TCPTransport.java:704)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Caused by: org.h2.jdbc.JdbcSQLNonTransientException: Błąd ogólny: "org.h2.mvstore.MVStoreException: The file is locked: C:/Users/Adria/IdeaProjects/MyArmyBuilder/myarmydb.mv.db [2.2.220/7]"
+General error: "org.h2.mvstore.MVStoreException: The file is locked: C:/Users/Adria/IdeaProjects/MyArmyBuilder/myarmydb.mv.db [2.2.220/7]" [50000-220]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:566)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
+	... 34 more
+Caused by: org.h2.mvstore.MVStoreException: The file is locked: C:/Users/Adria/IdeaProjects/MyArmyBuilder/myarmydb.mv.db [2.2.220/7]
+	at org.h2.mvstore.DataUtils.newMVStoreException(DataUtils.java:996)
+	at org.h2.mvstore.SingleFileStore.lockFileChannel(SingleFileStore.java:143)
+	at org.h2.mvstore.SingleFileStore.open(SingleFileStore.java:117)
+	at org.h2.mvstore.SingleFileStore.open(SingleFileStore.java:81)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:286)
+	... 28 more
+2024-05-22 18:06:20.448479+02:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Błąd składniowy w wyrażeniu SQL "SHOW [*]CREATE TABLE UNIT"
+Syntax error in SQL statement "SHOW [*]CREATE TABLE UNIT"; SQL statement:
+SHOW CREATE TABLE UNIT [42000-224]
+2024-05-22 18:06:24.272905+02:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Błąd składniowy w wyrażeniu SQL "SHOW [*]CREATE TABLE UNIT"
+Syntax error in SQL statement "SHOW [*]CREATE TABLE UNIT"; SQL statement:
+SHOW CREATE TABLE UNIT [42000-224]
+2024-05-22 18:06:25.292497+02:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Błąd składniowy w wyrażeniu SQL "SHOW [*]CREATE TABLE UNIT"
+Syntax error in SQL statement "SHOW [*]CREATE TABLE UNIT"; SQL statement:
+SHOW CREATE TABLE UNIT [42000-224]
+2024-05-22 18:12:00.616200+02:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Błąd składniowy w wyrażeniu SQL "ALTER TABLE Upgrade\000d\000aADD COLUMN unitUpgradesId INT[*],\000d\000aADD CONSTRAINT fk_unitUpgradesId\000d\000aFOREIGN KEY (unitUpgradesId)\000d\000aREFERENCES Unit(id)\000d\000aON DELETE NO ACTION\000d\000aON UPDATE NO ACTION"
+Syntax error in SQL statement "ALTER TABLE Upgrade\000d\000aADD COLUMN unitUpgradesId INT[*],\000d\000aADD CONSTRAINT fk_unitUpgradesId\000d\000aFOREIGN KEY (unitUpgradesId)\000d\000aREFERENCES Unit(id)\000d\000aON DELETE NO ACTION\000d\000aON UPDATE NO ACTION"; SQL statement:
+ALTER TABLE Upgrade
+ADD COLUMN unitUpgradesId INT,
+ADD CONSTRAINT fk_unitUpgradesId
+FOREIGN KEY (unitUpgradesId)
+REFERENCES Unit(id)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION [42000-224]
+2024-05-22 18:12:25.433616+02:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Błąd składniowy w wyrażeniu SQL "ALTER TABLE Upgrade\000d\000aADD COLUMN unitUpgradesId INT[*],\000d\000aADD CONSTRAINT fk_unitUpgradesId FOREIGN KEY (unitUpgradesId) REFERENCES Unit(id) ON DELETE NO ACTION ON UPDATE NO ACTION"
+Syntax error in SQL statement "ALTER TABLE Upgrade\000d\000aADD COLUMN unitUpgradesId INT[*],\000d\000aADD CONSTRAINT fk_unitUpgradesId FOREIGN KEY (unitUpgradesId) REFERENCES Unit(id) ON DELETE NO ACTION ON UPDATE NO ACTION"; SQL statement:
+ALTER TABLE Upgrade
+ADD COLUMN unitUpgradesId INT,
+ADD CONSTRAINT fk_unitUpgradesId FOREIGN KEY (unitUpgradesId) REFERENCES Unit(id) ON DELETE NO ACTION ON UPDATE NO ACTION [42000-224]
+2024-05-22 18:12:51.633518+02:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Błąd składniowy w wyrażeniu SQL "ALTER TABLE Upgrade\000d\000aADD COLUMN unitUpgradesId INT[*],\000d\000aADD CONSTRAINT fk_unitUpgradesId FOREIGN KEY (unitUpgradesId) REFERENCES Unit(id) ON DELETE NO ACTION ON UPDATE NO ACTION"
+Syntax error in SQL statement "ALTER TABLE Upgrade\000d\000aADD COLUMN unitUpgradesId INT[*],\000d\000aADD CONSTRAINT fk_unitUpgradesId FOREIGN KEY (unitUpgradesId) REFERENCES Unit(id) ON DELETE NO ACTION ON UPDATE NO ACTION"; SQL statement:
+ALTER TABLE Upgrade
+ADD COLUMN unitUpgradesId INT,
+ADD CONSTRAINT fk_unitUpgradesId FOREIGN KEY (unitUpgradesId) REFERENCES Unit(id) ON DELETE NO ACTION ON UPDATE NO ACTION [42000-224]
+2024-05-22 18:17:06.868608+02:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Błąd składniowy w wyrażeniu SQL "ALTER TABLE Upgrade\000d\000aADD COLUMN unitUpgradesId INT[*],\000d\000aADD CONSTRAINT fk_unitUpgradesId FOREIGN KEY (unitUpgradesId) REFERENCES Unit(id) ON DELETE NO ACTION ON UPDATE NO ACTION"
+Syntax error in SQL statement "ALTER TABLE Upgrade\000d\000aADD COLUMN unitUpgradesId INT[*],\000d\000aADD CONSTRAINT fk_unitUpgradesId FOREIGN KEY (unitUpgradesId) REFERENCES Unit(id) ON DELETE NO ACTION ON UPDATE NO ACTION"; SQL statement:
+ALTER TABLE Upgrade
+ADD COLUMN unitUpgradesId INT,
+ADD CONSTRAINT fk_unitUpgradesId FOREIGN KEY (unitUpgradesId) REFERENCES Unit(id) ON DELETE NO ACTION ON UPDATE NO ACTION [42000-224]
+2024-05-22 18:17:34.236977+02:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Błąd składniowy w wyrażeniu SQL "ALTER TABLE Upgrade\000d\000aADD COLUMN unitUpgradesId INT[*],\000d\000aADD CONSTRAINT fk_unitUpgradesId FOREIGN KEY (unitUpgradesId) REFERENCES Unit(id) ON DELETE NO ACTION ON UPDATE NO ACTION"
+Syntax error in SQL statement "ALTER TABLE Upgrade\000d\000aADD COLUMN unitUpgradesId INT[*],\000d\000aADD CONSTRAINT fk_unitUpgradesId FOREIGN KEY (unitUpgradesId) REFERENCES Unit(id) ON DELETE NO ACTION ON UPDATE NO ACTION"; SQL statement:
+ALTER TABLE Upgrade
+ADD COLUMN unitUpgradesId INT,
+ADD CONSTRAINT fk_unitUpgradesId FOREIGN KEY (unitUpgradesId) REFERENCES Unit(id) ON DELETE NO ACTION ON UPDATE NO ACTION [42000-224]
+2024-05-22 18:17:34.810977+02:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Błąd składniowy w wyrażeniu SQL "ALTER TABLE Upgrade\000d\000aADD COLUMN unitUpgradesId INT[*],\000d\000aADD CONSTRAINT fk_unitUpgradesId FOREIGN KEY (unitUpgradesId) REFERENCES Unit(id) ON DELETE NO ACTION ON UPDATE NO ACTION"
+Syntax error in SQL statement "ALTER TABLE Upgrade\000d\000aADD COLUMN unitUpgradesId INT[*],\000d\000aADD CONSTRAINT fk_unitUpgradesId FOREIGN KEY (unitUpgradesId) REFERENCES Unit(id) ON DELETE NO ACTION ON UPDATE NO ACTION"; SQL statement:
+ALTER TABLE Upgrade
+ADD COLUMN unitUpgradesId INT,
+ADD CONSTRAINT fk_unitUpgradesId FOREIGN KEY (unitUpgradesId) REFERENCES Unit(id) ON DELETE NO ACTION ON UPDATE NO ACTION [42000-224]
+2024-05-22 18:17:35.234183+02:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Błąd składniowy w wyrażeniu SQL "ALTER TABLE Upgrade\000d\000aADD COLUMN unitUpgradesId INT[*],\000d\000aADD CONSTRAINT fk_unitUpgradesId FOREIGN KEY (unitUpgradesId) REFERENCES Unit(id) ON DELETE NO ACTION ON UPDATE NO ACTION"
+Syntax error in SQL statement "ALTER TABLE Upgrade\000d\000aADD COLUMN unitUpgradesId INT[*],\000d\000aADD CONSTRAINT fk_unitUpgradesId FOREIGN KEY (unitUpgradesId) REFERENCES Unit(id) ON DELETE NO ACTION ON UPDATE NO ACTION"; SQL statement:
+ALTER TABLE Upgrade
+ADD COLUMN unitUpgradesId INT,
+ADD CONSTRAINT fk_unitUpgradesId FOREIGN KEY (unitUpgradesId) REFERENCES Unit(id) ON DELETE NO ACTION ON UPDATE NO ACTION [42000-224]
+2024-05-22 18:17:37.428603+02:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Błąd składniowy w wyrażeniu SQL "ALTER TABLE Upgrade\000d\000aADD COLUMN unitUpgradesId INT[*],\000d\000aADD CONSTRAINT fk_unitUpgradesId FOREIGN KEY (unitUpgradesId) REFERENCES Unit(id) ON DELETE NO ACTION ON UPDATE NO ACTION"
+Syntax error in SQL statement "ALTER TABLE Upgrade\000d\000aADD COLUMN unitUpgradesId INT[*],\000d\000aADD CONSTRAINT fk_unitUpgradesId FOREIGN KEY (unitUpgradesId) REFERENCES Unit(id) ON DELETE NO ACTION ON UPDATE NO ACTION"; SQL statement:
+ALTER TABLE Upgrade
+ADD COLUMN unitUpgradesId INT,
+ADD CONSTRAINT fk_unitUpgradesId FOREIGN KEY (unitUpgradesId) REFERENCES Unit(id) ON DELETE NO ACTION ON UPDATE NO ACTION [42000-224]
+2024-05-22 18:23:00.763468+02:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Błąd składniowy w wyrażeniu SQL "ALTER TABLE Upgrade\000d\000aADD COLUMN unitUpgradesId INT[*],\000d\000aADD CONSTRAINT fk_unitUpgradesId FOREIGN KEY (unitUpgradesId) REFERENCES Unit(id) ON DELETE NO ACTION ON UPDATE NO ACTION"
+Syntax error in SQL statement "ALTER TABLE Upgrade\000d\000aADD COLUMN unitUpgradesId INT[*],\000d\000aADD CONSTRAINT fk_unitUpgradesId FOREIGN KEY (unitUpgradesId) REFERENCES Unit(id) ON DELETE NO ACTION ON UPDATE NO ACTION"; SQL statement:
+ALTER TABLE Upgrade
+ADD COLUMN unitUpgradesId INT,
+ADD CONSTRAINT fk_unitUpgradesId FOREIGN KEY (unitUpgradesId) REFERENCES Unit(id) ON DELETE NO ACTION ON UPDATE NO ACTION [42000-224]
+2024-05-22 18:24:17.572696+02:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Zduplikowana nazwa kolumny "UNITUPGRADESID"
+Duplicate column name "UNITUPGRADESID"; SQL statement:
+ALTER TABLE Upgrade
+ADD COLUMN unitUpgradesId INT [42121-224]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:514)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
+	at org.h2.message.DbException.get(DbException.java:223)
+	at org.h2.message.DbException.get(DbException.java:199)
+	at org.h2.table.Table.setColumns(Table.java:494)
+	at org.h2.table.TableBase.<init>(TableBase.java:73)
+	at org.h2.mvstore.db.MVTable.<init>(MVTable.java:139)
+	at org.h2.mvstore.db.Store.createTable(Store.java:216)
+	at org.h2.schema.Schema.createTable(Schema.java:797)
+	at org.h2.command.ddl.AlterTableAlterColumn.cloneTableStructure(AlterTableAlterColumn.java:458)
+	at org.h2.command.ddl.AlterTableAlterColumn.copyData(AlterTableAlterColumn.java:343)
+	at org.h2.command.ddl.AlterTableAlterColumn.update(AlterTableAlterColumn.java:244)
+	at org.h2.command.CommandContainer.update(CommandContainer.java:169)
+	at org.h2.command.Command.executeUpdate(Command.java:256)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:262)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:231)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1345)
+	at org.h2.server.web.WebApp.query(WebApp.java:1143)
+	at org.h2.server.web.WebApp.query(WebApp.java:1119)
+	at org.h2.server.web.WebApp.process(WebApp.java:245)
+	at org.h2.server.web.WebApp.processRequest(WebApp.java:177)
+	at org.h2.server.web.JakartaWebServlet.doGet(JakartaWebServlet.java:129)
+	at org.h2.server.web.JakartaWebServlet.doPost(JakartaWebServlet.java:166)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:590)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:206)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:150)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:175)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:150)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:175)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:150)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:175)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:150)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:175)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:150)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:391)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:896)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1736)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+2024-05-22 18:24:17.574201+02:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Ograniczenie "FK_UNITUPGRADESID" już istnieje
+Constraint "FK_UNITUPGRADESID" already exists; SQL statement:
+ALTER TABLE Upgrade
+ADD CONSTRAINT fk_unitUpgradesId FOREIGN KEY (unitUpgradesId) REFERENCES Unit(id) ON DELETE NO ACTION ON UPDATE NO ACTION [90045-224]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:644)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
+	at org.h2.message.DbException.get(DbException.java:223)
+	at org.h2.message.DbException.get(DbException.java:199)
+	at org.h2.command.ddl.AlterTableAddConstraint.tryUpdate(AlterTableAddConstraint.java:111)
+	at org.h2.command.ddl.AlterTableAddConstraint.update(AlterTableAddConstraint.java:74)
+	at org.h2.command.ddl.AlterTable.update(AlterTable.java:46)
+	at org.h2.command.CommandContainer.update(CommandContainer.java:169)
+	at org.h2.command.Command.executeUpdate(Command.java:256)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:262)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:231)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1345)
+	at org.h2.server.web.WebApp.query(WebApp.java:1143)
+	at org.h2.server.web.WebApp.query(WebApp.java:1119)
+	at org.h2.server.web.WebApp.process(WebApp.java:245)
+	at org.h2.server.web.WebApp.processRequest(WebApp.java:177)
+	at org.h2.server.web.JakartaWebServlet.doGet(JakartaWebServlet.java:129)
+	at org.h2.server.web.JakartaWebServlet.doPost(JakartaWebServlet.java:166)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:590)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:206)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:150)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:175)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:150)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:175)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:150)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:175)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:150)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:175)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:150)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:391)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:896)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1736)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+2024-05-22 18:27:19.914602+02:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Próba zdefiniowania drugiego klucza głównego
+Attempt to define a second primary key; SQL statement:
+ALTER TABLE Unit
+ADD CONSTRAINT pk_Unit PRIMARY KEY (id) [90017-224]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:644)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
+	at org.h2.message.DbException.get(DbException.java:223)
+	at org.h2.message.DbException.get(DbException.java:199)
+	at org.h2.message.DbException.get(DbException.java:188)
+	at org.h2.command.ddl.AlterTableAddConstraint.tryUpdate(AlterTableAddConstraint.java:127)
+	at org.h2.command.ddl.AlterTableAddConstraint.update(AlterTableAddConstraint.java:74)
+	at org.h2.command.ddl.AlterTable.update(AlterTable.java:46)
+	at org.h2.command.CommandContainer.update(CommandContainer.java:169)
+	at org.h2.command.Command.executeUpdate(Command.java:256)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:262)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:231)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1345)
+	at org.h2.server.web.WebApp.query(WebApp.java:1143)
+	at org.h2.server.web.WebApp.query(WebApp.java:1119)
+	at org.h2.server.web.WebApp.process(WebApp.java:245)
+	at org.h2.server.web.WebApp.processRequest(WebApp.java:177)
+	at org.h2.server.web.JakartaWebServlet.doGet(JakartaWebServlet.java:129)
+	at org.h2.server.web.JakartaWebServlet.doPost(JakartaWebServlet.java:166)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:590)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:206)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:150)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:175)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:150)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:175)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:150)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:175)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:150)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:175)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:150)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:391)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:896)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1736)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+2024-05-22 18:53:17.499215+02:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabela "UNITSTATS" nie istnieje
+Table "UNITSTATS" not found; SQL statement:
+ALTER TABLE Unit
+ADD CONSTRAINT fk_statsId FOREIGN KEY (statsId) REFERENCES UnitStats(id) ON DELETE NO ACTION ON UPDATE NO ACTION [42102-224]
+2024-05-22 18:53:43.123226+02:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Zduplikowana nazwa kolumny "STATSID"
+Duplicate column name "STATSID"; SQL statement:
+ALTER TABLE Unit
+ADD COLUMN statsId INT [42121-224]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:514)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
+	at org.h2.message.DbException.get(DbException.java:223)
+	at org.h2.message.DbException.get(DbException.java:199)
+	at org.h2.table.Table.setColumns(Table.java:494)
+	at org.h2.table.TableBase.<init>(TableBase.java:73)
+	at org.h2.mvstore.db.MVTable.<init>(MVTable.java:139)
+	at org.h2.mvstore.db.Store.createTable(Store.java:216)
+	at org.h2.schema.Schema.createTable(Schema.java:797)
+	at org.h2.command.ddl.AlterTableAlterColumn.cloneTableStructure(AlterTableAlterColumn.java:458)
+	at org.h2.command.ddl.AlterTableAlterColumn.copyData(AlterTableAlterColumn.java:343)
+	at org.h2.command.ddl.AlterTableAlterColumn.update(AlterTableAlterColumn.java:244)
+	at org.h2.command.CommandContainer.update(CommandContainer.java:169)
+	at org.h2.command.Command.executeUpdate(Command.java:256)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:262)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:231)
+	at org.h2.server.web.WebApp.getResult(WebApp.java:1345)
+	at org.h2.server.web.WebApp.query(WebApp.java:1143)
+	at org.h2.server.web.WebApp.query(WebApp.java:1119)
+	at org.h2.server.web.WebApp.process(WebApp.java:245)
+	at org.h2.server.web.WebApp.processRequest(WebApp.java:177)
+	at org.h2.server.web.JakartaWebServlet.doGet(JakartaWebServlet.java:129)
+	at org.h2.server.web.JakartaWebServlet.doPost(JakartaWebServlet.java:166)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:590)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:206)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:150)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:175)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:150)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:175)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:150)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:175)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:150)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:175)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:150)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:391)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:896)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1736)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+2024-05-22 18:54:15.669721+02:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Błąd składniowy w wyrażeniu SQL "ALTER TABLE Unit\000d\000aADD COLUMN statsId INT[*],\000d\000aADD CONSTRAINT fk_statsId FOREIGN KEY (statsId) REFERENCES UnitStats(id) ON DELETE NO ACTION ON UPDATE NO ACTION"
+Syntax error in SQL statement "ALTER TABLE Unit\000d\000aADD COLUMN statsId INT[*],\000d\000aADD CONSTRAINT fk_statsId FOREIGN KEY (statsId) REFERENCES UnitStats(id) ON DELETE NO ACTION ON UPDATE NO ACTION"; SQL statement:
+ALTER TABLE Unit
+ADD COLUMN statsId INT,
+ADD CONSTRAINT fk_statsId FOREIGN KEY (statsId) REFERENCES UnitStats(id) ON DELETE NO ACTION ON UPDATE NO ACTION [42000-224]
+2024-05-22 18:54:44.838135+02:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabela "UNITSTATS" nie istnieje
+Table "UNITSTATS" not found; SQL statement:
+ALTER TABLE Unit
+ADD CONSTRAINT fk_statsId FOREIGN KEY (statsId) REFERENCES UnitStats(id) ON DELETE NO ACTION ON UPDATE NO ACTION [42102-224]
+2024-05-22 18:55:26.463545+02:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Błąd składniowy w wyrażeniu SQL "ALTER TABLE Unit\000d\000aADD COLUMN statsId INT[*],\000d\000aADD CONSTRAINT fk_statsId FOREIGN KEY (statsId) REFERENCES Unit_Stats(id) ON DELETE NO ACTION ON UPDATE NO ACTION"
+Syntax error in SQL statement "ALTER TABLE Unit\000d\000aADD COLUMN statsId INT[*],\000d\000aADD CONSTRAINT fk_statsId FOREIGN KEY (statsId) REFERENCES Unit_Stats(id) ON DELETE NO ACTION ON UPDATE NO ACTION"; SQL statement:
+ALTER TABLE Unit
+ADD COLUMN statsId INT,
+ADD CONSTRAINT fk_statsId FOREIGN KEY (statsId) REFERENCES Unit_Stats(id) ON DELETE NO ACTION ON UPDATE NO ACTION [42000-224]
+2024-05-22 18:55:50.078926+02:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Błąd składniowy w wyrażeniu SQL "ALTER TABLE Unit\000d\000aADD COLUMN statsId INT[*],\000d\000aADD CONSTRAINT fk_statsId FOREIGN KEY (statsId) REFERENCES Unit_Stats(id) ON DELETE NO ACTION ON UPDATE NO ACTION"
+Syntax error in SQL statement "ALTER TABLE Unit\000d\000aADD COLUMN statsId INT[*],\000d\000aADD CONSTRAINT fk_statsId FOREIGN KEY (statsId) REFERENCES Unit_Stats(id) ON DELETE NO ACTION ON UPDATE NO ACTION"; SQL statement:
+ALTER TABLE Unit
+ADD COLUMN statsId INT,
+ADD CONSTRAINT fk_statsId FOREIGN KEY (statsId) REFERENCES Unit_Stats(id) ON DELETE NO ACTION ON UPDATE NO ACTION [42000-224]
+2024-05-22 18:55:51.413170+02:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Błąd składniowy w wyrażeniu SQL "ALTER TABLE Unit\000d\000aADD COLUMN statsId INT[*],\000d\000aADD CONSTRAINT fk_statsId FOREIGN KEY (statsId) REFERENCES Unit_Stats(id) ON DELETE NO ACTION ON UPDATE NO ACTION"
+Syntax error in SQL statement "ALTER TABLE Unit\000d\000aADD COLUMN statsId INT[*],\000d\000aADD CONSTRAINT fk_statsId FOREIGN KEY (statsId) REFERENCES Unit_Stats(id) ON DELETE NO ACTION ON UPDATE NO ACTION"; SQL statement:
+ALTER TABLE Unit
+ADD COLUMN statsId INT,
+ADD CONSTRAINT fk_statsId FOREIGN KEY (statsId) REFERENCES Unit_Stats(id) ON DELETE NO ACTION ON UPDATE NO ACTION [42000-224]
+2024-05-22 18:55:51.790007+02:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Błąd składniowy w wyrażeniu SQL "ALTER TABLE Unit\000d\000aADD COLUMN statsId INT[*],\000d\000aADD CONSTRAINT fk_statsId FOREIGN KEY (statsId) REFERENCES Unit_Stats(id) ON DELETE NO ACTION ON UPDATE NO ACTION"
+Syntax error in SQL statement "ALTER TABLE Unit\000d\000aADD COLUMN statsId INT[*],\000d\000aADD CONSTRAINT fk_statsId FOREIGN KEY (statsId) REFERENCES Unit_Stats(id) ON DELETE NO ACTION ON UPDATE NO ACTION"; SQL statement:
+ALTER TABLE Unit
+ADD COLUMN statsId INT,
+ADD CONSTRAINT fk_statsId FOREIGN KEY (statsId) REFERENCES Unit_Stats(id) ON DELETE NO ACTION ON UPDATE NO ACTION [42000-224]
+2024-05-22 18:55:51.972569+02:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Błąd składniowy w wyrażeniu SQL "ALTER TABLE Unit\000d\000aADD COLUMN statsId INT[*],\000d\000aADD CONSTRAINT fk_statsId FOREIGN KEY (statsId) REFERENCES Unit_Stats(id) ON DELETE NO ACTION ON UPDATE NO ACTION"
+Syntax error in SQL statement "ALTER TABLE Unit\000d\000aADD COLUMN statsId INT[*],\000d\000aADD CONSTRAINT fk_statsId FOREIGN KEY (statsId) REFERENCES Unit_Stats(id) ON DELETE NO ACTION ON UPDATE NO ACTION"; SQL statement:
+ALTER TABLE Unit
+ADD COLUMN statsId INT,
+ADD CONSTRAINT fk_statsId FOREIGN KEY (statsId) REFERENCES Unit_Stats(id) ON DELETE NO ACTION ON UPDATE NO ACTION [42000-224]
+2024-05-22 18:55:52.141831+02:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Błąd składniowy w wyrażeniu SQL "ALTER TABLE Unit\000d\000aADD COLUMN statsId INT[*],\000d\000aADD CONSTRAINT fk_statsId FOREIGN KEY (statsId) REFERENCES Unit_Stats(id) ON DELETE NO ACTION ON UPDATE NO ACTION"
+Syntax error in SQL statement "ALTER TABLE Unit\000d\000aADD COLUMN statsId INT[*],\000d\000aADD CONSTRAINT fk_statsId FOREIGN KEY (statsId) REFERENCES Unit_Stats(id) ON DELETE NO ACTION ON UPDATE NO ACTION"; SQL statement:
+ALTER TABLE Unit
+ADD COLUMN statsId INT,
+ADD CONSTRAINT fk_statsId FOREIGN KEY (statsId) REFERENCES Unit_Stats(id) ON DELETE NO ACTION ON UPDATE NO ACTION [42000-224]
+2024-05-22 18:55:52.308675+02:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Błąd składniowy w wyrażeniu SQL "ALTER TABLE Unit\000d\000aADD COLUMN statsId INT[*],\000d\000aADD CONSTRAINT fk_statsId FOREIGN KEY (statsId) REFERENCES Unit_Stats(id) ON DELETE NO ACTION ON UPDATE NO ACTION"
+Syntax error in SQL statement "ALTER TABLE Unit\000d\000aADD COLUMN statsId INT[*],\000d\000aADD CONSTRAINT fk_statsId FOREIGN KEY (statsId) REFERENCES Unit_Stats(id) ON DELETE NO ACTION ON UPDATE NO ACTION"; SQL statement:
+ALTER TABLE Unit
+ADD COLUMN statsId INT,
+ADD CONSTRAINT fk_statsId FOREIGN KEY (statsId) REFERENCES Unit_Stats(id) ON DELETE NO ACTION ON UPDATE NO ACTION [42000-224]
+2024-05-22 18:55:52.490593+02:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Błąd składniowy w wyrażeniu SQL "ALTER TABLE Unit\000d\000aADD COLUMN statsId INT[*],\000d\000aADD CONSTRAINT fk_statsId FOREIGN KEY (statsId) REFERENCES Unit_Stats(id) ON DELETE NO ACTION ON UPDATE NO ACTION"
+Syntax error in SQL statement "ALTER TABLE Unit\000d\000aADD COLUMN statsId INT[*],\000d\000aADD CONSTRAINT fk_statsId FOREIGN KEY (statsId) REFERENCES Unit_Stats(id) ON DELETE NO ACTION ON UPDATE NO ACTION"; SQL statement:
+ALTER TABLE Unit
+ADD COLUMN statsId INT,
+ADD CONSTRAINT fk_statsId FOREIGN KEY (statsId) REFERENCES Unit_Stats(id) ON DELETE NO ACTION ON UPDATE NO ACTION [42000-224]
+2024-05-22 18:56:15.869318+02:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Błąd składniowy w wyrażeniu SQL "ALTER TABLE Unit\000d\000aADD COLUMN statsId INT[*],\000d\000aADD CONSTRAINT fk_statsId FOREIGN KEY (statsId) REFERENCES UNIT_STATS(id) ON DELETE NO ACTION ON UPDATE NO ACTION"
+Syntax error in SQL statement "ALTER TABLE Unit\000d\000aADD COLUMN statsId INT[*],\000d\000aADD CONSTRAINT fk_statsId FOREIGN KEY (statsId) REFERENCES UNIT_STATS(id) ON DELETE NO ACTION ON UPDATE NO ACTION"; SQL statement:
+ALTER TABLE Unit
+ADD COLUMN statsId INT,
+ADD CONSTRAINT fk_statsId FOREIGN KEY (statsId) REFERENCES UNIT_STATS(id) ON DELETE NO ACTION ON UPDATE NO ACTION [42000-224]
+2024-05-22 18:58:35.516256+02:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Błąd składniowy w wyrażeniu SQL "ALTER TABLE Unit\000d\000aADD COLUMN STATS_ID INT[*],\000d\000aADD CONSTRAINT fk_statsId FOREIGN KEY (STATS_ID) REFERENCES UNIT_STATS(id) ON DELETE NO ACTION ON UPDATE NO ACTION"
+Syntax error in SQL statement "ALTER TABLE Unit\000d\000aADD COLUMN STATS_ID INT[*],\000d\000aADD CONSTRAINT fk_statsId FOREIGN KEY (STATS_ID) REFERENCES UNIT_STATS(id) ON DELETE NO ACTION ON UPDATE NO ACTION"; SQL statement:
+ALTER TABLE Unit
+ADD COLUMN STATS_ID INT,
+ADD CONSTRAINT fk_statsId FOREIGN KEY (STATS_ID) REFERENCES UNIT_STATS(id) ON DELETE NO ACTION ON UPDATE NO ACTION [42000-224]
+2024-05-22 18:58:58.645334+02:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Błąd składniowy w wyrażeniu SQL "ALTER TABLE Unit\000d\000aADD COLUMN ""STATS_ID"" INT[*],\000d\000aADD CONSTRAINT fk_statsId FOREIGN KEY (""STATS_ID"") REFERENCES UNIT_STATS(""id"") ON DELETE NO ACTION ON UPDATE NO ACTION"
+Syntax error in SQL statement "ALTER TABLE Unit\000d\000aADD COLUMN ""STATS_ID"" INT[*],\000d\000aADD CONSTRAINT fk_statsId FOREIGN KEY (""STATS_ID"") REFERENCES UNIT_STATS(""id"") ON DELETE NO ACTION ON UPDATE NO ACTION"; SQL statement:
+ALTER TABLE Unit
+ADD COLUMN "STATS_ID" INT,
+ADD CONSTRAINT fk_statsId FOREIGN KEY ("STATS_ID") REFERENCES UNIT_STATS("id") ON DELETE NO ACTION ON UPDATE NO ACTION [42000-224]
+2024-05-22 18:59:25.507797+02:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Błąd składniowy w wyrażeniu SQL "ALTER TABLE Unit\000d\000aADD COLUMN STATS_ID INT[*],\000d\000aADD CONSTRAINT fk_statsId FOREIGN KEY (STATS_ID) REFERENCES UNIT_STATS(id) ON DELETE NO ACTION ON UPDATE NO ACTION"
+Syntax error in SQL statement "ALTER TABLE Unit\000d\000aADD COLUMN STATS_ID INT[*],\000d\000aADD CONSTRAINT fk_statsId FOREIGN KEY (STATS_ID) REFERENCES UNIT_STATS(id) ON DELETE NO ACTION ON UPDATE NO ACTION"; SQL statement:
+ALTER TABLE Unit
+ADD COLUMN STATS_ID INT,
+ADD CONSTRAINT fk_statsId FOREIGN KEY (STATS_ID) REFERENCES UNIT_STATS(id) ON DELETE NO ACTION ON UPDATE NO ACTION [42000-224]
+2024-05-22 19:00:59.054126+02:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Błąd składniowy w wyrażeniu SQL "ALTER TABLE Unit\000d\000aADD COLUMN STATS_ID INT[*],\000d\000aADD CONSTRAINT fk_statsId FOREIGN KEY (STATS_ID) REFERENCES UNIT_STATS(id) ON DELETE NO ACTION ON UPDATE NO ACTION"
+Syntax error in SQL statement "ALTER TABLE Unit\000d\000aADD COLUMN STATS_ID INT[*],\000d\000aADD CONSTRAINT fk_statsId FOREIGN KEY (STATS_ID) REFERENCES UNIT_STATS(id) ON DELETE NO ACTION ON UPDATE NO ACTION"; SQL statement:
+ALTER TABLE Unit
+ADD COLUMN STATS_ID INT,
+ADD CONSTRAINT fk_statsId FOREIGN KEY (STATS_ID) REFERENCES UNIT_STATS(id) ON DELETE NO ACTION ON UPDATE NO ACTION [42000-224]
+2024-05-22 19:01:20.686998+02:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Błąd składniowy w wyrażeniu SQL "ALTER TABLE Unit\000d\000aADD COLUMN STATS_ID INT[*],\000d\000aADD CONSTRAINT fk_statsId FOREIGN KEY (STATS_ID) REFERENCES UNIT_STATS(id) ON DELETE NO ACTION ON UPDATE NO ACTION"
+Syntax error in SQL statement "ALTER TABLE Unit\000d\000aADD COLUMN STATS_ID INT[*],\000d\000aADD CONSTRAINT fk_statsId FOREIGN KEY (STATS_ID) REFERENCES UNIT_STATS(id) ON DELETE NO ACTION ON UPDATE NO ACTION"; SQL statement:
+ALTER TABLE Unit
+ADD COLUMN STATS_ID INT,
+ADD CONSTRAINT fk_statsId FOREIGN KEY (STATS_ID) REFERENCES UNIT_STATS(id) ON DELETE NO ACTION ON UPDATE NO ACTION [42000-224]
+2024-05-22 19:01:24.053775+02:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Błąd składniowy w wyrażeniu SQL "ALTER TABLE Unit\000d\000aADD COLUMN STATS_ID INT[*],\000d\000aADD CONSTRAINT fk_statsId FOREIGN KEY (STATS_ID) REFERENCES UNIT_STATS(id) ON DELETE NO ACTION ON UPDATE NO ACTION"
+Syntax error in SQL statement "ALTER TABLE Unit\000d\000aADD COLUMN STATS_ID INT[*],\000d\000aADD CONSTRAINT fk_statsId FOREIGN KEY (STATS_ID) REFERENCES UNIT_STATS(id) ON DELETE NO ACTION ON UPDATE NO ACTION"; SQL statement:
+ALTER TABLE Unit
+ADD COLUMN STATS_ID INT,
+ADD CONSTRAINT fk_statsId FOREIGN KEY (STATS_ID) REFERENCES UNIT_STATS(id) ON DELETE NO ACTION ON UPDATE NO ACTION [42000-224]
+2024-05-22 19:01:53.738174+02:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Błąd składniowy w wyrażeniu SQL "ALTER TABLE Unit\000d\000aADD COLUMN STATS_ID INT[*],\000d\000aADD CONSTRAINT fk_statsId FOREIGN KEY (STATS_ID) REFERENCES UNIT_STATS(id) ON DELETE NO ACTION ON UPDATE NO ACTION"
+Syntax error in SQL statement "ALTER TABLE Unit\000d\000aADD COLUMN STATS_ID INT[*],\000d\000aADD CONSTRAINT fk_statsId FOREIGN KEY (STATS_ID) REFERENCES UNIT_STATS(id) ON DELETE NO ACTION ON UPDATE NO ACTION"; SQL statement:
+ALTER TABLE Unit
+ADD COLUMN STATS_ID INT,
+ADD CONSTRAINT fk_statsId FOREIGN KEY (STATS_ID) REFERENCES UNIT_STATS(id) ON DELETE NO ACTION ON UPDATE NO ACTION [42000-224]
+2024-05-22 19:02:24.702329+02:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Błąd składniowy w wyrażeniu SQL "ALTER TABLE Unit\000d\000aADD COLUMN STATS_ID INT[*],\000d\000aADD CONSTRAINT fk_statsId FOREIGN KEY (STATS_ID) REFERENCES UNIT_STATS(id) ON DELETE NO ACTION ON UPDATE NO ACTION"
+Syntax error in SQL statement "ALTER TABLE Unit\000d\000aADD COLUMN STATS_ID INT[*],\000d\000aADD CONSTRAINT fk_statsId FOREIGN KEY (STATS_ID) REFERENCES UNIT_STATS(id) ON DELETE NO ACTION ON UPDATE NO ACTION"; SQL statement:
+ALTER TABLE Unit
+ADD COLUMN STATS_ID INT,
+ADD CONSTRAINT fk_statsId FOREIGN KEY (STATS_ID) REFERENCES UNIT_STATS(id) ON DELETE NO ACTION ON UPDATE NO ACTION [42000-224]
+2024-05-22 19:02:25.379297+02:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Błąd składniowy w wyrażeniu SQL "ALTER TABLE Unit\000d\000aADD COLUMN STATS_ID INT[*],\000d\000aADD CONSTRAINT fk_statsId FOREIGN KEY (STATS_ID) REFERENCES UNIT_STATS(id) ON DELETE NO ACTION ON UPDATE NO ACTION"
+Syntax error in SQL statement "ALTER TABLE Unit\000d\000aADD COLUMN STATS_ID INT[*],\000d\000aADD CONSTRAINT fk_statsId FOREIGN KEY (STATS_ID) REFERENCES UNIT_STATS(id) ON DELETE NO ACTION ON UPDATE NO ACTION"; SQL statement:
+ALTER TABLE Unit
+ADD COLUMN STATS_ID INT,
+ADD CONSTRAINT fk_statsId FOREIGN KEY (STATS_ID) REFERENCES UNIT_STATS(id) ON DELETE NO ACTION ON UPDATE NO ACTION [42000-224]
+2024-05-22 19:02:25.553959+02:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Błąd składniowy w wyrażeniu SQL "ALTER TABLE Unit\000d\000aADD COLUMN STATS_ID INT[*],\000d\000aADD CONSTRAINT fk_statsId FOREIGN KEY (STATS_ID) REFERENCES UNIT_STATS(id) ON DELETE NO ACTION ON UPDATE NO ACTION"
+Syntax error in SQL statement "ALTER TABLE Unit\000d\000aADD COLUMN STATS_ID INT[*],\000d\000aADD CONSTRAINT fk_statsId FOREIGN KEY (STATS_ID) REFERENCES UNIT_STATS(id) ON DELETE NO ACTION ON UPDATE NO ACTION"; SQL statement:
+ALTER TABLE Unit
+ADD COLUMN STATS_ID INT,
+ADD CONSTRAINT fk_statsId FOREIGN KEY (STATS_ID) REFERENCES UNIT_STATS(id) ON DELETE NO ACTION ON UPDATE NO ACTION [42000-224]
+2024-05-22 19:02:25.727373+02:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Błąd składniowy w wyrażeniu SQL "ALTER TABLE Unit\000d\000aADD COLUMN STATS_ID INT[*],\000d\000aADD CONSTRAINT fk_statsId FOREIGN KEY (STATS_ID) REFERENCES UNIT_STATS(id) ON DELETE NO ACTION ON UPDATE NO ACTION"
+Syntax error in SQL statement "ALTER TABLE Unit\000d\000aADD COLUMN STATS_ID INT[*],\000d\000aADD CONSTRAINT fk_statsId FOREIGN KEY (STATS_ID) REFERENCES UNIT_STATS(id) ON DELETE NO ACTION ON UPDATE NO ACTION"; SQL statement:
+ALTER TABLE Unit
+ADD COLUMN STATS_ID INT,
+ADD CONSTRAINT fk_statsId FOREIGN KEY (STATS_ID) REFERENCES UNIT_STATS(id) ON DELETE NO ACTION ON UPDATE NO ACTION [42000-224]
+2024-05-22 19:02:26.348472+02:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Błąd składniowy w wyrażeniu SQL "ALTER TABLE Unit\000d\000aADD COLUMN STATS_ID INT[*],\000d\000aADD CONSTRAINT fk_statsId FOREIGN KEY (STATS_ID) REFERENCES UNIT_STATS(id) ON DELETE NO ACTION ON UPDATE NO ACTION"
+Syntax error in SQL statement "ALTER TABLE Unit\000d\000aADD COLUMN STATS_ID INT[*],\000d\000aADD CONSTRAINT fk_statsId FOREIGN KEY (STATS_ID) REFERENCES UNIT_STATS(id) ON DELETE NO ACTION ON UPDATE NO ACTION"; SQL statement:
+ALTER TABLE Unit
+ADD COLUMN STATS_ID INT,
+ADD CONSTRAINT fk_statsId FOREIGN KEY (STATS_ID) REFERENCES UNIT_STATS(id) ON DELETE NO ACTION ON UPDATE NO ACTION [42000-224]
+2024-05-22 21:31:13 database: flush
+org.h2.message.DbException: Błąd ogólny: "org.h2.mvstore.MVStoreException: The file is locked: C:/Users/Adria/IdeaProjects/MyArmyBuilder/myarmydb.mv.db [2.2.220/7]"
+General error: "org.h2.mvstore.MVStoreException: The file is locked: C:/Users/Adria/IdeaProjects/MyArmyBuilder/myarmydb.mv.db [2.2.220/7]" [50000-220]
+	at org.h2.message.DbException.get(DbException.java:212)
+	at org.h2.message.DbException.convert(DbException.java:407)
+	at org.h2.mvstore.db.Store.lambda$new$0(Store.java:122)
+	at org.h2.mvstore.MVStore.handleException(MVStore.java:1547)
+	at org.h2.mvstore.MVStore.panic(MVStore.java:371)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:291)
+	at org.h2.mvstore.MVStore$Builder.open(MVStore.java:2036)
+	at org.h2.mvstore.db.Store.<init>(Store.java:133)
+	at org.h2.engine.Database.<init>(Database.java:324)
+	at org.h2.engine.Engine.openSession(Engine.java:92)
+	at org.h2.engine.Engine.openSession(Engine.java:222)
+	at org.h2.engine.Engine.createSession(Engine.java:201)
+	at org.h2.engine.SessionRemote.connectEmbeddedOrServer(SessionRemote.java:338)
+	at org.h2.jdbc.JdbcConnection.<init>(JdbcConnection.java:122)
+	at org.h2.Driver.connect(Driver.java:59)
+	at com.intellij.database.remote.jdbc.helpers.JdbcHelperImpl.connect(JdbcHelperImpl.java:768)
+	at com.intellij.database.remote.jdbc.impl.RemoteDriverImpl.connect(RemoteDriverImpl.java:153)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at java.rmi/sun.rmi.server.UnicastServerRef.dispatch(UnicastServerRef.java:360)
+	at java.rmi/sun.rmi.transport.Transport$1.run(Transport.java:200)
+	at java.rmi/sun.rmi.transport.Transport$1.run(Transport.java:197)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:712)
+	at java.rmi/sun.rmi.transport.Transport.serviceCall(Transport.java:196)
+	at java.rmi/sun.rmi.transport.tcp.TCPTransport.handleMessages(TCPTransport.java:587)
+	at java.rmi/sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.run0(TCPTransport.java:828)
+	at java.rmi/sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.lambda$run$0(TCPTransport.java:705)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
+	at java.rmi/sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.run(TCPTransport.java:704)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:840)
+Caused by: org.h2.jdbc.JdbcSQLNonTransientException: Błąd ogólny: "org.h2.mvstore.MVStoreException: The file is locked: C:/Users/Adria/IdeaProjects/MyArmyBuilder/myarmydb.mv.db [2.2.220/7]"
+General error: "org.h2.mvstore.MVStoreException: The file is locked: C:/Users/Adria/IdeaProjects/MyArmyBuilder/myarmydb.mv.db [2.2.220/7]" [50000-220]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:566)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
+	... 34 more
+Caused by: org.h2.mvstore.MVStoreException: The file is locked: C:/Users/Adria/IdeaProjects/MyArmyBuilder/myarmydb.mv.db [2.2.220/7]
+	at org.h2.mvstore.DataUtils.newMVStoreException(DataUtils.java:996)
+	at org.h2.mvstore.SingleFileStore.lockFileChannel(SingleFileStore.java:143)
+	at org.h2.mvstore.SingleFileStore.open(SingleFileStore.java:117)
+	at org.h2.mvstore.SingleFileStore.open(SingleFileStore.java:81)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:286)
+	... 28 more
+2024-05-23 16:35:32.706477+02:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLDataException: Błąd konwersji danych "'' (UNIT: ""QUANTITY"" INTEGER NOT NULL)"
+Data conversion error converting "'' (UNIT: ""QUANTITY"" INTEGER NOT NULL)"; SQL statement:
+INSERT INTO "PUBLIC"."UNIT"("ID","POINTS_COST_PER_UNIT","QUANTITY","NAME","UNIT_TYPE","STATS_ID","UNIT_STATS_ID","MIN_QUANTITY")VALUES(?,?,?,?,?,?,?,?) [22018-224]
+2024-05-23 16:35:32.708481+02:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLDataException: Błąd konwersji danych "'' (UNIT: ""QUANTITY"" INTEGER NOT NULL)"
+Data conversion error converting "'' (UNIT: ""QUANTITY"" INTEGER NOT NULL)"; SQL statement:
+INSERT INTO "PUBLIC"."UNIT"("ID","POINTS_COST_PER_UNIT","QUANTITY","NAME","UNIT_TYPE","STATS_ID","UNIT_STATS_ID","MIN_QUANTITY")VALUES(?,?,?,?,?,?,?,?) [22018-224]
+2024-05-23 16:36:02.034065+02:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLDataException: Błąd konwersji danych "'' (UNIT: ""ID"" INTEGER GENERATED BY DEFAULT AS IDENTITY(START WITH 1 RESTART WITH 2) NOT NULL)"
+Data conversion error converting "'' (UNIT: ""ID"" INTEGER GENERATED BY DEFAULT AS IDENTITY(START WITH 1 RESTART WITH 2) NOT NULL)"; SQL statement:
+INSERT INTO "PUBLIC"."UNIT"("ID","POINTS_COST_PER_UNIT","QUANTITY","NAME","UNIT_TYPE","STATS_ID","UNIT_STATS_ID","MIN_QUANTITY")VALUES(?,?,?,?,?,?,?,?) [22018-224]
+2024-05-23 16:36:02.034065+02:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLDataException: Błąd konwersji danych "'' (UNIT: ""ID"" INTEGER GENERATED BY DEFAULT AS IDENTITY(START WITH 1 RESTART WITH 2) NOT NULL)"
+Data conversion error converting "'' (UNIT: ""ID"" INTEGER GENERATED BY DEFAULT AS IDENTITY(START WITH 1 RESTART WITH 2) NOT NULL)"; SQL statement:
+INSERT INTO "PUBLIC"."UNIT"("ID","POINTS_COST_PER_UNIT","QUANTITY","NAME","UNIT_TYPE","STATS_ID","UNIT_STATS_ID","MIN_QUANTITY")VALUES(?,?,?,?,?,?,?,?) [22018-224]
+2024-06-01 14:18:39.426144+02:00 jdbc[23]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Błąd składniowy w wyrażeniu SQL "SELECT * FROM UNIT ID [*]UPGRADE"
+Syntax error in SQL statement "SELECT * FROM UNIT ID [*]UPGRADE"; SQL statement:
+SELECT * FROM UNIT ID UPGRADE [42000-224]
+2024-06-01 14:23:00.372690+02:00 jdbc[23]: exception
+org.h2.jdbc.JdbcSQLDataException: Błąd konwersji danych "'' (UNIT_STATS: ""WARD_SAVE"" INTEGER)"
+Data conversion error converting "'' (UNIT_STATS: ""WARD_SAVE"" INTEGER)"; SQL statement:
+INSERT INTO "PUBLIC"."UNIT_STATS"("ID","A","BASIC_SAVE","BS","LD","S","T","W","WARD_SAVE","WS")VALUES(?,?,?,?,?,?,?,?,?,?) [22018-224]
+2024-06-01 14:23:00.372690+02:00 jdbc[23]: exception
+org.h2.jdbc.JdbcSQLDataException: Błąd konwersji danych "'' (UNIT_STATS: ""WARD_SAVE"" INTEGER)"
+Data conversion error converting "'' (UNIT_STATS: ""WARD_SAVE"" INTEGER)"; SQL statement:
+INSERT INTO "PUBLIC"."UNIT_STATS"("ID","A","BASIC_SAVE","BS","LD","S","T","W","WARD_SAVE","WS")VALUES(?,?,?,?,?,?,?,?,?,?) [22018-224]
+2024-06-06 16:34:13.717849+02:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLDataException: Błąd konwersji danych "'' (UPGRADE: ""ID"" INTEGER GENERATED BY DEFAULT AS IDENTITY(START WITH 1 RESTART WITH 2) NOT NULL)"
+Data conversion error converting "'' (UPGRADE: ""ID"" INTEGER GENERATED BY DEFAULT AS IDENTITY(START WITH 1 RESTART WITH 2) NOT NULL)"; SQL statement:
+INSERT INTO "PUBLIC"."UPGRADE"("ID","POINTS_COST","QUANTITY","SELECTED","UNIT_UPGRADES_ID","NAME","UNITUPGRADESID","UNIT_ID")VALUES(?,?,?,?,?,?,?,?) [22018-224]
+2024-06-06 16:34:13.720852+02:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLDataException: Błąd konwersji danych "'' (UPGRADE: ""ID"" INTEGER GENERATED BY DEFAULT AS IDENTITY(START WITH 1 RESTART WITH 2) NOT NULL)"
+Data conversion error converting "'' (UPGRADE: ""ID"" INTEGER GENERATED BY DEFAULT AS IDENTITY(START WITH 1 RESTART WITH 2) NOT NULL)"; SQL statement:
+INSERT INTO "PUBLIC"."UPGRADE"("ID","POINTS_COST","QUANTITY","SELECTED","UNIT_UPGRADES_ID","NAME","UNITUPGRADESID","UNIT_ID")VALUES(?,?,?,?,?,?,?,?) [22018-224]
+2024-06-06 18:18:54.541477+02:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Błąd składniowy w wyrażeniu SQL "Select * [*]Unit"
+Syntax error in SQL statement "Select * [*]Unit"; SQL statement:
+Select * Unit [42000-224]
+2024-06-06 18:18:59.980976+02:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Błąd składniowy w wyrażeniu SQL "Select FROM [*]* Unit"; oczekiwano "identifier"
+Syntax error in SQL statement "Select FROM [*]* Unit"; expected "identifier"; SQL statement:
+Select FROM * Unit [42001-224]
+2024-06-06 18:21:33.624919+02:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLDataException: Błąd konwersji danych "'n' (UNIT: ""UNIT_STATS_ID"" INTEGER)"
+Data conversion error converting "'n' (UNIT: ""UNIT_STATS_ID"" INTEGER)"; SQL statement:
+INSERT INTO "PUBLIC"."UNIT"("ID","POINTS_COST_PER_UNIT","QUANTITY","NAME","UNIT_TYPE","STATS_ID","UNIT_STATS_ID","MIN_QUANTITY")VALUES(?,?,?,?,?,?,?,?) [22018-224]
+2024-06-06 18:21:33.624919+02:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLDataException: Błąd konwersji danych "'n' (UNIT: ""UNIT_STATS_ID"" INTEGER)"
+Data conversion error converting "'n' (UNIT: ""UNIT_STATS_ID"" INTEGER)"; SQL statement:
+INSERT INTO "PUBLIC"."UNIT"("ID","POINTS_COST_PER_UNIT","QUANTITY","NAME","UNIT_TYPE","STATS_ID","UNIT_STATS_ID","MIN_QUANTITY")VALUES(?,?,?,?,?,?,?,?) [22018-224]
+2024-06-06 18:27:12.148100+02:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLDataException: Błąd konwersji danych "'15`' (UNIT: ""ID"" INTEGER GENERATED BY DEFAULT AS IDENTITY(START WITH 1 RESTART WITH 5) NOT NULL)"
+Data conversion error converting "'15`' (UNIT: ""ID"" INTEGER GENERATED BY DEFAULT AS IDENTITY(START WITH 1 RESTART WITH 5) NOT NULL)"; SQL statement:
+INSERT INTO "PUBLIC"."UNIT"("ID","POINTS_COST_PER_UNIT","QUANTITY","NAME","UNIT_TYPE","STATS_ID","UNIT_STATS_ID","MIN_QUANTITY")VALUES(?,?,?,?,?,?,?,?) [22018-224]
+2024-06-06 18:27:12.148100+02:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLDataException: Błąd konwersji danych "'15`' (UNIT: ""ID"" INTEGER GENERATED BY DEFAULT AS IDENTITY(START WITH 1 RESTART WITH 5) NOT NULL)"
+Data conversion error converting "'15`' (UNIT: ""ID"" INTEGER GENERATED BY DEFAULT AS IDENTITY(START WITH 1 RESTART WITH 5) NOT NULL)"; SQL statement:
+INSERT INTO "PUBLIC"."UNIT"("ID","POINTS_COST_PER_UNIT","QUANTITY","NAME","UNIT_TYPE","STATS_ID","UNIT_STATS_ID","MIN_QUANTITY")VALUES(?,?,?,?,?,?,?,?) [22018-224]
+2024-06-06 22:52:19.452080+02:00 database: wrong user or password; user: "SA"
+org.h2.message.DbException: Nieprawidłowy użytkownik/hasło
+Wrong user name or password [28000-224]
+	at org.h2.message.DbException.get(DbException.java:223)
+	at org.h2.message.DbException.get(DbException.java:199)
+	at org.h2.message.DbException.get(DbException.java:188)
+	at org.h2.engine.Engine.openSession(Engine.java:154)
+	at org.h2.engine.Engine.openSession(Engine.java:222)
+	at org.h2.engine.Engine.createSession(Engine.java:201)
+	at org.h2.engine.SessionRemote.connectEmbeddedOrServer(SessionRemote.java:343)
+	at org.h2.jdbc.JdbcConnection.<init>(JdbcConnection.java:125)
+	at org.h2.util.JdbcUtils.getConnection(JdbcUtils.java:288)
+	at org.h2.server.web.WebServer.getConnection(WebServer.java:811)
+	at org.h2.server.web.WebApp.login(WebApp.java:1039)
+	at org.h2.server.web.WebApp.process(WebApp.java:227)
+	at org.h2.server.web.WebApp.processRequest(WebApp.java:177)
+	at org.h2.server.web.JakartaWebServlet.doGet(JakartaWebServlet.java:129)
+	at org.h2.server.web.JakartaWebServlet.doPost(JakartaWebServlet.java:166)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:590)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:206)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:150)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:175)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:150)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:175)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:150)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:175)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:150)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:175)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:150)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:391)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:896)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1736)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: org.h2.jdbc.JdbcSQLInvalidAuthorizationSpecException: Nieprawidłowy użytkownik/hasło
+Wrong user name or password [28000-224]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:522)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
+	... 50 more
+2024-06-06 22:52:24.600379+02:00 database: wrong user or password; user: "SA"
+org.h2.message.DbException: Nieprawidłowy użytkownik/hasło
+Wrong user name or password [28000-224]
+	at org.h2.message.DbException.get(DbException.java:223)
+	at org.h2.message.DbException.get(DbException.java:199)
+	at org.h2.message.DbException.get(DbException.java:188)
+	at org.h2.engine.Engine.openSession(Engine.java:154)
+	at org.h2.engine.Engine.openSession(Engine.java:222)
+	at org.h2.engine.Engine.createSession(Engine.java:201)
+	at org.h2.engine.SessionRemote.connectEmbeddedOrServer(SessionRemote.java:343)
+	at org.h2.jdbc.JdbcConnection.<init>(JdbcConnection.java:125)
+	at org.h2.util.JdbcUtils.getConnection(JdbcUtils.java:288)
+	at org.h2.server.web.WebServer.getConnection(WebServer.java:811)
+	at org.h2.server.web.WebApp.login(WebApp.java:1039)
+	at org.h2.server.web.WebApp.process(WebApp.java:227)
+	at org.h2.server.web.WebApp.processRequest(WebApp.java:177)
+	at org.h2.server.web.JakartaWebServlet.doGet(JakartaWebServlet.java:129)
+	at org.h2.server.web.JakartaWebServlet.doPost(JakartaWebServlet.java:166)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:590)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:206)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:150)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:175)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:150)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:175)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:150)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:175)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:150)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:175)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:150)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:391)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:896)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1736)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: org.h2.jdbc.JdbcSQLInvalidAuthorizationSpecException: Nieprawidłowy użytkownik/hasło
+Wrong user name or password [28000-224]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:522)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
+	... 50 more
