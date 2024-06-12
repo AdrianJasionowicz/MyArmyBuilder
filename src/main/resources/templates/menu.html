@@ -9,24 +9,29 @@
             flex-direction: column;
             align-items: center;
         }
+
         .list {
             margin: 10px;
             padding: 10px;
             border: 1px solid #e21a1a;
             width: 30%;
         }
+
         .quantity-control {
             display: flex;
             align-items: center;
         }
+
         .quantity-input {
             width: 50px;
             text-align: center;
-            margin-right: 10px;
+            margin: 0 10px;
         }
+
         .quantity-button {
             padding: 5px 10px;
         }
+
         .army-composition {
             width: 100%;
             background-color: #ca5757;
@@ -35,11 +40,13 @@
             box-sizing: border-box;
             margin-top: 20px;
         }
+
         .units-container {
             display: flex;
             justify-content: space-between;
             width: 100%;
         }
+
         .units-container .list {
             margin: 10px;
         }
@@ -59,10 +66,10 @@
                 <!-- Section for Lord units -->
                 <h3>Lord</h3>
                 <ul>
-                    <li th:each="unit : ${availableUnits}" th:if="${unit.unitType == 'Lord'}">
+                    <li th:each="unit : ${availableUnits}" th:if="${unit.unitType == 'Lords'}">
                         <span th:text="${unit.name}">Unit Name</span>
                         <form th:action="@{/addUnit}" method="post" style="display:inline;">
-                            <input type="hidden" name="unitId" th:value="${unit.id}" />
+                            <input type="hidden" name="unitId" th:value="${unit.id}"/>
                             <button type="submit">Add</button>
                         </form>
                     </li>
@@ -74,7 +81,7 @@
                     <li th:each="unit : ${availableUnits}" th:if="${unit.unitType == 'Hero'}">
                         <span th:text="${unit.name}">Unit Name</span>
                         <form th:action="@{/addUnit}" method="post" style="display:inline;">
-                            <input type="hidden" name="unitId" th:value="${unit.id}" />
+                            <input type="hidden" name="unitId" th:value="${unit.id}"/>
                             <button type="submit">Add</button>
                         </form>
                     </li>
@@ -86,7 +93,7 @@
                     <li th:each="unit : ${availableUnits}" th:if="${unit.unitType == 'Core'}">
                         <span th:text="${unit.name}">Unit Name</span>
                         <form th:action="@{/addUnit}" method="post" style="display:inline;">
-                            <input type="hidden" name="unitId" th:value="${unit.id}" />
+                            <input type="hidden" name="unitId" th:value="${unit.id}"/>
                             <button type="submit">Add</button>
                         </form>
                     </li>
@@ -98,7 +105,7 @@
                     <li th:each="unit : ${availableUnits}" th:if="${unit.unitType == 'Special'}">
                         <span th:text="${unit.name}">Unit Name</span>
                         <form th:action="@{/addUnit}" method="post" style="display:inline;">
-                            <input type="hidden" name="unitId" th:value="${unit.id}" />
+                            <input type="hidden" name="unitId" th:value="${unit.id}"/>
                             <button type="submit">Add</button>
                         </form>
                     </li>
@@ -110,7 +117,7 @@
                     <li th:each="unit : ${availableUnits}" th:if="${unit.unitType == 'Rare'}">
                         <span th:text="${unit.name}">Unit Name</span>
                         <form th:action="@{/addUnit}" method="post" style="display:inline;">
-                            <input type="hidden" name="unitId" th:value="${unit.id}" />
+                            <input type="hidden" name="unitId" th:value="${unit.id}"/>
                             <button type="submit">Add</button>
                         </form>
                     </li>
@@ -125,20 +132,26 @@
                     <li th:each="unit : ${selectedUnits}">
                         <span th:text="${unit.name}">Unit Name</span>
                         <!-- Hidden field with unit ID -->
-                        <input type="hidden" name="selectedUnitId" th:value="${unit.id}" />
+                        <input type="hidden" name="selectedUnitId" th:value="${unit.id}"/>
                         <!-- Form to remove unit -->
                         <form th:action="@{/removeUnit}" method="post" style="display:inline;">
-                            <input type="hidden" name="unitId" th:value="${unit.id}" />
+                            <input type="hidden" name="unitId" th:value="${unit.id}"/>
                             <button type="submit">Remove</button>
                         </form>
                         <!-- Button to select upgrades for each unit -->
                         <button class="select-upgrades" th:data-unit-id="${unit.id}">Select Upgrades</button>
                         <!-- Quantity control for non-Lord and non-Hero units -->
                         <div class="quantity-control" th:unless="${unit.unitType == 'Lord' or unit.unitType == 'Hero' or unit.unitType == 'Rare'}">
-                            <form th:action="@{/setUnitQuantity}" method="post" style="display:inline;">
+                            <form action="/decreaseUnitQuantity" method="post" style="display: inline;">
                                 <input type="hidden" name="unitId" th:value="${unit.id}" />
-                                <input type="number" class="quantity-input" name="quantity" th:value="${unit.quantity}" min="0" />
-                                <button type="submit" style="display: none;">Update</button>
+                                <button type="submit">-</button>
+                            </form>
+                            <span>
+        <input type="number" class="quantity-input" name="quantity" th:value="${unit.quantity}" min="0" />
+    </span>
+                            <form action="/increaseUnitQuantity" method="post" style="display: inline;">
+                                <input type="hidden" name="unitId" th:value="${unit.id}" />
+                                <button type="submit">+</button>
                             </form>
                         </div>
                     </li>
@@ -159,20 +172,48 @@
             <h2>Army Composition</h2>
             <div th:if="${armyCompositions != null}">
                 <!-- Number of Lords -->
-                <p>Lords: <span id="total-lords"></span></p>
-                <!-- Other army composition details -->
+                <p>Lords: <span id="total-lords" th:text="${armyComposition.totalLords}"></span></p>
+                <!-- Number of Heroes -->
+                <p>Heroes: <span id="total-heroes" th:text="${armyComposition.totalHeroes}"></span></p>
+                <!-- Number of Core -->
+                <p>Core: <span id="total-core" th:text="${armyComposition.totalCore}"></span></p>
+                <!-- Number of Special -->
+                <p>Special: <span id="total-special" th:text="${armyComposition.totalSpecial}"></span></p>
+                <!-- Number of Rare -->
+                <p>Rare: <span id="total-rare" th:text="${armyComposition.totalRare}"></span></p>
             </div>
         </div>
 
         <div class="total-points">
-            <h2>Total Points: <span id="total-points">0</span></h2>
-            <button id="calculate-points">Calculate Points</button>
+            <h3>
+                <span th:text="'Total Points: ' + (${totalPoints} + ' / ' + ${pointsRestriction > 0 ? pointsRestriction : '0.0'})"></span>
+            </h3>
+            <!-- Sekcja wyświetlająca punkty dla poszczególnych typów jednostek -->
+            <div class="points-limits-by-type">
+                <h3>Points Limits by Unit Type</h3>
+                <ul>
+                    <li>Lords: <span th:if="${utilizedPointsByType != null}" th:text="${utilizedPointsByType['Lords']} + ' / ' + ${pointsLimitsByType['Lords']}"></span></li>
+                    <li>Hero: <span th:if="${utilizedPointsByType != null}" th:text="${utilizedPointsByType['Hero']} + ' / ' + ${pointsLimitsByType['Hero']}"></span></li>
+                    <li>Core: <span th:if="${utilizedPointsByType != null}" th:text="${utilizedPointsByType['Core']} + ' / ' + ${pointsLimitsByType['Core']}"></span></li>
+                    <li>Special: <span th:if="${utilizedPointsByType != null}" th:text="${utilizedPointsByType['Special']} + ' / ' + ${pointsLimitsByType['Special']}"></span></li>
+                    <li>Rare: <span th:if="${utilizedPointsByType != null}" th:text="${utilizedPointsByType['Rare']} + ' / ' + ${pointsLimitsByType['Rare']}"></span></li>
+                </ul>
+            </div>
         </div>
-    </div>
+            <form id="setPointsForm" action="/setPointsRestriction" method="post">
+                <label for="points">Set Points Restriction:</label>
+                <input type="number" id="points" name="points" min="0" max="1000000">
+                <button type="submit">Set</button>
+            </form>
+            <button id="calculate-points">Calculate Points</button>
+            <form action="/resetPoints" method="post">
+                <button type="submit">Reset Points</button>
+            </form>
+        </div>
 
     <script>
-        $(document).ready(function() {
-            $('.select-upgrades').click(function() {
+        $(document).ready(function () {
+            $('.select-upgrades').click(function () {
                 var unitId = $(this).data('unit-id');
                 console.log('Unit ID:', unitId);
 
@@ -184,10 +225,10 @@
                 $.ajax({
                     url: '/units/' + unitId + '/upgrades',
                     method: 'GET',
-                    success: function(upgrades) {
+                    success: function (upgrades) {
                         console.log('Upgrades:', upgrades);
                         $('#upgrades-list').empty();
-                        upgrades.forEach(function(upgrade) {
+                        upgrades.forEach(function (upgrade) {
                             $('#upgrades-list').append(
                                 '<li>' + upgrade.name +
                                 '<form action="/addUpgrade" method="post" style="display:inline;">' +
@@ -200,21 +241,21 @@
                             );
                         });
                     },
-                    error: function(error) {
+                    error: function (error) {
                         console.error('Error fetching upgrades:', error);
                     }
                 });
             });
 
-            $('#calculate-points').click(function() {
+            $('#calculate-points').click(function () {
                 $.ajax({
                     url: '/calculateTotalPoints',
                     method: 'GET',
-                    success: function(data) {
+                    success: function (data) {
                         console.log('Army Composition:', data);
                         $('#total-points').text(data.totalPoints);
                     },
-                    error: function(error) {
+                    error: function (error) {
                         console.error('Error calculating points:', error);
                     }
                 });

@@ -21,6 +21,7 @@ public class UnitDTO {
     private int minQuantity;
     private String unitType;
     private Integer statsId;
+    private String nation;
     private UnitStats unitStats;
     List<Upgrade> upgradeList = new ArrayList<>();
 

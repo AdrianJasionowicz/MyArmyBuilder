@@ -28,6 +28,4 @@ public class ArmyComposition {
     private double totalCore;
     private double totalSpecial;
     private double totalRare;
-
-
 }
