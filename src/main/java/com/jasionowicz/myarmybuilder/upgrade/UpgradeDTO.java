@@ -18,21 +18,35 @@ public class UpgradeDTO {
     private boolean selected;
     private double pointsCost;
     private Integer unitUpgradesId;
+    private Double totalCost;
+    private UpgradeRepository upgradeRepository;
 
-    private Upgrade upgrade;
-
-    public UpgradeDTO(Upgrade upgrade) {
-        this.upgrade = upgrade;
-        getDTOFromEntity();
+    public UpgradeDTO(Upgrade upgrade, UpgradeRepository upgradeRepository) {
+        this.upgradeRepository = upgradeRepository;
+        this.id = upgrade.getId();
+        this.name = upgrade.getName();
+        this.quantity = upgrade.getQuantity();
+        this.selected = upgrade.isSelected();
+        this.pointsCost = upgrade.getPointsCost();
+        this.unitUpgradesId = upgrade.getUnitUpgradesId();
+        this.totalCost = upgrade.getTotalCost();
     }
 
+    public UpgradeDTO(Upgrade upgrade) {
+    }
 
-    public void getDTOFromEntity() {
-        id = upgrade.getId();
-        name = upgrade.getName();
-        quantity = upgrade.getQuantity();
-        selected = upgrade.isSelected();
-        pointsCost = upgrade.getPointsCost();
-        unitUpgradesId = upgrade.getUnitUpgradesId();
+    public Upgrade toEntity() {
+        Upgrade upgrade = new Upgrade();
+        upgrade.setId(this.id);
+        upgrade.setName(this.name);
+        upgrade.setQuantity(this.quantity);
+        upgrade.setSelected(this.selected);
+        upgrade.setPointsCost(this.pointsCost);
+        upgrade.setUnitUpgradesId(this.unitUpgradesId);
+        return upgrade;
+    }
+
+    public UpgradeDTO(UpgradeRepository upgradeRepository) {
+        this.upgradeRepository = upgradeRepository;
     }
 }

@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-
 @Getter
 @Setter
 @AllArgsConstructor
@@ -22,38 +21,28 @@ public class UnitStatsDTO {
     private Integer basicSave;
     private Integer wardSave;
 
-
-    private UnitStats unitStats;
-
     public UnitStatsDTO(UnitStats unitStats) {
-        this.unitStats = unitStats;
-        getEntityToDTO();
+        this.id = unitStats.getId();
+        this.ws = unitStats.getWs();
+        this.bs = unitStats.getBs();
+        this.s = unitStats.getS();
+        this.t = unitStats.getT();
+        this.w = unitStats.getW();
+        this.a = unitStats.getA();
+        this.ld = unitStats.getLd();
+        this.basicSave = unitStats.getBasicSave();
+        this.wardSave = unitStats.getWardSave();
     }
 
-    public void getEntityToDTO() {
-        ws = unitStats.getWs();
-        bs = unitStats.getBs();
-        s = unitStats.getS();
-        t = unitStats.getT();
-        w = unitStats.getW();
-        a = unitStats.getA();
-        ld = unitStats.getLd();
-        basicSave = unitStats.getBasicSave();
-        wardSave = unitStats.getWardSave();
+    public void copyToEntity(UnitStats unitStats) {
+        unitStats.setWs(this.ws);
+        unitStats.setBs(this.bs);
+        unitStats.setS(this.s);
+        unitStats.setT(this.t);
+        unitStats.setW(this.w);
+        unitStats.setA(this.a);
+        unitStats.setLd(this.ld);
+        unitStats.setBasicSave(this.basicSave);
+        unitStats.setWardSave(this.wardSave);
     }
-
-    public void getDTOToEntity() {
-        unitStats.setWs(ws);
-        unitStats.setBs(bs);
-        unitStats.setS(s);
-        unitStats.setT(t);
-        unitStats.setW(w);
-        unitStats.setA(a);
-        unitStats.setLd(ld);
-        unitStats.setBasicSave(basicSave);
-        unitStats.setWardSave(wardSave);
-    }
-
-
 }
-

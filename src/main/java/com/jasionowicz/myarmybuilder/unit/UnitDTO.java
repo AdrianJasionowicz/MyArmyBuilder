@@ -23,6 +23,7 @@ public class UnitDTO {
     private Integer statsId;
     private String nation;
     private UnitStats unitStats;
+    private Integer selectedId;
     List<Upgrade> upgradeList = new ArrayList<>();
 
     private Unit unit;
@@ -30,6 +31,10 @@ public class UnitDTO {
     public UnitDTO(Unit unit) {
         this.unit = unit;
         getEntityToDTO();
+    }
+
+    public UnitDTO(String name, Double pointsCostPerUnit, int quantity, int minQuantity, String unitType) {
+
     }
 
     public void getEntityToDTO() {
@@ -42,6 +47,7 @@ public class UnitDTO {
         statsId = unit.getStatsId();
         unitStats = unit.getUnitStats();
         upgradeList = unit.getUpgradesList();
+        selectedId = unit.getSelectedId();
     }
 
     public void changeDTOtoEntity() {
@@ -51,6 +57,7 @@ public class UnitDTO {
         unit.setMinQuantity(minQuantity);
         unit.setUnitType(unitType);
         unit.setUnitStats(unitStats);
+        unit.setSelectedId(selectedId);
     }
 
 

@@ -19,10 +19,10 @@ public class UnitController {
 
 
     @PostMapping("/addUnits")
-    public void addUnit(@RequestParam("name") String name,@RequestParam("pointsCostPerUnit") Double pointsCostPerUnit, @RequestParam("quantity") int quantity,@RequestParam("minQuantity") int minQuantity,@RequestParam("unitType") String unitType) {
-        Unit unit = new Unit(name,pointsCostPerUnit, quantity, minQuantity,unitType);
-        System.out.println("Adding unit: " + unit.getName() + " with minimum quantity: " + minQuantity);
-        unitService.saveUnitToList(unit);
+    public void addUnit(@RequestParam("name") String name, @RequestParam("pointsCostPerUnit") Double pointsCostPerUnit, @RequestParam("quantity") int quantity, @RequestParam("minQuantity") int minQuantity, @RequestParam("unitType") String unitType) {
+        UnitDTO unitDTO = new UnitDTO(name, pointsCostPerUnit, quantity, minQuantity, unitType);
+        System.out.println("Adding unit: " + unitDTO.getName() + " with minimum quantity: " + minQuantity);
+        unitService.add(unitDTO);
     }
 
     @GetMapping("/{id}")
@@ -31,17 +31,17 @@ public class UnitController {
     }
 
     @GetMapping("/getUnits")
-    public List<Unit> getUnits() {
+    public List<UnitDTO> getUnits() {
         return unitService.findAll();
     }
 
     @PostMapping("/addUrUnit")
-    public Unit createUnit(@RequestBody Unit unit) {
-        return unitService.save(unit);
+    public void createUnit(@RequestBody UnitDTO unit) {
+        unitService.save(unit);
     }
 
     @PutMapping("/{id}")
-    public Unit updateUnit(@PathVariable Integer id, @RequestBody Unit updatedUnit) {
+    public UnitDTO updateUnit(@PathVariable Integer id, @RequestBody UnitDTO updatedUnit) {
         return unitService.updateUnit(id, updatedUnit);
     }
 

@@ -25,6 +25,7 @@
         private String unitType;
         private Integer statsId;
         private String nation;
+        private Integer selectedId;
         @OneToOne
         @JoinColumn(name = "unitStats_id")
         private UnitStats unitStats;

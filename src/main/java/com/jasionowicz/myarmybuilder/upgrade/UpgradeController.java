@@ -1,6 +1,6 @@
 package com.jasionowicz.myarmybuilder.upgrade;
 
-import com.jasionowicz.myarmybuilder.unit.SelectedUnits;
+import com.jasionowicz.myarmybuilder.selectedUnits.SelectedUnits;
 import com.jasionowicz.myarmybuilder.unit.Unit;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,9 +28,4 @@ private SelectedUnits selectedUnits;
     public List<Upgrade> getAllUpgrades() {
         return upgradesService.findAll();
     }
-    @GetMapping("/upu")
-    public List<Unit> getAllSelectedUnits() {
-        return selectedUnits.getSelectedUnits();
-    }
-
 }

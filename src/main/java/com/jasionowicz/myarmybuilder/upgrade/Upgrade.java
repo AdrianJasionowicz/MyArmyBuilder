@@ -16,12 +16,13 @@ import org.springframework.stereotype.Component;
 public class Upgrade {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
     private String name;
     private int quantity;
     private boolean selected;
     private double pointsCost;
     private Integer unitUpgradesId;
+    private Double totalCost;
     @ManyToOne
     @JoinColumn(name = "unit_id")
     @JsonBackReference

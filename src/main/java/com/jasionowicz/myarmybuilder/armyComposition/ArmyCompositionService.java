@@ -1,11 +1,10 @@
 package com.jasionowicz.myarmybuilder.armyComposition;
 
-import com.jasionowicz.myarmybuilder.unit.SelectedUnits;
+import com.jasionowicz.myarmybuilder.selectedUnits.SelectedUnits;
 import com.jasionowicz.myarmybuilder.unit.Unit;
 import com.jasionowicz.myarmybuilder.upgrade.Upgrade;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -24,29 +23,6 @@ public class ArmyCompositionService {
         this.selectedUnits = selectedUnits;
     }
 
-    public void addToCalculate(double points, int quantity, String unitType) {
-        double totalPointsForUnit = points * quantity;
-
-        switch (unitType) {
-            case "Lord":
-                armyComposition.setTotalLords(armyComposition.getTotalLords() + totalPointsForUnit);
-                break;
-            case "Hero":
-                armyComposition.setTotalHeroes(armyComposition.getTotalHeroes() + totalPointsForUnit);
-                break;
-            case "Core":
-                armyComposition.setTotalCore(armyComposition.getTotalCore() + totalPointsForUnit);
-                break;
-            case "Special":
-                armyComposition.setTotalSpecial(armyComposition.getTotalSpecial() + totalPointsForUnit);
-                break;
-            case "Rare":
-                armyComposition.setTotalRare(armyComposition.getTotalRare() + totalPointsForUnit);
-                break;
-        }
-
-        armyComposition.setTotalPoints(armyComposition.getTotalPoints() + totalPointsForUnit);
-    }
 
 
     public double calculateTotalPoints() {
@@ -85,7 +61,6 @@ public class ArmyCompositionService {
 
         Map<String, Double> pointsByType = new HashMap<>();
 
-        // Obliczanie sumy punktów dla każdego typu jednostki
         for (Unit unit : selectedUnitsList) {
             String unitType = unit.getUnitType();
             double unitPoints = unit.getPointsCostPerUnit() * unit.getQuantity();

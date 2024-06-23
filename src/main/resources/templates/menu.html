@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Builder Menu</title>
+    <title>Warhammer Builder</title>
     <style>
         .container {
             display: flex;
@@ -129,30 +129,32 @@
             <div class="list">
                 <h2>Selected Units</h2>
                 <ul>
-                    <li th:each="unit : ${selectedUnits}">
+                    <li th:each="unit, unitIndex : ${selectedUnits}">
                         <span th:text="${unit.name}">Unit Name</span>
                         <!-- Hidden field with unit ID -->
                         <input type="hidden" name="selectedUnitId" th:value="${unit.id}"/>
-                        <!-- Form to remove unit -->
                         <form th:action="@{/removeUnit}" method="post" style="display:inline;">
-                            <input type="hidden" name="unitId" th:value="${unit.id}"/>
-                            <button type="submit">Remove</button>
+                            <input type="hidden" name="selectedId" th:value="${unit.selectedId}"/>
+                            <button type="submit" th:id="'removeUnitBtn_' + ${unitIndex.index}">Remove</button>
                         </form>
+
                         <!-- Button to select upgrades for each unit -->
-                        <button class="select-upgrades" th:data-unit-id="${unit.id}">Select Upgrades</button>
+                        <button class="select-upgrades" th:data-selected-unit-id="${unit.selectedId}" th:id="'selectUpgradesBtn_' + ${unitIndex.index}">Select Upgrades</button>
                         <!-- Quantity control for non-Lord and non-Hero units -->
-                        <div class="quantity-control" th:unless="${unit.unitType == 'Lord' or unit.unitType == 'Hero' or unit.unitType == 'Rare'}">
+                        <div class="quantity-control" th:unless="${unit.unitType == 'Lords' or unit.unitType == 'Hero' or unit.unitType == 'Rare'}">
                             <form action="/decreaseUnitQuantity" method="post" style="display: inline;">
-                                <input type="hidden" name="unitId" th:value="${unit.id}" />
-                                <button type="submit">-</button>
+                                <input type="hidden" name="selectedId" th:value="${unit.selectedId}" />
+                                <button type="submit" th:id="'decreaseQuantityBtn_' + ${unitIndex.index}">-</button>
                             </form>
+
                             <span>
-        <input type="number" class="quantity-input" name="quantity" th:value="${unit.quantity}" min="0" />
-    </span>
+                                <input type="number" class="quantity-input" name="quantity" th:value="${unit.quantity}" min="0" />
+                            </span>
                             <form action="/increaseUnitQuantity" method="post" style="display: inline;">
-                                <input type="hidden" name="unitId" th:value="${unit.id}" />
-                                <button type="submit">+</button>
+                                <input type="hidden" name="selectedId" th:value="${unit.selectedId}" />
+                                <button type="submit" th:id="'increaseQuantityBtn_' + ${unitIndex.index}">+</button>
                             </form>
+
                         </div>
                     </li>
                 </ul>
@@ -188,7 +190,7 @@
             <h3>
                 <span th:text="'Total Points: ' + (${totalPoints} + ' / ' + ${pointsRestriction > 0 ? pointsRestriction : '0.0'})"></span>
             </h3>
-            <!-- Sekcja wyświetlająca punkty dla poszczególnych typów jednostek -->
+            <!-- Section displaying points for each unit type -->
             <div class="points-limits-by-type">
                 <h3>Points Limits by Unit Type</h3>
                 <ul>
@@ -200,67 +202,67 @@
                 </ul>
             </div>
         </div>
-            <form id="setPointsForm" action="/setPointsRestriction" method="post">
-                <label for="points">Set Points Restriction:</label>
-                <input type="number" id="points" name="points" min="0" max="1000000">
-                <button type="submit">Set</button>
-            </form>
-            <button id="calculate-points">Calculate Points</button>
-            <form action="/resetPoints" method="post">
-                <button type="submit">Reset Points</button>
-            </form>
-        </div>
 
-    <script>
-        $(document).ready(function () {
-            $('.select-upgrades').click(function () {
-                var unitId = $(this).data('unit-id');
-                console.log('Unit ID:', unitId);
+    </div>
+</div>
 
-                if (unitId === undefined || unitId === null) {
-                    console.error('Unit ID is undefined or null.');
-                    return;
-                }
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    $(document).ready(function () {
+        console.log('Document is ready');
 
-                $.ajax({
-                    url: '/units/' + unitId + '/upgrades',
-                    method: 'GET',
-                    success: function (upgrades) {
-                        console.log('Upgrades:', upgrades);
-                        $('#upgrades-list').empty();
-                        upgrades.forEach(function (upgrade) {
-                            $('#upgrades-list').append(
-                                '<li>' + upgrade.name +
-                                '<form action="/addUpgrade" method="post" style="display:inline;">' +
-                                '<input type="hidden" name="_method" value="put" />' + // Dodaj to ukryte pole
-                                '<input type="hidden" name="unitId" value="' + unitId + '" />' +
-                                '<input type="hidden" name="upgradeId" value="' + upgrade.id + '" />' +
-                                '<button type="submit">' + (upgrade.selected ? 'Unselect' : 'Select') + '</button>' +
-                                '</form>' +
-                                '</li>'
-                            );
+        $('.select-upgrades').on('click', function () {
+            console.log('Select Upgrades button clicked');
+            var selectedUnitId = $(this).data('selected-unit-id');
+            console.log('Selected Unit ID:', selectedUnitId);
+
+            $.ajax({
+                type: 'GET',
+                url: '/units/' + selectedUnitId + '/upgrades',
+                success: function (data) {
+                    console.log('Received data:', data);
+                    $('#upgrades-list').empty();
+                    $.each(data, function (index, upgrade) {
+                        var listItem = $('<li>').text(upgrade.name);
+                        var selectButton = $('<button>').text('Select').addClass('select-upgrade-button');
+                        selectButton.data('upgrade-id', upgrade.id);
+                        selectButton.data('selected-unit-id', selectedUnitId);
+                        listItem.append(selectButton);
+                        $('#upgrades-list').append(listItem);
+                    });
+
+                    // Add click event for new select buttons
+                    $('.select-upgrade-button').on('click', function () {
+                        var upgradeId = $(this).data('upgrade-id');
+                        var selectedUnitId = $(this).data('selected-unit-id');
+                        console.log('Upgrade selected. Upgrade ID:', upgradeId, 'Selected Unit ID:', selectedUnitId);
+
+                        $.ajax({
+                            type: 'POST',
+                            url: '/units/' + selectedUnitId + '/upgrades/' + upgradeId + '/select',
+                            success: function () {
+                                alert('Upgrade selected successfully!');
+                            },
+                            error: function (xhr, textStatus, errorThrown) {
+                                console.log('Error:', textStatus, errorThrown);
+                                alert('Error selecting upgrade.');
+                            }
                         });
-                    },
-                    error: function (error) {
-                        console.error('Error fetching upgrades:', error);
-                    }
-                });
-            });
-
-            $('#calculate-points').click(function () {
-                $.ajax({
-                    url: '/calculateTotalPoints',
-                    method: 'GET',
-                    success: function (data) {
-                        console.log('Army Composition:', data);
-                        $('#total-points').text(data.totalPoints);
-                    },
-                    error: function (error) {
-                        console.error('Error calculating points:', error);
-                    }
-                });
+                    });
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    console.log('Error:', textStatus, errorThrown);
+                    alert('Error fetching upgrades.');
+                }
             });
         });
-    </script>
+
+        $('#closeUpgradesBtn').on('click', function () {
+            console.log('Close Upgrades button clicked');
+            $('#selectedUnitUpgrades').hide();
+        });
+    });
+    /*]]>*/
+</script>
 </body>
 </html>
