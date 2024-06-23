@@ -12,6 +12,7 @@ import com.jasionowicz.myarmybuilder.unit.UnitService;
 import com.jasionowicz.myarmybuilder.upgrade.Upgrade;
 import com.jasionowicz.myarmybuilder.upgrade.UpgradesService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -115,22 +116,31 @@ public class MenuController {
         return armyComposition;
     }
 
-
-@GetMapping("/units/{selectedId}/upgrades")
-public ResponseEntity<List<Upgrade>> getUpgradesForUnit(@PathVariable Integer selectedId) {
-    int unitId = selectedService.getIdBySelectedId(selectedId);
-    List<Upgrade> upgrades = upgradesService.findUpgradesByUnitId(unitId);
-    if (!upgrades.isEmpty()) {
-        return ResponseEntity.ok(upgrades);
-    } else {
-        return ResponseEntity.notFound().build();
+    @GetMapping("/units/{selectedId}/upgrades")
+    public ResponseEntity<List<Upgrade>> getUpgradesForUnit(@PathVariable Integer selectedId) {
+        int unitId = selectedService.getIdBySelectedId(selectedId);
+        List<Upgrade> upgrades = upgradesService.findUpgradesByUnitId(unitId);
+        if (!upgrades.isEmpty()) {
+            return ResponseEntity.ok(upgrades);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
-}
 
     @PostMapping("/addUpgrade")
-    public String toggleUpgradeSelection(@RequestParam Integer unitId, @RequestParam Integer upgradeId) {
-        selectedService.addUpgrade(upgradeId);
-        return "redirect:/menu";
+    public ResponseEntity<String> toggleUpgradeSelection(@RequestParam Integer selectedUnitId, @RequestParam Integer upgradeId) {
+        try {
+            selectedService.toggleUpgrade(selectedUnitId, upgradeId);
+            return ResponseEntity.ok("Upgrade toggled successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error toggling upgrade: " + e.getMessage());
+        }
+    }
+
+    @PostMapping("/removeUpgrade")
+    public ResponseEntity<String> removeUpgrade(@RequestParam Integer selectedUnitId, @RequestParam Integer upgradeId) {
+        selectedService.removeUpgrade(selectedUnitId, upgradeId);
+        return ResponseEntity.ok("Upgrade removed");
     }
 
     @PostMapping("/resetPoints")

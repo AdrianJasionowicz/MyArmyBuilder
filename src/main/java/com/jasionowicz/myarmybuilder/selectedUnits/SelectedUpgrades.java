@@ -1,6 +1,6 @@
 package com.jasionowicz.myarmybuilder.selectedUnits;
 
-import com.jasionowicz.myarmybuilder.unit.Unit;
+import com.jasionowicz.myarmybuilder.selectedUnits.SelectedService;
 import com.jasionowicz.myarmybuilder.upgrade.Upgrade;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,29 +16,33 @@ import java.util.List;
 public class SelectedUpgrades {
 
     private List<Upgrade> selectedUpgrades;
+
+    private List<Integer> selectedUnitIds;
+
     private SelectedService selectedService;
 
     public SelectedUpgrades(SelectedService selectedService) {
         this.selectedService = selectedService;
         this.selectedUpgrades = new ArrayList<>();
+        this.selectedUnitIds = new ArrayList<>();
     }
 
-    public void addUpgrade(Upgrade upgrade) {
+    public void addUpgrade(Upgrade upgrade, int selectedUnitId) {
         selectedUpgrades.add(upgrade);
+        selectedUnitIds.add(selectedUnitId);
     }
 
-    public void removeUpgrade(Integer selectedId, Integer upgradeId) {
-        Unit unit = selectedService.getBySelectedId(selectedId);
-        if (unit != null) {
-            Iterator<Upgrade> iterator = selectedUpgrades.iterator();
-            while (iterator.hasNext()) {
-                Upgrade upgrade = iterator.next();
-                if (upgrade.getId().equals(upgradeId) && unit.getSelectedId().equals(selectedId)) {
-                    iterator.remove();
-                    break;
-                }
+    public void removeUpgrade(Integer upgradeId) {
+        Iterator<Upgrade> iterator = selectedUpgrades.iterator();
+        Iterator<Integer> unitIdIterator = selectedUnitIds.iterator();
+        while (iterator.hasNext() && unitIdIterator.hasNext()) {
+            Upgrade upgrade = iterator.next();
+            Integer unitId = unitIdIterator.next();
+            if (upgrade.getId().equals(upgradeId)) {
+                iterator.remove();
+                unitIdIterator.remove();
+                break;
             }
         }
     }
-
 }

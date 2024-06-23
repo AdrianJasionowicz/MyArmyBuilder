@@ -1,5 +1,7 @@
 package com.jasionowicz.myarmybuilder.selectedUnits;
 
+import com.jasionowicz.myarmybuilder.selectedUnits.SelectedUnits;
+import com.jasionowicz.myarmybuilder.selectedUnits.SelectedUpgrades;
 import com.jasionowicz.myarmybuilder.unit.Unit;
 import com.jasionowicz.myarmybuilder.unit.UnitDTO;
 import com.jasionowicz.myarmybuilder.upgrade.Upgrade;
@@ -8,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.Iterator;
 import java.util.Optional;
 
 @Service
@@ -58,7 +61,6 @@ public class SelectedService {
         return unit.map(Unit::getId).orElseThrow(() -> new IllegalArgumentException("No unit found for selectedId: " + selectedId));
     }
 
-
     public ResponseEntity<String> increaseUnitQuantity(Integer selectedId) {
         if (selectedId == null) {
             return ResponseEntity.badRequest().body("Selected ID is null");
@@ -83,14 +85,58 @@ public class SelectedService {
         return ResponseEntity.badRequest().body("Unit not found or quantity is zero");
     }
 
-    public void addUpgrade(Integer upgradeId) {
-        Upgrade upgrade = upgradeService.getUpgradeById(upgradeId);
-        if (upgrade != null) {
-            selectedUpgrades.addUpgrade(upgrade);
+    public void addUpgrade(Integer selectedId, Upgrade upgrade) {
+        Unit unit = getBySelectedId(selectedId);
+        if (unit != null) {
+            selectedUpgrades.addUpgrade(upgrade, selectedId);
         }
     }
 
     public void removeUpgrade(Integer selectedId, Integer upgradeId) {
-        selectedUpgrades.removeUpgrade(selectedId, upgradeId);
+        Unit unit = getBySelectedId(selectedId);
+        if (unit != null) {
+            selectedUpgrades.removeUpgrade(upgradeId);
+        }
     }
+
+    public void toggleUpgrade(Integer selectedId, Integer upgradeId) {
+        Unit unit = getBySelectedId(selectedId);
+        if (unit != null) {
+            Upgrade upgrade = findUpgradeById(upgradeId);
+            if (upgrade != null) {
+                if (selectedUpgrades.getSelectedUpgrades().contains(upgrade)) {
+                    removeUpgrade(selectedId, upgradeId);
+                } else {
+                    addUpgrade(selectedId, upgrade);
+                }
+            }
+        }
+    }
+
+    private Upgrade findUpgradeById(Integer upgradeId) {
+        return selectedUpgrades.getSelectedUpgrades().stream()
+                .filter(upgrade -> upgrade.getId().equals(upgradeId))
+                .findFirst()
+                .orElse(null);
+    }
+    public double calculatePointsForUpgrades(Integer selectedId) {
+        long totalPoints = 0;
+        long unitQuantity = (long) selectedUnits.getUnitQuantityBySelectedId(selectedId);
+
+        for (Upgrade upgrade : selectedUpgrades.getSelectedUpgrades()) {
+            long cost = (long) upgrade.getPointsCost();
+            long quantity = upgrade.getQuantity();
+
+            if (quantity == 0) {
+                totalPoints += cost * unitQuantity; // Mnożenie kosztu przez ilość jednostek
+            } else {
+                totalPoints += cost;
+            }
+        }
+        return totalPoints;
+    }
+    public void removeUpgradeFromUnit(Integer selectedUnitId, Integer upgradeId) {
+        selectedUpgrades.removeUpgrade(upgradeId);
+    }
+
 }

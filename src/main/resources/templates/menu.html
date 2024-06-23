@@ -52,6 +52,56 @@
         }
     </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            console.log('Document is ready');
+
+            $('.select-upgrades').on('click', function () {
+                console.log('Select Upgrades button clicked');
+                var selectedUnitId = $(this).data('selected-unit-id');
+                console.log('Selected Unit ID:', selectedUnitId);
+
+                $.ajax({
+                    type: 'GET',
+                    url: '/units/' + selectedUnitId + '/upgrades',
+                    success: function (data) {
+                        console.log('Received data:', data);
+                        $('#upgrades-list').empty();
+                        $.each(data, function (index, upgrade) {
+                            var listItem = $('<li>').text(upgrade.name);
+                            var selectButton = $('<button>')
+                                .text(upgrade.selected ? 'Unselect' : 'Select')
+                                .click(function () {
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: '/toggleUpgrade',
+                                        data: { selectedId: selectedUnitId, upgradeId: upgrade.id },
+                                        success: function () {
+                                            selectButton.text(selectButton.text() === 'Select' ? 'Unselect' : 'Select');
+                                        },
+                                        error: function () {
+                                            alert('Error toggling upgrade.');
+                                        }
+                                    });
+                                });
+                            listItem.append(selectButton);
+                            $('#upgrades-list').append(listItem);
+                        });
+                        $('#selectedUnitUpgrades').show();
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        console.log('Error:', textStatus, errorThrown);
+                        alert('Error fetching upgrades.');
+                    }
+                });
+            });
+
+            // Closing upgrades section
+            $('#closeUpgradesBtn').on('click', function () {
+                $('#selectedUnitUpgrades').hide();
+            });
+        });
+    </script>
 </head>
 <body>
 <h1>Warhammer Builder</h1>
@@ -207,7 +257,6 @@
 </div>
 
 <script th:inline="javascript">
-    /*<![CDATA[*/
     $(document).ready(function () {
         console.log('Document is ready');
 
@@ -224,9 +273,11 @@
                     $('#upgrades-list').empty();
                     $.each(data, function (index, upgrade) {
                         var listItem = $('<li>').text(upgrade.name);
-                        var selectButton = $('<button>').text('Select').addClass('select-upgrade-button');
-                        selectButton.data('upgrade-id', upgrade.id);
-                        selectButton.data('selected-unit-id', selectedUnitId);
+                        var selectButton = $('<button>')
+                            .text(upgrade.selected ? 'Unselect' : 'Select')
+                            .addClass('select-upgrade-button')
+                            .data('upgrade-id', upgrade.id)
+                            .data('selected-unit-id', selectedUnitId);
                         listItem.append(selectButton);
                         $('#upgrades-list').append(listItem);
                     });
@@ -235,17 +286,21 @@
                     $('.select-upgrade-button').on('click', function () {
                         var upgradeId = $(this).data('upgrade-id');
                         var selectedUnitId = $(this).data('selected-unit-id');
-                        console.log('Upgrade selected. Upgrade ID:', upgradeId, 'Selected Unit ID:', selectedUnitId);
+                        var isSelected = $(this).text() === 'Unselect';
+                        var url = isSelected ? '/removeUpgrade' : '/addUpgrade';
+                        var button = $(this);
+                        console.log(isSelected ? 'Unselecting upgrade' : 'Selecting upgrade');
 
                         $.ajax({
                             type: 'POST',
-                            url: '/units/' + selectedUnitId + '/upgrades/' + upgradeId + '/select',
+                            url: url,
+                            data: { selectedUnitId: selectedUnitId, upgradeId: upgradeId },
                             success: function () {
-                                alert('Upgrade selected successfully!');
+                                button.text(isSelected ? 'Select' : 'Unselect');
                             },
                             error: function (xhr, textStatus, errorThrown) {
                                 console.log('Error:', textStatus, errorThrown);
-                                alert('Error selecting upgrade.');
+                                alert('Error toggling upgrade.');
                             }
                         });
                     });
@@ -262,7 +317,6 @@
             $('#selectedUnitUpgrades').hide();
         });
     });
-    /*]]>*/
 </script>
 </body>
 </html>

@@ -20,6 +20,7 @@ public class UpgradeDTO {
     private Integer unitUpgradesId;
     private Double totalCost;
     private UpgradeRepository upgradeRepository;
+    private Integer selectedUnitId;
 
     public UpgradeDTO(Upgrade upgrade, UpgradeRepository upgradeRepository) {
         this.upgradeRepository = upgradeRepository;

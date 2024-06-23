@@ -28,4 +28,13 @@ public class    SelectedUnits {
                 .filter(unit -> unit.getSelectedId().equals(selectedId))
                 .findFirst();
     }
+
+    public double getUnitQuantityBySelectedId(Integer selectedId) {
+        for (Unit selectedUnit : selectedUnits) {
+            if (selectedUnit.getSelectedId().equals(selectedId)) {
+                return selectedUnit.getQuantity();
+            }
+        }
+        return 1;
+    }
 }

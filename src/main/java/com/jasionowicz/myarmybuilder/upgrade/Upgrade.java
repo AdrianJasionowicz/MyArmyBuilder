@@ -23,6 +23,7 @@ public class Upgrade {
     private double pointsCost;
     private Integer unitUpgradesId;
     private Double totalCost;
+    private Integer selectedUnitId;
     @ManyToOne
     @JoinColumn(name = "unit_id")
     @JsonBackReference
