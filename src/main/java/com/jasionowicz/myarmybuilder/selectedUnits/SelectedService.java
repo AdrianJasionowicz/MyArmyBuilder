@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -31,6 +32,7 @@ public class SelectedService {
     public Integer generateSelectedId() {
         return selectedUnits.getSelectedUnits().size() + 1;
     }
+
 
     public ResponseEntity<UnitDTO> addUnit(UnitDTO unitDTO) {
         int selectedId = generateSelectedId();
@@ -89,6 +91,9 @@ public class SelectedService {
         Unit unit = getBySelectedId(selectedId);
         if (unit != null) {
             selectedUpgrades.addUpgrade(upgrade, selectedId);
+            System.out.println("Upgrade added successfully: " + upgrade);
+        } else {
+            System.out.println("Unit not found for selectedId: " + selectedId);
         }
     }
 
@@ -99,15 +104,15 @@ public class SelectedService {
         }
     }
 
-    public void toggleUpgrade(Integer selectedId, Integer upgradeId) {
-        Unit unit = getBySelectedId(selectedId);
+    public void toggleUpgrade(Integer selectedUnitId, Integer upgradeId) {
+        Unit unit = getBySelectedId(selectedUnitId);
         if (unit != null) {
-            Upgrade upgrade = findUpgradeById(upgradeId);
+            Upgrade upgrade = upgradeService.getUpgradeById(upgradeId);
             if (upgrade != null) {
                 if (selectedUpgrades.getSelectedUpgrades().contains(upgrade)) {
-                    removeUpgrade(selectedId, upgradeId);
+                    removeUpgrade(selectedUnitId, upgradeId);
                 } else {
-                    addUpgrade(selectedId, upgrade);
+                    addUpgrade(selectedUnitId, upgrade);
                 }
             }
         }
@@ -119,24 +124,22 @@ public class SelectedService {
                 .findFirst()
                 .orElse(null);
     }
-    public double calculatePointsForUpgrades(Integer selectedId) {
-        long totalPoints = 0;
-        long unitQuantity = (long) selectedUnits.getUnitQuantityBySelectedId(selectedId);
-
-        for (Upgrade upgrade : selectedUpgrades.getSelectedUpgrades()) {
-            long cost = (long) upgrade.getPointsCost();
-            long quantity = upgrade.getQuantity();
-
-            if (quantity == 0) {
-                totalPoints += cost * unitQuantity; // Mnożenie kosztu przez ilość jednostek
-            } else {
-                totalPoints += cost;
-            }
+    public double calculateUpgradePoints(Integer selectedUnitId) {
+        Unit unit = getBySelectedId(selectedUnitId);
+        if (unit != null) {
+            double totalUpgradePoints = selectedUpgrades.getSelectedUpgrades().stream()
+                    .filter(upgrade -> selectedUpgrades.getSelectedUnitIds().contains(selectedUnitId)) // Sprawdź, czy ulepszenie dotyczy wybranej jednostki
+                    .mapToDouble(Upgrade::getPointsCost)
+                    .sum();
+            return totalUpgradePoints * unit.getQuantity();
         }
-        return totalPoints;
+        return 0;
     }
     public void removeUpgradeFromUnit(Integer selectedUnitId, Integer upgradeId) {
         selectedUpgrades.removeUpgrade(upgradeId);
     }
 
+    public List<Unit> getSelectedUnits() {
+        return selectedUnits.getSelectedUnits();
+    }
 }

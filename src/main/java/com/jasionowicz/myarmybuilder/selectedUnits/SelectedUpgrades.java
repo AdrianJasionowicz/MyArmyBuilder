@@ -4,7 +4,9 @@ import com.jasionowicz.myarmybuilder.selectedUnits.SelectedService;
 import com.jasionowicz.myarmybuilder.upgrade.Upgrade;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -15,16 +17,18 @@ import java.util.List;
 @Component
 public class SelectedUpgrades {
 
+    private final LocalContainerEntityManagerFactoryBean entityManager;
     private List<Upgrade> selectedUpgrades;
 
     private List<Integer> selectedUnitIds;
 
     private SelectedService selectedService;
 
-    public SelectedUpgrades(SelectedService selectedService) {
+    public SelectedUpgrades(SelectedService selectedService, LocalContainerEntityManagerFactoryBean entityManager) {
         this.selectedService = selectedService;
         this.selectedUpgrades = new ArrayList<>();
         this.selectedUnitIds = new ArrayList<>();
+        this.entityManager = entityManager;
     }
 
     public void addUpgrade(Upgrade upgrade, int selectedUnitId) {
@@ -45,4 +49,5 @@ public class SelectedUpgrades {
             }
         }
     }
+
 }

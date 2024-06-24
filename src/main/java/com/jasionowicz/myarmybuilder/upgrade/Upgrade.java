@@ -7,7 +7,6 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.stereotype.Component;
 
-@ToString
 @Getter
 @Setter
 @AllArgsConstructor

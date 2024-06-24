@@ -5,9 +5,10 @@
     import jakarta.persistence.*;
     import lombok.*;
 
+    import java.util.ArrayList;
     import java.util.List;
 
-    @ToString
+
     @Entity
     @Getter
     @Setter
@@ -29,9 +30,9 @@
         @OneToOne
         @JoinColumn(name = "unitStats_id")
         private UnitStats unitStats;
-        @OneToMany(mappedBy = "unit")
+        @OneToMany(mappedBy = "unit", fetch = FetchType.EAGER)
         @JsonManagedReference
-        private List<Upgrade> upgradesList;
+        private List<Upgrade> upgradesList = new ArrayList<>();
 
 
         public Unit(String name, double pointsCostPerUnit, int quantity, String unitType) {

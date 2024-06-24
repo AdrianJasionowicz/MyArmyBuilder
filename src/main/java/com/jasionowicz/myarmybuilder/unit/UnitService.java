@@ -1,6 +1,5 @@
 package com.jasionowicz.myarmybuilder.unit;
 
-import com.jasionowicz.myarmybuilder.armyComposition.ArmyCompositionRepository;
 import com.jasionowicz.myarmybuilder.upgrade.Upgrade;
 import com.jasionowicz.myarmybuilder.upgrade.UpgradeDTO;
 import com.jasionowicz.myarmybuilder.upgrade.UpgradeRepository;

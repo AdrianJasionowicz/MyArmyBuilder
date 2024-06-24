@@ -1,10 +1,13 @@
 package com.jasionowicz.myarmybuilder.armyComposition;
 
+import com.jasionowicz.myarmybuilder.selectedUnits.SelectedService;
 import com.jasionowicz.myarmybuilder.selectedUnits.SelectedUnits;
 import com.jasionowicz.myarmybuilder.unit.Unit;
 import com.jasionowicz.myarmybuilder.upgrade.Upgrade;
+import org.springframework.transaction.annotation.Transactional;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -18,20 +21,42 @@ public class ArmyCompositionService {
     private final SelectedUnits selectedUnits;
     @Getter
     private final ArmyComposition armyComposition = new ArmyComposition();
+    private SelectedService selectedService;
 
-    public ArmyCompositionService(SelectedUnits selectedUnits) {
+@Autowired
+    public ArmyCompositionService(SelectedUnits selectedUnits,SelectedService selectedService ) {
         this.selectedUnits = selectedUnits;
+        this.selectedService = selectedService;
+
     }
 
 
-
+    @Transactional(readOnly = true)
     public double calculateTotalPoints() {
-        double totalPoints = 0;
-        for (Unit unit : selectedUnits.getSelectedUnits()) {
+        List<Unit> selectedUnitsList = selectedService.getSelectedUnits();
+        double totalPoints = 0.0;
+
+        for (Unit unit : selectedUnitsList) {
+
             totalPoints += unit.getPointsCostPerUnit() * unit.getQuantity();
+
+            if (unit.getUpgradesList() != null) {
+                totalPoints += unit.getUpgradesList().stream()
+                        .filter(Upgrade::isSelected)
+                        .mapToDouble(upgrade -> {
+                            if (upgrade.getQuantity() == 1) {
+                                return upgrade.getPointsCost();
+                            } else {
+                                return upgrade.getPointsCost() * upgrade.getQuantity();
+                            }
+                        })
+                        .sum();
+            }
         }
+
         return totalPoints;
     }
+
 
     private double calculateUpgradePoints(Unit unit) {
         double upgradePoints = 0;

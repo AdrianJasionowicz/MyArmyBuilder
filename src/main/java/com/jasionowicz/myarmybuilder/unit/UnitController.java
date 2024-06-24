@@ -1,5 +1,7 @@
 package com.jasionowicz.myarmybuilder.unit;
 
+import com.jasionowicz.myarmybuilder.selectedUnits.SelectedUpgrades;
+import com.jasionowicz.myarmybuilder.upgrade.Upgrade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,10 +12,12 @@ import java.util.Optional;
 @RequestMapping("/units")
 public class UnitController {
 
+    private SelectedUpgrades selectedUpgrades;
     @Autowired
     private final UnitService unitService;
 
-    public UnitController(UnitService unitService) {
+    public UnitController(SelectedUpgrades selectedUpgrades, UnitService unitService) {
+        this.selectedUpgrades = selectedUpgrades;
         this.unitService = unitService;
     }
 
@@ -49,5 +53,8 @@ public class UnitController {
     public void deleteUnit(@PathVariable Integer id) {
         unitService.deleteById(id);
     }
-
+    @GetMapping("/showMe")
+    public List<Upgrade> showAll() {
+        return selectedUpgrades.getSelectedUpgrades();
+    }
 }

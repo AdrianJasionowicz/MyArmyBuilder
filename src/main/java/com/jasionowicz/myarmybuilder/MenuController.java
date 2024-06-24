@@ -1,10 +1,10 @@
 package com.jasionowicz.myarmybuilder;
 
 import com.jasionowicz.myarmybuilder.armyComposition.ArmyComposition;
-import com.jasionowicz.myarmybuilder.armyComposition.ArmyCompositionRepository;
 import com.jasionowicz.myarmybuilder.armyComposition.ArmyCompositionService;
 import com.jasionowicz.myarmybuilder.selectedUnits.SelectedService;
 import com.jasionowicz.myarmybuilder.selectedUnits.SelectedUnits;
+import com.jasionowicz.myarmybuilder.selectedUnits.SelectedUpgrades;
 import com.jasionowicz.myarmybuilder.unit.Unit;
 import com.jasionowicz.myarmybuilder.unit.UnitDTO;
 import com.jasionowicz.myarmybuilder.unit.UnitRepository;
@@ -30,7 +30,6 @@ public class MenuController {
     private final SelectedService selectedService;
     private final UnitRepository unitRepository;
     private final UpgradesService upgradesService;
-    private final ArmyCompositionRepository armyCompositionRepository;
     private final ArmyComposition armyComposition;
     private final ArmyCompositionService armyCompositionService;
     private final UnitService unitService;
@@ -38,10 +37,9 @@ public class MenuController {
     private double pointsRestriction = 0;
 
     @Autowired
-    public MenuController(UnitRepository unitRepository, UpgradesService upgradesService, ArmyCompositionRepository armyCompositionRepository, ArmyComposition armyComposition, ArmyCompositionService armyCompositionService, UnitService unitService, SelectedUnits selectedUnits, SelectedService selectedService) {
+    public MenuController(SelectedUpgrades selectedUpgrades, UnitRepository unitRepository, UpgradesService upgradesService, ArmyComposition armyComposition, ArmyCompositionService armyCompositionService, UnitService unitService, SelectedUnits selectedUnits, SelectedService selectedService) {
         this.unitRepository = unitRepository;
         this.upgradesService = upgradesService;
-        this.armyCompositionRepository = armyCompositionRepository;
         this.armyComposition = armyComposition;
         this.armyCompositionService = armyCompositionService;
         this.unitService = unitService;
@@ -128,19 +126,34 @@ public class MenuController {
     }
 
     @PostMapping("/addUpgrade")
-    public ResponseEntity<String> toggleUpgradeSelection(@RequestParam Integer selectedUnitId, @RequestParam Integer upgradeId) {
+    public ResponseEntity<String> addUpgrade(@RequestParam Integer selectedUnitId, @RequestParam Integer upgradeId) {
         try {
-            selectedService.toggleUpgrade(selectedUnitId, upgradeId);
-            return ResponseEntity.ok("Upgrade toggled successfully");
+            Upgrade upgrade = upgradesService.getUpgradeById(upgradeId);
+            if (upgrade != null) {
+                upgrade.setSelectedUnitId(selectedUnitId);
+                selectedService.addUpgrade(selectedUnitId, upgrade);
+
+                double totalPoints = armyCompositionService.calculateTotalPoints();
+
+                return ResponseEntity.ok("Upgrade added successfully. Total points: " + totalPoints);
+            } else {
+                return ResponseEntity.notFound().build();
+            }
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error toggling upgrade: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error adding upgrade: " + e.getMessage());
         }
     }
 
     @PostMapping("/removeUpgrade")
     public ResponseEntity<String> removeUpgrade(@RequestParam Integer selectedUnitId, @RequestParam Integer upgradeId) {
-        selectedService.removeUpgrade(selectedUnitId, upgradeId);
-        return ResponseEntity.ok("Upgrade removed");
+        try {
+            selectedService.removeUpgrade(selectedUnitId, upgradeId);
+            double totalPoints = armyCompositionService.calculateTotalPoints(); // Aktualizacja całkowitych punktów
+            return ResponseEntity.ok("Upgrade removed successfully. Total points: " + totalPoints);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error removing upgrade: " + e.getMessage());
+        }
     }
 
     @PostMapping("/resetPoints")
@@ -189,5 +202,7 @@ public class MenuController {
 
         return utilizedPointsByType;
     }
+
+
 
 }
