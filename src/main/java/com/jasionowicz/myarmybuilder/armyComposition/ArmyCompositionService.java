@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Getter
 @Setter
@@ -23,8 +24,8 @@ public class ArmyCompositionService {
     private final ArmyComposition armyComposition = new ArmyComposition();
     private SelectedService selectedService;
 
-@Autowired
-    public ArmyCompositionService(SelectedUnits selectedUnits,SelectedService selectedService ) {
+    @Autowired
+    public ArmyCompositionService(SelectedUnits selectedUnits, SelectedService selectedService) {
         this.selectedUnits = selectedUnits;
         this.selectedService = selectedService;
 
@@ -37,7 +38,6 @@ public class ArmyCompositionService {
         double totalPoints = 0.0;
 
         for (Unit unit : selectedUnitsList) {
-
             totalPoints += unit.getPointsCostPerUnit() * unit.getQuantity();
 
             if (unit.getUpgradesList() != null) {
@@ -54,23 +54,36 @@ public class ArmyCompositionService {
             }
         }
 
+        for (Unit unit : selectedUnitsList) {
+            List<Upgrade> upgradesList = unit.getUpgradesList();
+            if (upgradesList != null && unit.getId() < upgradesList.size()) {
+                if (upgradesList.get(unit.getId()).isSelected()) {
+                    totalPoints += calculateUpgradePoints(unit.getSelectedId());
+                }
+            }
+        }
+
         return totalPoints;
     }
 
-
-    private double calculateUpgradePoints(Unit unit) {
+    private double calculateUpgradePoints(Integer selectedId) {
         double upgradePoints = 0;
-        for (Upgrade upgrade : unit.getUpgradesList()) {
-            if (upgrade.isSelected()) {
-                if (upgrade.getQuantity() == 1) {
-                    upgradePoints += upgrade.getPointsCost();
-                } else {
-                    upgradePoints += upgrade.getPointsCost() * unit.getQuantity();
+        Optional<Unit> selectedUnit = Optional.ofNullable(selectedService.getBySelectedId(selectedId));
+        if (selectedUnit.isPresent()) {
+            for (Upgrade upgrade : selectedUnit.get().getUpgradesList()) {
+                String unitType = selectedUnit.get().getUnitType();
+                if (upgrade.isSelected()) {
+                    if (upgrade.getQuantity() == 1) {
+                        upgradePoints += upgrade.getPointsCost();
+                    } else {
+                        upgradePoints += upgrade.getPointsCost() * selectedUnit.get().getQuantity();
+                    }
                 }
             }
         }
         return upgradePoints;
     }
+
 
     public void resetPoints() {
         armyComposition.setTotalPoints(0);
@@ -91,6 +104,7 @@ public class ArmyCompositionService {
             double unitPoints = unit.getPointsCostPerUnit() * unit.getQuantity();
             pointsByType.put(unitType, pointsByType.getOrDefault(unitType, 0.0) + unitPoints);
         }
+
 
         return pointsByType;
     }

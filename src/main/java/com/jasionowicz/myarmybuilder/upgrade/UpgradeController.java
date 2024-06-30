@@ -1,7 +1,6 @@
 package com.jasionowicz.myarmybuilder.upgrade;
 
 import com.jasionowicz.myarmybuilder.selectedUnits.SelectedUnits;
-import com.jasionowicz.myarmybuilder.unit.Unit;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

@@ -1,16 +1,14 @@
 package com.jasionowicz.myarmybuilder.selectedUnits;
 
-import com.jasionowicz.myarmybuilder.selectedUnits.SelectedUnits;
-import com.jasionowicz.myarmybuilder.selectedUnits.SelectedUpgrades;
 import com.jasionowicz.myarmybuilder.unit.Unit;
 import com.jasionowicz.myarmybuilder.unit.UnitDTO;
 import com.jasionowicz.myarmybuilder.upgrade.Upgrade;
+import com.jasionowicz.myarmybuilder.upgrade.UpgradeDTO;
 import com.jasionowicz.myarmybuilder.upgrade.UpgradesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,7 +22,7 @@ public class SelectedService {
     private SelectedUnits selectedUnits;
 
     @Autowired
-    private SelectedUpgrades selectedUpgrades;
+    private UpgradeDTO upgradeDTO;
 
     public SelectedService() {
     }
@@ -87,59 +85,110 @@ public class SelectedService {
         return ResponseEntity.badRequest().body("Unit not found or quantity is zero");
     }
 
-    public void addUpgrade(Integer selectedId, Upgrade upgrade) {
-        Unit unit = getBySelectedId(selectedId);
-        if (unit != null) {
-            selectedUpgrades.addUpgrade(upgrade, selectedId);
-            System.out.println("Upgrade added successfully: " + upgrade);
+    public ResponseEntity<?> addUpgrade(Integer selectedId, Upgrade upgrade) {
+        Optional<Unit> optionalUnit = selectedUnits.findBySelectedId(selectedId);
+        if (optionalUnit.isPresent()) {
+            Unit unit = optionalUnit.get();
+            List<Upgrade> upgrades = unit.getUpgradesList();
+
+
+            boolean isWeaponTeamThere = false;
+            if (checkWeaponTeams(selectedId)) {
+                isWeaponTeamThere = true;
+                return ResponseEntity.badRequest().body("Cannot take more than one weapon team");
+            }
+
+            boolean upgradeExists = false;
+            for (Upgrade existingUpgrade : upgrades) {
+                if (existingUpgrade.getId().equals(upgrade.getId())) {
+                    existingUpgrade.setSelected(true);
+                    upgradeExists = true;
+                    break;
+                }
+            }
+            if (!upgradeExists) {
+                upgrade.setSelected(true);
+                upgrades.add(upgrade);
+            }
+
+            return ResponseEntity.ok("Upgrade added successfully");
+        } else {
+            System.out.println("Unit not found for selectedId: " + selectedId);
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+
+    public void removeUpgrade(Integer selectedId, Integer upgradeId) {
+        Optional<Unit> optionalUnit = selectedUnits.findBySelectedId(selectedId);
+        if (optionalUnit.isPresent()) {
+            Unit unit = optionalUnit.get();
+            List<Upgrade> upgrades = unit.getUpgradesList();
+            for (Upgrade existingUpgrade : upgrades) {
+                if (existingUpgrade.getId().equals(upgradeId)) {
+                    existingUpgrade.setSelected(false);
+                    break;
+                }
+            }
         } else {
             System.out.println("Unit not found for selectedId: " + selectedId);
         }
     }
 
-    public void removeUpgrade(Integer selectedId, Integer upgradeId) {
-        Unit unit = getBySelectedId(selectedId);
-        if (unit != null) {
-            selectedUpgrades.removeUpgrade(upgradeId);
-        }
-    }
-
-    public void toggleUpgrade(Integer selectedUnitId, Integer upgradeId) {
-        Unit unit = getBySelectedId(selectedUnitId);
-        if (unit != null) {
-            Upgrade upgrade = upgradeService.getUpgradeById(upgradeId);
-            if (upgrade != null) {
-                if (selectedUpgrades.getSelectedUpgrades().contains(upgrade)) {
-                    removeUpgrade(selectedUnitId, upgradeId);
-                } else {
-                    addUpgrade(selectedUnitId, upgrade);
-                }
-            }
-        }
-    }
-
-    private Upgrade findUpgradeById(Integer upgradeId) {
-        return selectedUpgrades.getSelectedUpgrades().stream()
-                .filter(upgrade -> upgrade.getId().equals(upgradeId))
-                .findFirst()
-                .orElse(null);
-    }
-    public double calculateUpgradePoints(Integer selectedUnitId) {
-        Unit unit = getBySelectedId(selectedUnitId);
-        if (unit != null) {
-            double totalUpgradePoints = selectedUpgrades.getSelectedUpgrades().stream()
-                    .filter(upgrade -> selectedUpgrades.getSelectedUnitIds().contains(selectedUnitId)) // Sprawdź, czy ulepszenie dotyczy wybranej jednostki
-                    .mapToDouble(Upgrade::getPointsCost)
-                    .sum();
-            return totalUpgradePoints * unit.getQuantity();
-        }
-        return 0;
-    }
-    public void removeUpgradeFromUnit(Integer selectedUnitId, Integer upgradeId) {
-        selectedUpgrades.removeUpgrade(upgradeId);
-    }
-
     public List<Unit> getSelectedUnits() {
         return selectedUnits.getSelectedUnits();
     }
+
+    public boolean checkWeaponTeams(Integer selectedId) {
+        List<Upgrade> getUpgrades = selectedUnits.upgradesList(selectedId);
+        for (Upgrade getUpgrade : getUpgrades) {
+            if (getUpgrade.isSelected() && getUpgrade.getUpgradeType().equals("Weapon team")) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public ResponseEntity checkLordsUpgrades(Integer selectedId) {
+        List<Upgrade> upgradeList = selectedUnits.upgradesList(selectedId);
+        double upgradeLimit = 0;
+        for (Upgrade upgrade : upgradeList) {
+            if (upgrade.isSelected() && upgrade.getUpgradeType().equals("Magic weapon")) {
+                upgradeLimit += upgrade.getPointsCost();
+            }
+
+        }
+        if (upgradeLimit > 100) {
+            return ResponseEntity.badRequest().body("Upgrade limit exceeded");
+        }
+        return ResponseEntity.ok("Done");
+    }
+
+    public boolean checkChieftainStandardBanner(Integer selectedId) {
+        List<Upgrade> checkUpgrades = selectedUnits.upgradesList(selectedId);
+        boolean standardBannerfound = false;
+        for (Upgrade checkUpgrade : checkUpgrades) {
+            if (checkUpgrade.isSelected() && checkUpgrade.getUpgradeType().equals("Standard Banner")) {
+                standardBannerfound = true;
+                return standardBannerfound;
+            }
+        }
+        return standardBannerfound;
+    }
+
+    public ResponseEntity checkHeroUpgrades(Integer selectedId) {
+        List<Upgrade> checkUpgrades = selectedUnits.upgradesList(selectedId);
+        double upgradeLimit = 0;
+        for (Upgrade checkUpgrade : checkUpgrades) {
+            if (checkUpgrade.isSelected() && checkUpgrade.getUpgradeType().equals("Magic Weapon")) {
+                upgradeLimit += checkUpgrade.getPointsCost();
+            }
+        }
+        if (upgradeLimit > 100) {
+            return ResponseEntity.badRequest().body("Upgrade limit exceeded");
+        }
+        return ResponseEntity.ok("Done");
+    }
+
+
 }

@@ -4,7 +4,6 @@ import com.jasionowicz.myarmybuilder.armyComposition.ArmyComposition;
 import com.jasionowicz.myarmybuilder.armyComposition.ArmyCompositionService;
 import com.jasionowicz.myarmybuilder.selectedUnits.SelectedService;
 import com.jasionowicz.myarmybuilder.selectedUnits.SelectedUnits;
-import com.jasionowicz.myarmybuilder.selectedUnits.SelectedUpgrades;
 import com.jasionowicz.myarmybuilder.unit.Unit;
 import com.jasionowicz.myarmybuilder.unit.UnitDTO;
 import com.jasionowicz.myarmybuilder.unit.UnitRepository;
@@ -18,10 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Controller
@@ -37,7 +33,7 @@ public class MenuController {
     private double pointsRestriction = 0;
 
     @Autowired
-    public MenuController(SelectedUpgrades selectedUpgrades, UnitRepository unitRepository, UpgradesService upgradesService, ArmyComposition armyComposition, ArmyCompositionService armyCompositionService, UnitService unitService, SelectedUnits selectedUnits, SelectedService selectedService) {
+    public MenuController(UnitRepository unitRepository, UpgradesService upgradesService, ArmyComposition armyComposition, ArmyCompositionService armyCompositionService, UnitService unitService, SelectedUnits selectedUnits, SelectedService selectedService) {
         this.unitRepository = unitRepository;
         this.upgradesService = upgradesService;
         this.armyComposition = armyComposition;
@@ -149,7 +145,7 @@ public class MenuController {
     public ResponseEntity<String> removeUpgrade(@RequestParam Integer selectedUnitId, @RequestParam Integer upgradeId) {
         try {
             selectedService.removeUpgrade(selectedUnitId, upgradeId);
-            double totalPoints = armyCompositionService.calculateTotalPoints(); // Aktualizacja całkowitych punktów
+            double totalPoints = armyCompositionService.calculateTotalPoints();
             return ResponseEntity.ok("Upgrade removed successfully. Total points: " + totalPoints);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error removing upgrade: " + e.getMessage());
@@ -203,6 +199,25 @@ public class MenuController {
         return utilizedPointsByType;
     }
 
+    @GetMapping("/{selectedId}/selectedUpgrades")
+    public ResponseEntity<List<Upgrade>> getSelectedUpgrades(@PathVariable Integer selectedId) {
+        Unit unit = selectedService.getBySelectedId(selectedId);
+
+        if (unit == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        List<Upgrade> selectedUpgrades = unit.getUpgradesList();
+        List<Upgrade> selectedUpgradesList = new ArrayList<>();
+
+        for (Upgrade selectedUpgrade : selectedUpgrades) {
+            if (selectedUpgrade.isSelected()) {
+                selectedUpgradesList.add(selectedUpgrade);
+            }
+        }
+
+        return ResponseEntity.ok(selectedUpgradesList);
+    }
 
 
 }

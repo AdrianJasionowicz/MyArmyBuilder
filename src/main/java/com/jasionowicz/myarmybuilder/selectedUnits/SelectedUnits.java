@@ -1,15 +1,17 @@
 package com.jasionowicz.myarmybuilder.selectedUnits;
 
 import com.jasionowicz.myarmybuilder.unit.Unit;
+import com.jasionowicz.myarmybuilder.upgrade.Upgrade;
 import lombok.Getter;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
 @Getter
 @Component
-public class    SelectedUnits {
+public class SelectedUnits {
     private final List<Unit> selectedUnits = new ArrayList<>();
 
     public void addUnit(Unit unit) {
@@ -38,4 +40,11 @@ public class    SelectedUnits {
         }
         return 1;
     }
+
+    public List<Upgrade> upgradesList(Integer selectedId) {
+        Optional<Unit> selectedUnit = findBySelectedId(selectedId);
+        return selectedUnit.get().getUpgradesList();
+    }
+
+
 }

@@ -922,3 +922,35 @@ select u1_0.id,u1_0.min_quantity,u1_0.name,u1_0.nation,u1_0.points_cost_per_unit
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1354)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1343)
 	at com.jasionowicz.myarmybuilder.MyArmyBuilderApplication.main(MyArmyBuilderApplication.java:24)
+2024-06-30 11:35:27.561854+02:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLDataException: Błąd konwersji danych "'' (UPGRADE: ""TOTAL_COST"" FLOAT(53))"
+Data conversion error converting "'' (UPGRADE: ""TOTAL_COST"" FLOAT(53))"; SQL statement:
+INSERT INTO "PUBLIC"."UPGRADE"("ID","POINTS_COST","QUANTITY","SELECTED","UNIT_UPGRADES_ID","NAME","UNITUPGRADESID","UNIT_ID","TOTAL_COST","SELECTED_UNIT_ID","UPGRADE_TYPE")VALUES(?,?,?,?,?,?,?,?,?,?,?) [22018-224]
+2024-06-30 11:35:27.562358+02:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLDataException: Błąd konwersji danych "'' (UPGRADE: ""TOTAL_COST"" FLOAT(53))"
+Data conversion error converting "'' (UPGRADE: ""TOTAL_COST"" FLOAT(53))"; SQL statement:
+INSERT INTO "PUBLIC"."UPGRADE"("ID","POINTS_COST","QUANTITY","SELECTED","UNIT_UPGRADES_ID","NAME","UNITUPGRADESID","UNIT_ID","TOTAL_COST","SELECTED_UNIT_ID","UPGRADE_TYPE")VALUES(?,?,?,?,?,?,?,?,?,?,?) [22018-224]
+2024-06-30 11:45:06.117137+02:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLDataException: Błąd konwersji danych "'' (UPGRADE: ""UNITUPGRADESID"" INTEGER)"
+Data conversion error converting "'' (UPGRADE: ""UNITUPGRADESID"" INTEGER)"; SQL statement:
+INSERT INTO "PUBLIC"."UPGRADE"("ID","POINTS_COST","QUANTITY","SELECTED","UNIT_UPGRADES_ID","NAME","UNITUPGRADESID","UNIT_ID","TOTAL_COST","SELECTED_UNIT_ID","UPGRADE_TYPE")VALUES(?,?,?,?,?,?,?,?,?,?,?) [22018-224]
+2024-06-30 11:45:06.117137+02:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLDataException: Błąd konwersji danych "'' (UPGRADE: ""UNITUPGRADESID"" INTEGER)"
+Data conversion error converting "'' (UPGRADE: ""UNITUPGRADESID"" INTEGER)"; SQL statement:
+INSERT INTO "PUBLIC"."UPGRADE"("ID","POINTS_COST","QUANTITY","SELECTED","UNIT_UPGRADES_ID","NAME","UNITUPGRADESID","UNIT_ID","TOTAL_COST","SELECTED_UNIT_ID","UPGRADE_TYPE")VALUES(?,?,?,?,?,?,?,?,?,?,?) [22018-224]
+2024-06-30 11:48:05.943731+02:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLDataException: Błąd konwersji danych "'' (UPGRADE: ""UNIT_UPGRADES_ID"" INTEGER)"
+Data conversion error converting "'' (UPGRADE: ""UNIT_UPGRADES_ID"" INTEGER)"; SQL statement:
+INSERT INTO "PUBLIC"."UPGRADE"("ID","POINTS_COST","QUANTITY","SELECTED","UNIT_UPGRADES_ID","NAME","UNITUPGRADESID","UNIT_ID","TOTAL_COST","SELECTED_UNIT_ID","UPGRADE_TYPE")VALUES(?,?,?,?,?,?,?,?,?,?,?) [22018-224]
+2024-06-30 11:48:05.943731+02:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLDataException: Błąd konwersji danych "'' (UPGRADE: ""UNIT_UPGRADES_ID"" INTEGER)"
+Data conversion error converting "'' (UPGRADE: ""UNIT_UPGRADES_ID"" INTEGER)"; SQL statement:
+INSERT INTO "PUBLIC"."UPGRADE"("ID","POINTS_COST","QUANTITY","SELECTED","UNIT_UPGRADES_ID","NAME","UNITUPGRADESID","UNIT_ID","TOTAL_COST","SELECTED_UNIT_ID","UPGRADE_TYPE")VALUES(?,?,?,?,?,?,?,?,?,?,?) [22018-224]
+2024-06-30 14:21:12.730702+02:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLDataException: Błąd konwersji danych "'' (UPGRADE: ""SELECTED_UNIT_ID"" INTEGER)"
+Data conversion error converting "'' (UPGRADE: ""SELECTED_UNIT_ID"" INTEGER)"; SQL statement:
+INSERT INTO "PUBLIC"."UPGRADE"("ID","POINTS_COST","QUANTITY","SELECTED","UNIT_UPGRADES_ID","NAME","UNITUPGRADESID","UNIT_ID","TOTAL_COST","SELECTED_UNIT_ID","UPGRADE_TYPE","DESCRIPTION")VALUES(?,?,?,?,?,?,?,?,?,?,?,?) [22018-224]
+2024-06-30 14:21:12.752378+02:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLDataException: Błąd konwersji danych "'' (UPGRADE: ""SELECTED_UNIT_ID"" INTEGER)"
+Data conversion error converting "'' (UPGRADE: ""SELECTED_UNIT_ID"" INTEGER)"; SQL statement:
+INSERT INTO "PUBLIC"."UPGRADE"("ID","POINTS_COST","QUANTITY","SELECTED","UNIT_UPGRADES_ID","NAME","UNITUPGRADESID","UNIT_ID","TOTAL_COST","SELECTED_UNIT_ID","UPGRADE_TYPE","DESCRIPTION")VALUES(?,?,?,?,?,?,?,?,?,?,?,?) [22018-224]

@@ -5,8 +5,6 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.jasionowicz.myarmybuilder.unit.Unit;
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.stereotype.Component;
-
 @Getter
 @Setter
 @AllArgsConstructor
@@ -23,6 +21,8 @@ public class Upgrade {
     private Integer unitUpgradesId;
     private Double totalCost;
     private Integer selectedUnitId;
+    private String upgradeType;
+    private String description;
     @ManyToOne
     @JoinColumn(name = "unit_id")
     @JsonBackReference
