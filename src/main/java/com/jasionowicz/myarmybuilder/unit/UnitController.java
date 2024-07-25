@@ -19,12 +19,6 @@ public class UnitController {
     }
 
 
-    @PostMapping("/addUnits")
-    public void addUnit(@RequestParam("name") String name, @RequestParam("pointsCostPerUnit") Double pointsCostPerUnit, @RequestParam("quantity") int quantity, @RequestParam("minQuantity") int minQuantity, @RequestParam("unitType") String unitType) {
-        UnitDTO unitDTO = new UnitDTO(name, pointsCostPerUnit, quantity, minQuantity, unitType);
-        System.out.println("Adding unit: " + unitDTO.getName() + " with minimum quantity: " + minQuantity);
-        unitService.add(unitDTO);
-    }
 
     @GetMapping("/{id}")
     public Optional<Optional> getUnitById(@PathVariable Integer id) {

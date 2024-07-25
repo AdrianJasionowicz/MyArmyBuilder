@@ -15,12 +15,7 @@ public class Upgrade {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
-    private int quantity;
-    private boolean selected;
     private double pointsCost;
-    private Integer unitUpgradesId;
-    private Double totalCost;
-    private Integer selectedUnitId;
     private String upgradeType;
     private String description;
     @ManyToOne
@@ -32,10 +27,10 @@ public class Upgrade {
         this.name = name;
     }
 
-    public Upgrade(String name, int quantity, double pointsCost, Integer unitUpgradesId) {
+    public Upgrade(String name, double pointsCost) {
         this.name = name;
-        this.quantity = quantity;
         this.pointsCost = pointsCost;
-        this.unitUpgradesId = unitUpgradesId;
     }
+
+
 }

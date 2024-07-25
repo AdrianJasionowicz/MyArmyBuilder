@@ -1,88 +1,69 @@
 package com.jasionowicz.myarmybuilder.armyComposition;
 
 import com.jasionowicz.myarmybuilder.selectedUnits.SelectedService;
-import com.jasionowicz.myarmybuilder.selectedUnits.SelectedUnits;
-import com.jasionowicz.myarmybuilder.unit.Unit;
-import com.jasionowicz.myarmybuilder.upgrade.Upgrade;
-import org.springframework.transaction.annotation.Transactional;
+import com.jasionowicz.myarmybuilder.selectedUnits.SelectedUnit;
+import com.jasionowicz.myarmybuilder.selectedUnits.SelectedUnitRepository;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 @Getter
 @Setter
 @Service
 public class ArmyCompositionService {
-    private final SelectedUnits selectedUnits;
+    private final SelectedUnit selectedUnit;
     @Getter
     private final ArmyComposition armyComposition = new ArmyComposition();
+    private final SelectedUnitRepository selectedUnitRepository;
     private SelectedService selectedService;
 
     @Autowired
-    public ArmyCompositionService(SelectedUnits selectedUnits, SelectedService selectedService) {
-        this.selectedUnits = selectedUnits;
+    public ArmyCompositionService(SelectedUnit selectedUnit, SelectedService selectedService, SelectedUnitRepository selectedUnitRepository) {
+        this.selectedUnit = selectedUnit;
         this.selectedService = selectedService;
-
+        this.selectedUnitRepository = selectedUnitRepository;
     }
 
 
     @Transactional(readOnly = true)
     public double calculateTotalPoints() {
-        List<Unit> selectedUnitsList = selectedService.getSelectedUnits();
+        List<SelectedUnit> selectedUnitsList = selectedUnitRepository.findAll();
         double totalPoints = 0.0;
-
-        for (Unit unit : selectedUnitsList) {
-            totalPoints += unit.getPointsCostPerUnit() * unit.getQuantity();
-
-            if (unit.getUpgradesList() != null) {
-                totalPoints += unit.getUpgradesList().stream()
-                        .filter(Upgrade::isSelected)
-                        .mapToDouble(upgrade -> {
-                            if (upgrade.getQuantity() == 1) {
-                                return upgrade.getPointsCost();
-                            } else {
-                                return upgrade.getPointsCost() * upgrade.getQuantity();
-                            }
-                        })
-                        .sum();
-            }
+        for (SelectedUnit units : selectedUnitsList) {
+          totalPoints +=   units.getQuantity() * units.getUnit().getPointsCostPerUnit();
         }
 
-        for (Unit unit : selectedUnitsList) {
-            List<Upgrade> upgradesList = unit.getUpgradesList();
-            if (upgradesList != null && unit.getId() < upgradesList.size()) {
-                if (upgradesList.get(unit.getId()).isSelected()) {
-                    totalPoints += calculateUpgradePoints(unit.getSelectedId());
-                }
-            }
-        }
+
 
         return totalPoints;
     }
 
-    private double calculateUpgradePoints(Integer selectedId) {
-        double upgradePoints = 0;
-        Optional<Unit> selectedUnit = Optional.ofNullable(selectedService.getBySelectedId(selectedId));
-        if (selectedUnit.isPresent()) {
-            for (Upgrade upgrade : selectedUnit.get().getUpgradesList()) {
-                String unitType = selectedUnit.get().getUnitType();
-                if (upgrade.isSelected()) {
-                    if (upgrade.getQuantity() == 1) {
-                        upgradePoints += upgrade.getPointsCost();
-                    } else {
-                        upgradePoints += upgrade.getPointsCost() * selectedUnit.get().getQuantity();
-                    }
-                }
-            }
-        }
-        return upgradePoints;
-    }
+
+
+//    private double calculateUpgradePoints(Integer id) {
+//        double upgradePoints = 0;
+//        Optional<SelectedUnit> selectedUnit = selectedUnitRepository.findById(id);
+//        if (selectedUnit.isPresent()) {
+//            SelectedUnit selectedUnitz = selectedUnit.get();
+//            for (SelectedUpgrades selectedUpgrades : selectedUnit.get().getSelectedUpgrades()) {
+//                if (selectedUpgrades.isSelected()) {
+//                    if (selectedUpgrades.getQuantity() == 1) {
+//                        upgradePoints += selectedUpgrades.getPointsCost();
+//                    } else {
+//                        upgradePoints += selectedUpgrades.getPointsCost() * selectedUnitz.getQuantity();
+//                    }
+//                }
+//            }
+//        }
+//        return upgradePoints;
+//    }
+
 
 
     public void resetPoints() {
@@ -95,17 +76,19 @@ public class ArmyCompositionService {
     }
 
     public Map<String, Double> calculateDedicatedPoints() {
-        List<Unit> selectedUnitsList = selectedUnits.getSelectedUnits();
+        List<SelectedUnit> selectedUnitsList = selectedUnitRepository.findAll();
 
         Map<String, Double> pointsByType = new HashMap<>();
 
-        for (Unit unit : selectedUnitsList) {
-            String unitType = unit.getUnitType();
-            double unitPoints = unit.getPointsCostPerUnit() * unit.getQuantity();
+        for (SelectedUnit selectedUnit : selectedUnitsList) {
+            String unitType = selectedUnit.getUnit().getUnitType();
+            double unitPoints = selectedUnit.getUnit().getPointsCostPerUnit() * selectedUnit.getQuantity();
+
             pointsByType.put(unitType, pointsByType.getOrDefault(unitType, 0.0) + unitPoints);
         }
 
-
         return pointsByType;
     }
+
+
 }

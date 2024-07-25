@@ -1,5 +1,7 @@
 package com.jasionowicz.myarmybuilder.upgrade;
 
+import com.jasionowicz.myarmybuilder.selectedUpgrades.SelectedUpgrades;
+import com.jasionowicz.myarmybuilder.selectedUpgrades.SelectedUpgradesRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
@@ -7,17 +9,15 @@ import java.util.List;
 public class UpgradesService {
 
     private final UpgradeRepository upgradeRepository;
-
+    private SelectedUpgradesRepository selectedUpgradesRepository;
     public UpgradesService(UpgradeRepository upgradeRepository) {
         this.upgradeRepository = upgradeRepository;
     }
 
-    public List<Upgrade> findUpgradesByUnitId(Integer unitId) {
-        return upgradeRepository.findAllByUnitUpgradesId(unitId);
-    }
+    public List<Upgrade> getUnitUpgradesById(Integer id) {
+        List<Upgrade> upgrades = upgradeRepository.findAllByUnitId(id);
 
-    public List<Upgrade> findAll() {
-        return upgradeRepository.findAll();
+        return upgrades;
     }
 
     public void addUpgrade(Upgrade upgrade) {
@@ -35,9 +35,7 @@ public class UpgradesService {
     public void updateUpgrade(Integer id, Upgrade upgrade) {
         Upgrade existingUpgrade = upgradeRepository.findById(id).orElseThrow(() -> new RuntimeException("Upgrade not found"));
         existingUpgrade.setName(upgrade.getName());
-        existingUpgrade.setQuantity(upgrade.getQuantity());
         existingUpgrade.setPointsCost(upgrade.getPointsCost());
-        existingUpgrade.setSelected(upgrade.isSelected());
         upgradeRepository.save(existingUpgrade);
     }
 }

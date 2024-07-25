@@ -1,193 +1,84 @@
 package com.jasionowicz.myarmybuilder.selectedUnits;
 
-import com.jasionowicz.myarmybuilder.unit.Unit;
-import com.jasionowicz.myarmybuilder.unit.UnitDTO;
-import com.jasionowicz.myarmybuilder.upgrade.Upgrade;
-import com.jasionowicz.myarmybuilder.upgrade.UpgradeDTO;
-import com.jasionowicz.myarmybuilder.upgrade.UpgradesService;
+import com.jasionowicz.myarmybuilder.selectedUpgrades.SelectedUpgrades;
+import com.jasionowicz.myarmybuilder.selectedUpgrades.SelectedUpgradesDTO;
+import com.jasionowicz.myarmybuilder.selectedUpgrades.SelectedUpgradesRepository;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class SelectedService {
 
-    @Autowired
-    private UpgradesService upgradeService;
 
     @Autowired
-    private SelectedUnits selectedUnits;
-
+    private SelectedUpgradesRepository selectedUpgradesRepository;
     @Autowired
-    private UpgradeDTO upgradeDTO;
+    private SelectedUnitRepository selectedUnitRepository;
+    @Autowired
+    private SelectedUnit selectedUnit;
+    private SelectedUnitDTO selectedUnitDTO;
+    @Autowired
+    private SelectedUpgrades selectedUpgrades;
 
     public SelectedService() {
     }
 
-    public Integer generateSelectedId() {
-        return selectedUnits.getSelectedUnits().size() + 1;
+    @PostConstruct
+    public void clear() {
+        selectedUnitRepository.deleteAll();
     }
 
 
-    public ResponseEntity<UnitDTO> addUnit(UnitDTO unitDTO) {
-        int selectedId = generateSelectedId();
-        unitDTO.setSelectedId(selectedId);
-        unitDTO.getUnit().setSelectedId(selectedId);
-        selectedUnits.addUnit(unitDTO.getUnit());
-        return ResponseEntity.ok(unitDTO);
-    }
-
-    public ResponseEntity<Unit> removeUnitById(int selectedId) {
-        Unit unitToRemove = getBySelectedId(selectedId);
-        if (unitToRemove != null) {
-            selectedUnits.removeUnitBySelectedId(unitToRemove.getSelectedId());
-            return ResponseEntity.ok(unitToRemove);
+    public ResponseEntity<String> removeUnitById(int id) {
+        SelectedUnit selectedUnit = selectedUnitRepository.findById(id).orElse(null);
+        if (selectedUnit != null) {
+            selectedUnitRepository.delete(selectedUnit);
+            return ResponseEntity.ok("Done");
         }
         return ResponseEntity.badRequest().body(null);
     }
 
-    public Unit getBySelectedId(int selectedId) {
-        return selectedUnits.getSelectedUnits().stream()
-                .filter(unit -> unit.getSelectedId() != null && unit.getSelectedId().equals(selectedId))
-                .findFirst()
-                .orElse(null);
-    }
 
-    public int getIdBySelectedId(int selectedId) {
-        Optional<Unit> unit = selectedUnits.findBySelectedId(selectedId);
-        return unit.map(Unit::getId).orElseThrow(() -> new IllegalArgumentException("No unit found for selectedId: " + selectedId));
-    }
-
-    public ResponseEntity<String> increaseUnitQuantity(Integer selectedId) {
-        if (selectedId == null) {
-            return ResponseEntity.badRequest().body("Selected ID is null");
-        }
-        Unit selectedUnit = getBySelectedId(selectedId);
-        if (selectedUnit != null) {
-            selectedUnit.setQuantity(selectedUnit.getQuantity() + 1);
+    public ResponseEntity<String> increaseUnitQuantity(Integer id) {
+        Optional<SelectedUnit> selectedUnit = selectedUnitRepository.findById(id);
+        if (selectedUnit.isPresent()) {
+            SelectedUnit unit = selectedUnit.get();
+            unit.setQuantity(unit.getQuantity() + 1);
+            selectedUnitRepository.save(unit);
             return ResponseEntity.ok("Quantity increased");
         }
         return ResponseEntity.badRequest().body("Unit not found");
     }
 
-    public ResponseEntity<String> decreaseUnitQuantity(Integer selectedId) {
-        if (selectedId == null) {
-            return ResponseEntity.badRequest().body("Selected ID is null");
-        }
-        Unit selectedUnit = getBySelectedId(selectedId);
-        if (selectedUnit != null && selectedUnit.getQuantity() > 0) {
-            selectedUnit.setQuantity(selectedUnit.getQuantity() - 1);
-            return ResponseEntity.ok("Quantity decreased");
-        }
-        return ResponseEntity.badRequest().body("Unit not found or quantity is zero");
-    }
+    public ResponseEntity<String> decreaseUnitQuantity(Integer id) {
+        Optional<SelectedUnit> optionalSelectedUnit = selectedUnitRepository.findById(id);
 
-    public ResponseEntity<?> addUpgrade(Integer selectedId, Upgrade upgrade) {
-        Optional<Unit> optionalUnit = selectedUnits.findBySelectedId(selectedId);
-        if (optionalUnit.isPresent()) {
-            Unit unit = optionalUnit.get();
-            List<Upgrade> upgrades = unit.getUpgradesList();
+        if (optionalSelectedUnit.isPresent()) {
+            SelectedUnit selectedUnit = optionalSelectedUnit.get();
 
+            if (selectedUnit.getQuantity() > 0) {
+                selectedUnit.setQuantity(selectedUnit.getQuantity() - 1);
+                selectedUnitRepository.save(selectedUnit);
 
-            boolean isWeaponTeamThere = false;
-            if (checkWeaponTeams(selectedId)) {
-                isWeaponTeamThere = true;
-                return ResponseEntity.badRequest().body("Cannot take more than one weapon team");
-            }
-
-            boolean upgradeExists = false;
-            for (Upgrade existingUpgrade : upgrades) {
-                if (existingUpgrade.getId().equals(upgrade.getId())) {
-                    existingUpgrade.setSelected(true);
-                    upgradeExists = true;
-                    break;
-                }
-            }
-            if (!upgradeExists) {
-                upgrade.setSelected(true);
-                upgrades.add(upgrade);
-            }
-
-            return ResponseEntity.ok("Upgrade added successfully");
-        } else {
-            System.out.println("Unit not found for selectedId: " + selectedId);
-            return ResponseEntity.notFound().build();
-        }
-    }
-
-
-    public void removeUpgrade(Integer selectedId, Integer upgradeId) {
-        Optional<Unit> optionalUnit = selectedUnits.findBySelectedId(selectedId);
-        if (optionalUnit.isPresent()) {
-            Unit unit = optionalUnit.get();
-            List<Upgrade> upgrades = unit.getUpgradesList();
-            for (Upgrade existingUpgrade : upgrades) {
-                if (existingUpgrade.getId().equals(upgradeId)) {
-                    existingUpgrade.setSelected(false);
-                    break;
-                }
+                return ResponseEntity.ok("Quantity decreased");
+            } else {
+                return ResponseEntity.badRequest().body("Quantity cannot be less than zero");
             }
         } else {
-            System.out.println("Unit not found for selectedId: " + selectedId);
+            return ResponseEntity.badRequest().body("Unit not found");
         }
     }
 
-    public List<Unit> getSelectedUnits() {
-        return selectedUnits.getSelectedUnits();
-    }
-
-    public boolean checkWeaponTeams(Integer selectedId) {
-        List<Upgrade> getUpgrades = selectedUnits.upgradesList(selectedId);
-        for (Upgrade getUpgrade : getUpgrades) {
-            if (getUpgrade.isSelected() && getUpgrade.getUpgradeType().equals("Weapon team")) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public ResponseEntity checkLordsUpgrades(Integer selectedId) {
-        List<Upgrade> upgradeList = selectedUnits.upgradesList(selectedId);
-        double upgradeLimit = 0;
-        for (Upgrade upgrade : upgradeList) {
-            if (upgrade.isSelected() && upgrade.getUpgradeType().equals("Magic weapon")) {
-                upgradeLimit += upgrade.getPointsCost();
-            }
-
-        }
-        if (upgradeLimit > 100) {
-            return ResponseEntity.badRequest().body("Upgrade limit exceeded");
-        }
-        return ResponseEntity.ok("Done");
-    }
-
-    public boolean checkChieftainStandardBanner(Integer selectedId) {
-        List<Upgrade> checkUpgrades = selectedUnits.upgradesList(selectedId);
-        boolean standardBannerfound = false;
-        for (Upgrade checkUpgrade : checkUpgrades) {
-            if (checkUpgrade.isSelected() && checkUpgrade.getUpgradeType().equals("Standard Banner")) {
-                standardBannerfound = true;
-                return standardBannerfound;
-            }
-        }
-        return standardBannerfound;
-    }
-
-    public ResponseEntity checkHeroUpgrades(Integer selectedId) {
-        List<Upgrade> checkUpgrades = selectedUnits.upgradesList(selectedId);
-        double upgradeLimit = 0;
-        for (Upgrade checkUpgrade : checkUpgrades) {
-            if (checkUpgrade.isSelected() && checkUpgrade.getUpgradeType().equals("Magic Weapon")) {
-                upgradeLimit += checkUpgrade.getPointsCost();
-            }
-        }
-        if (upgradeLimit > 100) {
-            return ResponseEntity.badRequest().body("Upgrade limit exceeded");
-        }
-        return ResponseEntity.ok("Done");
+    public List<SelectedUnit> getSelectedUnits() {
+        return selectedUnitRepository.findAll();
     }
 
 

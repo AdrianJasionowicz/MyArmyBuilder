@@ -25,10 +25,8 @@ public class UnitService {
         return unitRepository.findById(id).map(unit -> {
             unit.setName(updatedUnitDto.getName());
             unit.setPointsCostPerUnit(updatedUnitDto.getPointsCostPerUnit());
-            unit.setQuantity(updatedUnitDto.getQuantity());
             unit.setMinQuantity(updatedUnitDto.getMinQuantity());
             unit.setUnitType(updatedUnitDto.getUnitType());
-            unit.setStatsId(updatedUnitDto.getStatsId());
             unit.setUnitStats(updatedUnitDto.getUnitStats());
             List<Upgrade> upgrades = updatedUnitDto.getUpgradeList().stream()
                     .map(dto -> new UpgradeDTO(upgradeRepository).toEntity())
@@ -44,10 +42,8 @@ public class UnitService {
         unitDto.setId(unit.getId());
         unitDto.setName(unit.getName());
         unitDto.setPointsCostPerUnit(unit.getPointsCostPerUnit());
-        unitDto.setQuantity(unit.getQuantity());
         unitDto.setMinQuantity(unit.getMinQuantity());
         unitDto.setUnitType(unit.getUnitType());
-        unitDto.setStatsId(unit.getStatsId());
         unitDto.setUnitStats(unit.getUnitStats());
         List<Upgrade> upgrades = unit.getUpgradesList().stream()
                 .map(dto -> new UpgradeDTO(dto, upgradeRepository).toEntity())
@@ -78,10 +74,8 @@ public class UnitService {
         unit.setId(unitDto.getId());
         unit.setName(unitDto.getName());
         unit.setPointsCostPerUnit(unitDto.getPointsCostPerUnit());
-        unit.setQuantity(unitDto.getQuantity());
         unit.setMinQuantity(unitDto.getMinQuantity());
         unit.setUnitType(unitDto.getUnitType());
-        unit.setStatsId(unitDto.getStatsId());
         unit.setUnitStats(unitDto.getUnitStats());
         return unit;
     }

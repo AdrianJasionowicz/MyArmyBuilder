@@ -50,10 +50,20 @@
         .units-container .list {
             margin: 10px;
         }
+
+        .total-points {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .points-limits-by-type {
+            margin-top: 10px;
+        }
     </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
+
 <h1>Warhammer Builder</h1>
 <div style="border: 1px solid red;">
     <div class="container">
@@ -131,30 +141,37 @@
                 <ul>
                     <li th:each="unit, unitIndex : ${selectedUnits}">
                         <span th:text="${unit.name}">Unit Name</span>
-                        <!-- Hidden field with unit ID -->
-                        <input type="hidden" name="selectedUnitId" th:value="${unit.id}"/>
                         <form th:action="@{/removeUnit}" method="post" style="display:inline;">
-                            <input type="hidden" name="selectedId" th:value="${unit.selectedId}"/>
+                            <input type="hidden" name="id" th:value="${unit.id}"/>
                             <button type="submit" th:id="'removeUnitBtn_' + ${unitIndex.index}">Remove</button>
                         </form>
+                        <button class="select-upgrades"
+                                th:data-id="${unit.id}"
+                                th:id="'selectUpgradesBtn_' + ${unitIndex.index}">Select Upgrades
+                        </button>
 
-                        <!-- Button to select upgrades for each unit -->
-                        <button class="select-upgrades" th:data-selected-unit-id="${unit.selectedId}" th:id="'selectUpgradesBtn_' + ${unitIndex.index}">Select Upgrades</button>
-                        <!-- Quantity control for non-Lord and non-Hero units -->
-                        <div class="quantity-control" th:unless="${unit.unitType == 'Lords' or unit.unitType == 'Hero' or unit.unitType == 'Rare'}">
-                            <form action="/decreaseUnitQuantity" method="post" style="display: inline;">
-                                <input type="hidden" name="selectedId" th:value="${unit.selectedId}" />
+
+                        <div class="quantity-control"
+                             th:unless="${unit.unitType == 'Lords' or unit.unitType == 'Hero' or unit.unitType == 'Rare'}">
+                            <!-- Formularz do zmniejszenia ilości -->
+                            <form th:action="@{/decreaseUnitQuantity}" method="post" style="display: inline;">
+                                <!-- Przekazanie id jednostki jako parametr -->
+                                <input type="hidden" name="id" th:value="${unit.id}"/>
                                 <button type="submit" th:id="'decreaseQuantityBtn_' + ${unitIndex.index}">-</button>
                             </form>
 
+                            <!-- Pole wyświetlające aktualną ilość jednostek -->
                             <span>
-                    <input type="number" class="quantity-input" name="quantity" th:value="${unit.quantity}" min="0" />
+                    <input type="number" class="quantity-input" name="quantity" th:value="${unit.quantity}" min="0"
+                           disabled/>
                 </span>
-                            <form action="/increaseUnitQuantity" method="post" style="display: inline;">
-                                <input type="hidden" name="selectedId" th:value="${unit.selectedId}" />
+
+                            <!-- Formularz do zwiększenia ilości -->
+                            <form th:action="@{/increaseUnitQuantity}" method="post" style="display: inline;">
+                                <!-- Przekazanie id jednostki jako parametr -->
+                                <input type="hidden" name="id" th:value="${unit.id}"/>
                                 <button type="submit" th:id="'increaseQuantityBtn_' + ${unitIndex.index}">+</button>
                             </form>
-
                         </div>
                     </li>
                 </ul>
@@ -164,199 +181,130 @@
                 <h2>Upgrades</h2>
                 <div id="upgrades-list"></div>
                 <ul>
-                    <li th:each="upgrade, upgradeIndex : ${upgrades}">
+                    <li th:each="upgrade : ${upgrades}">
                         <div class="upgrade-item">
                             <span th:text="${upgrade.name}">Upgrade Name</span>
                             <div class="button-container">
-                                <button class="select-upgrade-button" th:data-selected-unit-id="${selectedUnitId}" th:data-upgrade-id="${upgrade.id}">Select</button>
-                                <button class="unselect-upgrade-button" th:data-selected-unit-id="${selectedUnitId}" th:data-upgrade-id="${upgrade.id}" style="display:none;">Unselect</button>
+                                <button class="select-upgrade-button" th:data-upgrade-id="${upgrade.id}">Select</button>
+
+
+                                <button class="unselect-upgrade-button" th:data-selected-unit-id="${unit.id}"
+                                        th:data-upgrade-id="${upgrade.id}" style="display:none;">Unselect
+                                </button>
                             </div>
                         </div>
                     </li>
                 </ul>
             </div>
 
-            <form id="sendUpgradeForm" style="display: none;">
-                <input type="hidden" id="selectedUnitId" name="selectedUnitId">
-                <input type="hidden" id="upgradeId" name="upgradeId">
-                <button type="submit">Send Upgrade</button>
-            </form>
+        </div> <!-- units-container -->
+
+        <!-- Section for army composition -->
+        <div class="army-composition">
+            <h2>Army Composition</h2>
+            <div th:if="${armyCompositions != null}">
+                <!-- Number of Lords -->
+                <p>Lords: <span id="total-lords" th:text="${armyComposition.totalLords}"></span></p>
+                <!-- Number of Heroes -->
+                <p>Heroes: <span id="total-heroes" th:text="${armyComposition.totalHeroes}"></span></p>
+                <!-- Number of Core -->
+                <p>Core: <span id="total-core" th:text="${armyComposition.totalCore}"></span></p>
+                <!-- Number of Special -->
+                <p>Special: <span id="total-special" th:text="${armyComposition.totalSpecial}"></span></p>
+                <!-- Number of Rare -->
+                <p>Rare: <span id="total-rare" th:text="${armyComposition.totalRare}"></span></p>
+            </div>
         </div>
 
-    </div>
-
-    <!-- Section for army composition -->
-    <div class="army-composition">
-        <h2>Army Composition</h2>
-        <div th:if="${armyCompositions != null}">
-            <!-- Number of Lords -->
-            <p>Lords: <span id="total-lords" th:text="${armyComposition.totalLords}"></span></p>
-            <!-- Number of Heroes -->
-            <p>Heroes: <span id="total-heroes" th:text="${armyComposition.totalHeroes}"></span></p>
-            <!-- Number of Core -->
-            <p>Core: <span id="total-core" th:text="${armyComposition.totalCore}"></span></p>
-            <!-- Number of Special -->
-            <p>Special: <span id="total-special" th:text="${armyComposition.totalSpecial}"></span></p>
-            <!-- Number of Rare -->
-            <p>Rare: <span id="total-rare" th:text="${armyComposition.totalRare}"></span></p>
+        <div class="total-points">
+            <h3>
+                <span th:text="'Total Points: ' + (${totalPoints} + ' / ' + ${pointsRestriction > 0 ? pointsRestriction : '0.0'})"></span>
+            </h3>
+            <!--Points restriction section -->
+            <div class="points-form">
+                <h3>Set Points Restriction</h3>
+                <form th:action="@{/setPointsRestriction}" method="post">
+                    <input type="number" id="points" name="points" min="0" required/>
+                    <button type="submit">Set Points</button>
+                </form>
+            </div>
+            <!-- Section displaying points for each unit type -->
+            <div class="points-limits-by-type">
+                <h3>Points Limits by Unit Type</h3>
+                <ul>
+                    <li>Lords: <span th:if="${utilizedPointsByType != null}"
+                                     th:text="${utilizedPointsByType['Lords']} + ' / ' + ${pointsLimitsByType['Lords']}"></span>
+                    </li>
+                    <li>Hero: <span th:if="${utilizedPointsByType != null}"
+                                    th:text="${utilizedPointsByType['Hero']} + ' / ' + ${pointsLimitsByType['Hero']}"></span>
+                    </li>
+                    <li>Core: <span th:if="${utilizedPointsByType != null}"
+                                    th:text="${utilizedPointsByType['Core']} + ' / ' + ${pointsLimitsByType['Core']}"></span>
+                    </li>
+                    <li>Special: <span th:if="${utilizedPointsByType != null}"
+                                       th:text="${utilizedPointsByType['Special']} + ' / ' + ${pointsLimitsByType['Special']}"></span>
+                    </li>
+                    <li>Rare: <span th:if="${utilizedPointsByType != null}"
+                                    th:text="${utilizedPointsByType['Rare']} + ' / ' + ${pointsLimitsByType['Rare']}"></span>
+                    </li>
+                </ul>
+            </div>
         </div>
-    </div>
 
-    <div class="total-points">
-        <h3>
-            <span th:text="'Total Points: ' + (${totalPoints} + ' / ' + ${pointsRestriction > 0 ? pointsRestriction : '0.0'})"></span>
-        </h3>
-        <!-- Section displaying points for each unit type -->
-        <div class="points-limits-by-type">
-            <h3>Points Limits by Unit Type</h3>
-            <ul>
-                <li>Lords: <span th:if="${utilizedPointsByType != null}" th:text="${utilizedPointsByType['Lords']} + ' / ' + ${pointsLimitsByType['Lords']}"></span></li>
-                <li>Hero: <span th:if="${utilizedPointsByType != null}" th:text="${utilizedPointsByType['Hero']} + ' / ' + ${pointsLimitsByType['Hero']}"></span></li>
-                <li>Core: <span th:if="${utilizedPointsByType != null}" th:text="${utilizedPointsByType['Core']} + ' / ' + ${pointsLimitsByType['Core']}"></span></li>
-                <li>Special: <span th:if="${utilizedPointsByType != null}" th:text="${utilizedPointsByType['Special']} + ' / ' + ${pointsLimitsByType['Special']}"></span></li>
-                <li>Rare: <span th:if="${utilizedPointsByType != null}" th:text="${utilizedPointsByType['Rare']} + ' / ' + ${pointsLimitsByType['Rare']}"></span></li>
-            </ul>
-        </div>
-    </div>
-
-</div>
+    </div> <!-- container -->
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function () {
         $('.select-upgrades').on('click', function () {
-            var selectedUnitId = $(this).data('selected-unit-id');
-            console.log('Selected Unit ID:', selectedUnitId);
+            var unitId = $(this).data('id');
 
             $.ajax({
                 type: 'GET',
-                url: '/units/' + selectedUnitId + '/upgrades',
+                url: '/units/' + unitId + '/upgrades',
                 success: function (data) {
                     console.log('Received data:', data);
                     $('#upgrades-list').empty();
 
-                    $.ajax({
-                        type: 'GET',
-                        url: '/units/' + selectedUnitId + '/selectedUpgrades',
-                        success: function (selectedData) {
-                            var selectedUpgradeIds = selectedData.map(upgrade => upgrade.id);
+                    data.forEach(function (upgrade) {
+                        var listItem = $('<li>').text(upgrade.name + ' (+' + upgrade.pointsCost + ' pts)');
 
-                            data.forEach(function (upgrade) {
-                                var listItem = $('<li>');
-                                if (selectedUpgradeIds.includes(upgrade.id)) {
-                                    listItem.append('<img src="../static/selectedUpgrade.png" alt="selected" class="selected-icon" />');
-                                }
+                        var selectButton = $('<button>')
+                            .text('Add')
+                            .addClass('select-upgrade-button')
+                            .data('upgrade-id', upgrade.id)
+                            .data('unit-id', unitId)
+                            .click(function () {
+                                var upgradeId = $(this).data('upgrade-id');
+                                var unitId = $(this).data('unit-id');
 
-                                listItem.append(upgrade.name + ' (+' + upgrade.pointsCost + ' pkt)');
-
-                                var selectButton = $('<button>')
-                                    .text('Add')
-                                    .addClass('select-upgrade-button')
-                                    .data('upgrade-id', upgrade.id)
-                                    .data('selected-unit-id', selectedUnitId)
-                                    .click(function () {
-                                        var upgradeId = $(this).data('upgrade-id');
-                                        $.ajax({
-                                            type: 'POST',
-                                            url: '/addUpgrade',
-                                            data: { selectedUnitId: selectedUnitId, upgradeId: upgradeId },
-                                            success: function () {
-                                                listItem.prepend('<img src="/static/selectedUpgrade.png" alt="selected" class="selected-icon" />');
-                                            },
-                                            error: function () {
-                                                alert('Error adding upgrade.');
-                                            }
-                                        });
-                                    });
-
-                                var unselectButton = $('<button>')
-                                    .text('Remove')
-                                    .addClass('unselect-upgrade-button')
-                                    .data('upgrade-id', upgrade.id)
-                                    .data('selected-unit-id', selectedUnitId)
-                                    .click(function () {
-                                        var upgradeId = $(this).data('upgrade-id');
-                                        $.ajax({
-                                            type: 'POST',
-                                            url: '/removeUpgrade',
-                                            data: { selectedUnitId: selectedUnitId, upgradeId: upgradeId },
-                                            success: function () {
-                                                listItem.find('.selected-icon').remove();
-                                            },
-                                            error: function () {
-                                                alert('Error removing upgrade.');
-                                            }
-                                        });
-                                    });
-
-                                listItem.append(selectButton);
-                                listItem.append(unselectButton);
-                                $('#upgrades-list').append(listItem);
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '/addUpgrade',
+                                    data: {unitId: unitId, upgradeId: upgradeId},
+                                    success: function () {
+                                        listItem.prepend('<img src="/selectedUpgrade.png" alt="selected" class="selected-icon" />');
+                                    },
+                                    error: function () {
+                                        alert('Error adding upgrade.');
+                                    }
+                                });
                             });
-                        },
-                        error: function () {
-                            // Jeśli nie ma wybranych ulepszeń, wyświetl pełną listę bez zaznaczeń
-                            data.forEach(function (upgrade) {
-                                var listItem = $('<li>').text(upgrade.name + ' (+' + upgrade.pointsCost + ' pkt)');
 
-                                var selectButton = $('<button>')
-                                    .text('Add')
-                                    .addClass('select-upgrade-button')
-                                    .data('upgrade-id', upgrade.id)
-                                    .data('selected-unit-id', selectedUnitId)
-                                    .click(function () {
-                                        var upgradeId = $(this).data('upgrade-id');
-                                        $.ajax({
-                                            type: 'POST',
-                                            url: '/addUpgrade',
-                                            data: { selectedUnitId: selectedUnitId, upgradeId: upgradeId },
-                                            success: function () {
-                                                listItem.prepend('<img src="/static/selectedUpgrade.png" alt="selected" class="selected-icon" />');
-                                            },
-                                            error: function () {
-                                                alert('Error adding upgrade.');
-                                            }
-                                        });
-                                    });
-
-                                var unselectButton = $('<button>')
-                                    .text('Remove')
-                                    .addClass('unselect-upgrade-button')
-                                    .data('upgrade-id', upgrade.id)
-                                    .data('selected-unit-id', selectedUnitId)
-                                    .click(function () {
-                                        var upgradeId = $(this).data('upgrade-id');
-                                        $.ajax({
-                                            type: 'POST',
-                                            url: '/removeUpgrade',
-                                            data: { selectedUnitId: selectedUnitId, upgradeId: upgradeId },
-                                            success: function () {
-                                                listItem.find('.selected-icon').remove();
-                                            },
-                                            error: function () {
-                                                alert('Error removing upgrade.');
-                                            }
-                                        });
-                                    });
-
-                                listItem.append(selectButton);
-                                listItem.append(unselectButton);
-                                $('#upgrades-list').append(listItem);
-                            });
-                        }
+                        listItem.append(selectButton);
+                        $('#upgrades-list').append(listItem);
                     });
                 },
-                error: function (xhr, textStatus, errorThrown) {
-                    console.log('Error:', textStatus, errorThrown);
+                error: function () {
+                    console.log('Error fetching upgrades.');
                     alert('Error fetching upgrades.');
                 }
             });
         });
     });
-</script>
 
+</script>
 
 </body>
 </html>
-

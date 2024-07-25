@@ -1,19 +1,17 @@
 package com.jasionowicz.myarmybuilder.upgrade;
 
-import com.jasionowicz.myarmybuilder.selectedUnits.SelectedUnits;
+import com.jasionowicz.myarmybuilder.selectedUnits.SelectedUnit;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/upgrades")
 public class UpgradeController {
-private SelectedUnits selectedUnits;
+    private SelectedUnit selectedUnit;
     private final UpgradeRepository upgradeRepository;
     private final UpgradesService upgradesService;
 
-    public UpgradeController(SelectedUnits selectedUnits, UpgradeRepository upgradeRepository, UpgradesService upgradesService) {
-        this.selectedUnits = selectedUnits;
+    public UpgradeController(SelectedUnit selectedUnit, UpgradeRepository upgradeRepository, UpgradesService upgradesService) {
+        this.selectedUnit = selectedUnit;
         this.upgradeRepository = upgradeRepository;
         this.upgradesService = upgradesService;
     }
@@ -23,8 +21,4 @@ private SelectedUnits selectedUnits;
         upgradesService.addUpgrade(upgrade);
     }
 
-    @GetMapping("/showall")
-    public List<Upgrade> getAllUpgrades() {
-        return upgradesService.findAll();
-    }
 }
