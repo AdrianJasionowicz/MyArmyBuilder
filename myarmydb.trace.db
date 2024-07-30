@@ -1106,3 +1106,306 @@ drop SELECTED_UNITS [42001-224]
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Błąd składniowy w wyrażeniu SQL "[*]SELECTED_UNIT"; oczekiwano "SAVEPOINT, SCRIPT, SHUTDOWN"
 Syntax error in SQL statement "[*]SELECTED_UNIT"; expected "SAVEPOINT, SCRIPT, SHUTDOWN"; SQL statement:
 SELECTED_UNIT [42001-224]
+2024-07-30 11:23:37.993119+02:00 jdbc[24]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabela "SKAVENUNITS" nie istnieje
+Table "SKAVENUNITS" not found; SQL statement:
+INSERT INTO SkavenUnits (ID, WS, BS, S, T, W, A, LD, BASIC_SAVE, WARD_SAVE, M, I) VALUES
+(1, 3, 4, 3, 3, 1, 1, 5, NULL, NULL, 5, 4),   -- Clanrat
+(2, 4, 5, 3, 3, 1, 1, 6, NULL, NULL, 5, 5),   -- Stormvermin
+(3, 3, 3, 4, 4, 1, 2, 6, NULL, NULL, 5, 3),   -- Plague Monks
+(4, 0, 3, 5, 5, 4, 3, 6, NULL, NULL, 6, 4),   -- Rat Ogre
+(5, 4, 4, 3, 3, 1, 1, 6, NULL, NULL, 5, 4),   -- Warpfire Thrower
+(6, 0, 3, 5, 5, 5, 3, 7, NULL, NULL, 8, 3),   -- Doomwheel
+(7, 4, 2, 4, 6, 1, 1, 6, NULL, NULL, 5, 2),   -- Jezzail
+(8, 4, 2, 4, 6, 1, 1, 6, NULL, NULL, 5, 2),   -- Warp-lock Jezzail
+(9, 0, 3, 5, 5, 6, 4, 6, NULL, NULL, 6, 3),   -- Plague Furnace
+(10, 6, 4, 5, 5, 7, 5, 5, 6, NULL, 5, 5),    -- Vermin Lord
+(11, 4, 4, 4, 4, 3, 3, 7, NULL, NULL, 5, 7),   -- Warlord
+(12, 4, 4, 4, 4, 3, 3, 7, NULL, NULL, 5, 7),   -- Grey Seer
+(13, 4, 4, 4, 4, 3, 3, 7, NULL, NULL, 5, 5),   -- Assassin
+(14, 4, 4, 4, 4, 3, 3, 7, NULL, NULL, 5, 5),   -- Warlock Engineer
+(15, 4, 4, 4, 4, 3, 3, 7, NULL, NULL, 5, 5),   -- Chieftain
+(16, 4, 4, 4, 4, 3, 3, 7, NULL, NULL, 5, 5),   -- Plague Priest
+(17, 3, 2, 3, 3, 1, 1, 6, NULL, NULL, 5, 3),   -- Skavenslaves
+(18, 4, 2, 3, 3, 1, 1, 6, NULL, NULL, 5, 5),   -- Night Runners
+(19, 0, 3, 3, 3, 1, 1, 5, NULL, NULL, 5, 4),   -- Giant Rats
+(20, 0, 3, 3, 3, 1, 1, 5, NULL, NULL, 5, 4),   -- Rat Swarms
+(21, 0, 4, 4, 4, 1, 1, 6, NULL, NULL, 5, 5),   -- Gutter Runners
+(22, 0, 4, 4, 4, 3, 3, 6, NULL, NULL, 5, 4),   -- Plague Censer Bearers
+(23, 0, 4, 4, 4, 1, 1, 5, NULL, NULL, 5, 4),   -- Warlock Jezzails
+(24, 0, 4, 4, 4, 1, 1, 5, NULL, NULL, 5, 4),   -- Poisoned Wind Globadiers
+(25, 0, 3, 5, 5, 6, 6, 7, NULL, NULL, 6, 4),   -- Abomination
+(26, 0, 3, 5, 4, 4, 3, 6, NULL, NULL, 8, 4),   -- Warp Lightning Cannon
+(27, 0, 3, 5, 4, 4, 3, 6, NULL, NULL, 8, 4) [42102-224]
+2024-07-30 11:33:28.666385+02:00 jdbc[24]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabela "SKAVENUNITS" nie istnieje
+Table "SKAVENUNITS" not found; SQL statement:
+-- Format: ID, MIN_QUANTITY, POINTS_COST_PER_UNIT, UNIT_STATS_ID, NAME, NATION, UNIT_TYPE
+INSERT INTO SkavenUnits (ID, MIN_QUANTITY, POINTS_COST_PER_UNIT, UNIT_STATS_ID, NAME, NATION, UNIT_TYPE) VALUES
+(1, 20, 4, 1, 'Clanrat', 'Skaven', 'CORE'),
+(2, 10, 12, 2, 'Stormvermin', 'Skaven', 'CORE'),
+(3, 10, 13, 3, 'Plague Monks', 'Skaven', 'SPECIAL'),
+(4, 1, 50, 4, 'Rat Ogre', 'Skaven', 'RARE'),
+(5, 1, 35, 5, 'Warpfire Thrower', 'Skaven', 'SPECIAL'),
+(6, 1, 60, 6, 'Doomwheel', 'Skaven', 'RARE'),
+(7, 5, 25, 7, 'Jezzail', 'Skaven', 'SPECIAL'),
+(8, 5, 30, 8, 'Warp-lock Jezzail', 'Skaven', 'SPECIAL'),
+(9, 1, 150, 9, 'Plague Furnace', 'Skaven', 'RARE'),
+(10, 1, 100, 10, 'Warp Lightning Cannon', 'Skaven', 'RARE'),
+(11, 1, 90, 11, 'Plague Claw Catapult', 'Skaven', 'RARE'),
+(12, 20, 2, 12, 'Skavenslaves', 'Skaven', 'CORE'),
+(13, 10, 8, 13, 'Night Runners', 'Skaven', 'CORE'),
+(14, 10, 10, 14, 'Giant Rats', 'Skaven', 'SPECIAL'),
+(15, 10, 15, 15, 'Rat Swarm', 'Skaven', 'SPECIAL'),
+(16, 10, 12, 16, 'Gutter Runners', 'Skaven', 'SPECIAL'),
+(17, 1, 220, 17, 'Abomination', 'Skaven', 'RARE'),
+(18, 10, 20, 18, 'Plague Censer Bearers', 'Skaven', 'SPECIAL'),
+(19, 10, 18, 19, 'Warlock Jezzails', 'Skaven', 'SPECIAL'),
+(20, 10, 15, 20, 'Poisoned Wind Globadiers', 'Skaven', 'SPECIAL'),
+(21, 1, 300, 21, 'Vermin Lord', 'Skaven', 'LORD'),
+(22, 1, 90, 22, 'Warlord', 'Skaven', 'HERO'),
+(23, 1, 100, 23, 'Grey Seer', 'Skaven', 'HERO'),
+(24, 1, 85, 24, 'Assassin', 'Skaven', 'HERO'),
+(25, 1, 80, 25, 'Warlock Engineer', 'Skaven', 'HERO'),
+(26, 1, 85, 26, 'Chieftain', 'Skaven', 'HERO'),
+(27, 1, 90, 27, 'Plague Priest', 'Skaven', 'HERO') [42102-224]
+2024-07-30 11:33:28.734388+02:00 jdbc[24]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabela "SKAVENUNITS" nie istnieje
+Table "SKAVENUNITS" not found; SQL statement:
+-- Format: ID, MIN_QUANTITY, POINTS_COST_PER_UNIT, UNIT_STATS_ID, NAME, NATION, UNIT_TYPE
+INSERT INTO SkavenUnits (ID, MIN_QUANTITY, POINTS_COST_PER_UNIT, UNIT_STATS_ID, NAME, NATION, UNIT_TYPE) VALUES
+(1, 20, 4, 1, 'Clanrat', 'Skaven', 'CORE'),
+(2, 10, 12, 2, 'Stormvermin', 'Skaven', 'CORE'),
+(3, 10, 13, 3, 'Plague Monks', 'Skaven', 'SPECIAL'),
+(4, 1, 50, 4, 'Rat Ogre', 'Skaven', 'RARE'),
+(5, 1, 35, 5, 'Warpfire Thrower', 'Skaven', 'SPECIAL'),
+(6, 1, 60, 6, 'Doomwheel', 'Skaven', 'RARE'),
+(7, 5, 25, 7, 'Jezzail', 'Skaven', 'SPECIAL'),
+(8, 5, 30, 8, 'Warp-lock Jezzail', 'Skaven', 'SPECIAL'),
+(9, 1, 150, 9, 'Plague Furnace', 'Skaven', 'RARE'),
+(10, 1, 100, 10, 'Warp Lightning Cannon', 'Skaven', 'RARE'),
+(11, 1, 90, 11, 'Plague Claw Catapult', 'Skaven', 'RARE'),
+(12, 20, 2, 12, 'Skavenslaves', 'Skaven', 'CORE'),
+(13, 10, 8, 13, 'Night Runners', 'Skaven', 'CORE'),
+(14, 10, 10, 14, 'Giant Rats', 'Skaven', 'SPECIAL'),
+(15, 10, 15, 15, 'Rat Swarm', 'Skaven', 'SPECIAL'),
+(16, 10, 12, 16, 'Gutter Runners', 'Skaven', 'SPECIAL'),
+(17, 1, 220, 17, 'Abomination', 'Skaven', 'RARE'),
+(18, 10, 20, 18, 'Plague Censer Bearers', 'Skaven', 'SPECIAL'),
+(19, 10, 18, 19, 'Warlock Jezzails', 'Skaven', 'SPECIAL'),
+(20, 10, 15, 20, 'Poisoned Wind Globadiers', 'Skaven', 'SPECIAL'),
+(21, 1, 300, 21, 'Vermin Lord', 'Skaven', 'LORD'),
+(22, 1, 90, 22, 'Warlord', 'Skaven', 'HERO'),
+(23, 1, 100, 23, 'Grey Seer', 'Skaven', 'HERO'),
+(24, 1, 85, 24, 'Assassin', 'Skaven', 'HERO'),
+(25, 1, 80, 25, 'Warlock Engineer', 'Skaven', 'HERO'),
+(26, 1, 85, 26, 'Chieftain', 'Skaven', 'HERO'),
+(27, 1, 90, 27, 'Plague Priest', 'Skaven', 'HERO') [42102-224]
+2024-07-30 12:20:52.927055+02:00 jdbc[24]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabela "UPGRADES" nie istnieje
+Table "UPGRADES" not found; SQL statement:
+-- Stormvermin
+INSERT INTO UPGRADES (ID, POINTS_COST, UNIT_ID, DESCRIPTION, NAME, UPGRADE_TYPE) VALUES
+(6, 10, 2, 'Champion', 'Champion', 'SingleBuy'),
+(7, 5, 2, 'Musician', 'Musician', 'SingleBuy'),
+(8, 10, 2, 'Standard Bearer', 'Standard Bearer', 'SingleBuy'),
+(9, 10, 2, 'Halberd', 'Halberd', 'Weapon'),
+(10, 30, 2, 'Ratling Gun', 'Ratling Gun', 'Weapon Team'),
+(11, 30, 2, 'Warpfire Thrower', 'Warpfire Thrower', 'Weapon Team') [42102-224]
+2024-07-30 12:20:52.928562+02:00 jdbc[24]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabela "UPGRADES" nie istnieje
+Table "UPGRADES" not found; SQL statement:
+-- Skavenslaves
+INSERT INTO UPGRADES (ID, POINTS_COST, UNIT_ID, DESCRIPTION, NAME, UPGRADE_TYPE) VALUES
+(12, 10, 3, 'Champion', 'Champion', 'SingleBuy'),
+(13, 5, 3, 'Musician', 'Musician', 'SingleBuy'),
+(14, 10, 3, 'Standard Bearer', 'Standard Bearer', 'SingleBuy'),
+(15, 5, 3, 'Prods', 'Prods', 'Weapon') [42102-224]
+2024-07-30 12:20:52.928562+02:00 jdbc[24]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabela "UPGRADES" nie istnieje
+Table "UPGRADES" not found; SQL statement:
+-- Plague Priest
+INSERT INTO UPGRADES (ID, POINTS_COST, UNIT_ID, DESCRIPTION, NAME, UPGRADE_TYPE) VALUES
+(16, 200, 4, 'Plague Furnace', 'Plague Furnace', 'RARE'),
+
+-- Rat Ogre
+INSERT INTO UPGRADES (ID, POINTS_COST, UNIT_ID, DESCRIPTION, NAME, UPGRADE_TYPE) VALUES
+(18, 25, 5, 'Warpstone Tokens', 'Warpstone Tokens', 'SPECIAL') [42102-224]
+2024-07-30 12:20:52.929562+02:00 jdbc[24]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabela "UPGRADES" nie istnieje
+Table "UPGRADES" not found; SQL statement:
+-- Gutter Runners
+INSERT INTO UPGRADES (ID, POINTS_COST, UNIT_ID, DESCRIPTION, NAME, UPGRADE_TYPE) VALUES
+(19, 30, 6, 'Poisoned Wind Globadiers', 'Poisoned Wind Globadiers', 'SPECIAL'),
+(20, 30, 6, 'Warp-grinder', 'Warp-grinder', 'Weapon Team') [42102-224]
+2024-07-30 12:20:52.929562+02:00 jdbc[24]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabela "UPGRADES" nie istnieje
+Table "UPGRADES" not found; SQL statement:
+-- Plague Monks
+INSERT INTO UPGRADES (ID, POINTS_COST, UNIT_ID, DESCRIPTION, NAME, UPGRADE_TYPE) VALUES
+(21, 10, 7, 'Champion', 'Champion', 'SingleBuy'),
+(22, 5, 7, 'Musician', 'Musician', 'SingleBuy'),
+(23, 10, 7, 'Standard Bearer', 'Standard Bearer', 'SingleBuy') [42102-224]
+2024-07-30 12:20:52.929562+02:00 jdbc[24]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabela "UPGRADES" nie istnieje
+Table "UPGRADES" not found; SQL statement:
+-- Warlock Engineer
+INSERT INTO UPGRADES (ID, POINTS_COST, UNIT_ID, DESCRIPTION, NAME, UPGRADE_TYPE) VALUES
+(24, 50, 8, 'Doomrocket', 'Doomrocket', 'SPECIAL'),
+(25, 25, 8, 'Warpstone Tokens', 'Warpstone Tokens', 'SPECIAL') [42102-224]
+2024-07-30 12:20:52.930563+02:00 jdbc[24]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabela "UPGRADES" nie istnieje
+Table "UPGRADES" not found; SQL statement:
+-- Abomination
+INSERT INTO UPGRADES (ID, POINTS_COST, UNIT_ID, DESCRIPTION, NAME, UPGRADE_TYPE) VALUES
+(26, 30, 9, 'Warpstone Tokens', 'Warpstone Tokens', 'SPECIAL') [42102-224]
+2024-07-30 12:20:52.930563+02:00 jdbc[24]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabela "UPGRADES" nie istnieje
+Table "UPGRADES" not found; SQL statement:
+-- Warp Lightning Cannon
+INSERT INTO UPGRADES (ID, POINTS_COST, UNIT_ID, DESCRIPTION, NAME, UPGRADE_TYPE) VALUES
+(27, 50, 10, 'Enhanced Warp Lightning', 'Enhanced Warp Lightning', 'SPECIAL') [42102-224]
+2024-07-30 12:20:52.930563+02:00 jdbc[24]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabela "UPGRADES" nie istnieje
+Table "UPGRADES" not found; SQL statement:
+-- Plague Claw Catapult
+INSERT INTO UPGRADES (ID, POINTS_COST, UNIT_ID, DESCRIPTION, NAME, UPGRADE_TYPE) VALUES
+(28, 30, 11, 'Warpstone Tokens', 'Warpstone Tokens', 'SPECIAL') [42102-224]
+2024-07-30 12:20:52.930563+02:00 jdbc[24]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabela "UPGRADES" nie istnieje
+Table "UPGRADES" not found; SQL statement:
+-- Jezzail
+INSERT INTO UPGRADES (ID, POINTS_COST, UNIT_ID, DESCRIPTION, NAME, UPGRADE_TYPE) VALUES
+(29, 20, 12, 'Precision Sights', 'Precision Sights', 'SPECIAL') [42102-224]
+2024-07-30 12:20:52.930563+02:00 jdbc[24]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabela "UPGRADES" nie istnieje
+Table "UPGRADES" not found; SQL statement:
+-- Warplock Jezzail
+INSERT INTO UPGRADES (ID, POINTS_COST, UNIT_ID, DESCRIPTION, NAME, UPGRADE_TYPE) VALUES
+(30, 20, 13, 'Enhanced Scope', 'Enhanced Scope', 'SPECIAL') [42102-224]
+2024-07-30 12:21:01.019335+02:00 jdbc[24]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabela "UPGRADES" nie istnieje
+Table "UPGRADES" not found; SQL statement:
+-- Stormvermin
+INSERT INTO UPGRADES (ID, POINTS_COST, UNIT_ID, DESCRIPTION, NAME, UPGRADE_TYPE) VALUES
+(6, 10, 2, 'Champion', 'Champion', 'SingleBuy'),
+(7, 5, 2, 'Musician', 'Musician', 'SingleBuy'),
+(8, 10, 2, 'Standard Bearer', 'Standard Bearer', 'SingleBuy'),
+(9, 10, 2, 'Halberd', 'Halberd', 'Weapon'),
+(10, 30, 2, 'Ratling Gun', 'Ratling Gun', 'Weapon Team'),
+(11, 30, 2, 'Warpfire Thrower', 'Warpfire Thrower', 'Weapon Team') [42102-224]
+2024-07-30 12:21:01.019335+02:00 jdbc[24]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabela "UPGRADES" nie istnieje
+Table "UPGRADES" not found; SQL statement:
+-- Skavenslaves
+INSERT INTO UPGRADES (ID, POINTS_COST, UNIT_ID, DESCRIPTION, NAME, UPGRADE_TYPE) VALUES
+(12, 10, 3, 'Champion', 'Champion', 'SingleBuy'),
+(13, 5, 3, 'Musician', 'Musician', 'SingleBuy'),
+(14, 10, 3, 'Standard Bearer', 'Standard Bearer', 'SingleBuy'),
+(15, 5, 3, 'Prods', 'Prods', 'Weapon') [42102-224]
+2024-07-30 12:21:01.020439+02:00 jdbc[24]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabela "UPGRADES" nie istnieje
+Table "UPGRADES" not found; SQL statement:
+-- Plague Priest
+INSERT INTO UPGRADES (ID, POINTS_COST, UNIT_ID, DESCRIPTION, NAME, UPGRADE_TYPE) VALUES
+(16, 200, 4, 'Plague Furnace', 'Plague Furnace', 'RARE'),
+
+-- Rat Ogre
+INSERT INTO UPGRADES (ID, POINTS_COST, UNIT_ID, DESCRIPTION, NAME, UPGRADE_TYPE) VALUES
+(18, 25, 5, 'Warpstone Tokens', 'Warpstone Tokens', 'SPECIAL') [42102-224]
+2024-07-30 12:21:01.020439+02:00 jdbc[24]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabela "UPGRADES" nie istnieje
+Table "UPGRADES" not found; SQL statement:
+-- Gutter Runners
+INSERT INTO UPGRADES (ID, POINTS_COST, UNIT_ID, DESCRIPTION, NAME, UPGRADE_TYPE) VALUES
+(19, 30, 6, 'Poisoned Wind Globadiers', 'Poisoned Wind Globadiers', 'SPECIAL'),
+(20, 30, 6, 'Warp-grinder', 'Warp-grinder', 'Weapon Team') [42102-224]
+2024-07-30 12:21:01.020439+02:00 jdbc[24]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabela "UPGRADES" nie istnieje
+Table "UPGRADES" not found; SQL statement:
+-- Plague Monks
+INSERT INTO UPGRADES (ID, POINTS_COST, UNIT_ID, DESCRIPTION, NAME, UPGRADE_TYPE) VALUES
+(21, 10, 7, 'Champion', 'Champion', 'SingleBuy'),
+(22, 5, 7, 'Musician', 'Musician', 'SingleBuy'),
+(23, 10, 7, 'Standard Bearer', 'Standard Bearer', 'SingleBuy') [42102-224]
+2024-07-30 12:21:01.020439+02:00 jdbc[24]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabela "UPGRADES" nie istnieje
+Table "UPGRADES" not found; SQL statement:
+-- Warlock Engineer
+INSERT INTO UPGRADES (ID, POINTS_COST, UNIT_ID, DESCRIPTION, NAME, UPGRADE_TYPE) VALUES
+(24, 50, 8, 'Doomrocket', 'Doomrocket', 'SPECIAL'),
+(25, 25, 8, 'Warpstone Tokens', 'Warpstone Tokens', 'SPECIAL') [42102-224]
+2024-07-30 12:21:01.020439+02:00 jdbc[24]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabela "UPGRADES" nie istnieje
+Table "UPGRADES" not found; SQL statement:
+-- Abomination
+INSERT INTO UPGRADES (ID, POINTS_COST, UNIT_ID, DESCRIPTION, NAME, UPGRADE_TYPE) VALUES
+(26, 30, 9, 'Warpstone Tokens', 'Warpstone Tokens', 'SPECIAL') [42102-224]
+2024-07-30 12:21:01.021596+02:00 jdbc[24]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabela "UPGRADES" nie istnieje
+Table "UPGRADES" not found; SQL statement:
+-- Warp Lightning Cannon
+INSERT INTO UPGRADES (ID, POINTS_COST, UNIT_ID, DESCRIPTION, NAME, UPGRADE_TYPE) VALUES
+(27, 50, 10, 'Enhanced Warp Lightning', 'Enhanced Warp Lightning', 'SPECIAL') [42102-224]
+2024-07-30 12:21:01.021596+02:00 jdbc[24]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabela "UPGRADES" nie istnieje
+Table "UPGRADES" not found; SQL statement:
+-- Plague Claw Catapult
+INSERT INTO UPGRADES (ID, POINTS_COST, UNIT_ID, DESCRIPTION, NAME, UPGRADE_TYPE) VALUES
+(28, 30, 11, 'Warpstone Tokens', 'Warpstone Tokens', 'SPECIAL') [42102-224]
+2024-07-30 12:21:01.021596+02:00 jdbc[24]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabela "UPGRADES" nie istnieje
+Table "UPGRADES" not found; SQL statement:
+-- Jezzail
+INSERT INTO UPGRADES (ID, POINTS_COST, UNIT_ID, DESCRIPTION, NAME, UPGRADE_TYPE) VALUES
+(29, 20, 12, 'Precision Sights', 'Precision Sights', 'SPECIAL') [42102-224]
+2024-07-30 12:21:01.021596+02:00 jdbc[24]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabela "UPGRADES" nie istnieje
+Table "UPGRADES" not found; SQL statement:
+-- Warplock Jezzail
+INSERT INTO UPGRADES (ID, POINTS_COST, UNIT_ID, DESCRIPTION, NAME, UPGRADE_TYPE) VALUES
+(30, 20, 13, 'Enhanced Scope', 'Enhanced Scope', 'SPECIAL') [42102-224]
+2024-07-30 12:21:53.588397+02:00 jdbc[24]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Błąd składniowy w wyrażeniu SQL "-- Plague Priest\000d\000aINSERT INTO UPGRADE (ID, POINTS_COST, UNIT_ID, DESCRIPTION, NAME, UPGRADE_TYPE) VALUES\000d\000a(16, 200, 4, 'Plague Furnace', 'Plague Furnace', 'RARE'),\000d\000a\000d\000a-- Rat Ogre\000d\000aINSERT [*]INTO UPGRADE (ID, POINTS_COST, UNIT_ID, DESCRIPTION, NAME, UPGRADE_TYPE) VALUES\000d\000a(18, 25, 5, 'Warpstone Tokens', 'Warpstone Tokens', 'SPECIAL')"
+Syntax error in SQL statement "-- Plague Priest\000d\000aINSERT INTO UPGRADE (ID, POINTS_COST, UNIT_ID, DESCRIPTION, NAME, UPGRADE_TYPE) VALUES\000d\000a(16, 200, 4, 'Plague Furnace', 'Plague Furnace', 'RARE'),\000d\000a\000d\000a-- Rat Ogre\000d\000aINSERT [*]INTO UPGRADE (ID, POINTS_COST, UNIT_ID, DESCRIPTION, NAME, UPGRADE_TYPE) VALUES\000d\000a(18, 25, 5, 'Warpstone Tokens', 'Warpstone Tokens', 'SPECIAL')"; SQL statement:
+-- Plague Priest
+INSERT INTO UPGRADE (ID, POINTS_COST, UNIT_ID, DESCRIPTION, NAME, UPGRADE_TYPE) VALUES
+(16, 200, 4, 'Plague Furnace', 'Plague Furnace', 'RARE'),
+
+-- Rat Ogre
+INSERT INTO UPGRADE (ID, POINTS_COST, UNIT_ID, DESCRIPTION, NAME, UPGRADE_TYPE) VALUES
+(18, 25, 5, 'Warpstone Tokens', 'Warpstone Tokens', 'SPECIAL') [42000-224]
+2024-07-30 12:22:45.438574+02:00 jdbc[24]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Błąd składniowy w wyrażeniu SQL "-- Plague Priest\000d\000aINSERT INTO UPGRADE (ID, POINTS_COST, UNIT_ID, DESCRIPTION, NAME, UPGRADE_TYPE) VALUES\000d\000a(16, 200, 4, 'Plague Furnace', 'Plague Furnace', 'RARE'),\000d\000a\000d\000a-- Rat Ogre\000d\000aINSERT [*]INTO UPGRADE (ID, POINTS_COST, UNIT_ID, DESCRIPTION, NAME, UPGRADE_TYPE) VALUES\000d\000a(18, 25, 5, 'Warpstone Tokens', 'Warpstone Tokens', 'SPECIAL')"
+Syntax error in SQL statement "-- Plague Priest\000d\000aINSERT INTO UPGRADE (ID, POINTS_COST, UNIT_ID, DESCRIPTION, NAME, UPGRADE_TYPE) VALUES\000d\000a(16, 200, 4, 'Plague Furnace', 'Plague Furnace', 'RARE'),\000d\000a\000d\000a-- Rat Ogre\000d\000aINSERT [*]INTO UPGRADE (ID, POINTS_COST, UNIT_ID, DESCRIPTION, NAME, UPGRADE_TYPE) VALUES\000d\000a(18, 25, 5, 'Warpstone Tokens', 'Warpstone Tokens', 'SPECIAL')"; SQL statement:
+-- Plague Priest
+INSERT INTO UPGRADE (ID, POINTS_COST, UNIT_ID, DESCRIPTION, NAME, UPGRADE_TYPE) VALUES
+(16, 200, 4, 'Plague Furnace', 'Plague Furnace', 'RARE'),
+
+-- Rat Ogre
+INSERT INTO UPGRADE (ID, POINTS_COST, UNIT_ID, DESCRIPTION, NAME, UPGRADE_TYPE) VALUES
+(18, 25, 5, 'Warpstone Tokens', 'Warpstone Tokens', 'SPECIAL') [42000-224]
+2024-07-30 12:32:54.946914+02:00 jdbc[25]: null
+org.h2.message.DbException: Połączenie zostało zamknięte przez aplikacje i zostało usunięte przez kolektor nieużytków
+The connection was not closed by the application and is garbage collected [90018-224]
+	at org.h2.message.DbException.get(DbException.java:223)
+	at org.h2.message.DbException.get(DbException.java:199)
+	at org.h2.message.DbException.get(DbException.java:188)
+	at org.h2.jdbc.JdbcConnection.closeOld(JdbcConnection.java:218)
+	at org.h2.jdbc.JdbcConnection.<init>(JdbcConnection.java:135)
+	at org.h2.Driver.connect(Driver.java:59)
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:138)
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:359)
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:201)
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:470)
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:733)
+	at com.zaxxer.hikari.pool.HikariPool$PoolEntryCreator.call(HikariPool.java:712)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: org.h2.jdbc.JdbcSQLNonTransientConnectionException: Połączenie zostało zamknięte przez aplikacje i zostało usunięte przez kolektor nieużytków
+The connection was not closed by the application and is garbage collected [90018-224]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:690)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
+	... 16 more

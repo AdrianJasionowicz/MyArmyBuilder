@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class SelectedUpgradesDTO {
+public class SelectedUpgradeDTO {
     private Integer id;
     private int quantity;
     private boolean selected;
@@ -21,18 +21,19 @@ public class SelectedUpgradesDTO {
     private double pointsCost;
 
 
-    public SelectedUpgradesDTO(UpgradeDTO upgradeDTO) {
+    public SelectedUpgradeDTO(UpgradeDTO upgradeDTO) {
         this.id = upgradeDTO.getId();
         this.name = upgradeDTO.getName();
         this.quantity = upgradeDTO.getQuantity();
     }
 
-    public SelectedUpgradesDTO(SelectedUpgrades selectedUpgrades) {
-        this.id = selectedUpgrades.getId();
-        this.quantity = selectedUpgrades.getQuantity();
-        this.selected = selectedUpgrades.isSelected();
-        this.totalCost = selectedUpgrades.getTotalCost();
-        this.name = selectedUpgrades.getUpgrade().getName();
-        this.pointsCost = selectedUpgrades.getUpgrade().getPointsCost();
+    public SelectedUpgradeDTO(SelectedUpgrade selectedUpgrade) {
+        this.id = selectedUpgrade.getId();
+        this.quantity = selectedUpgrade.getQuantity();
+        this.selected = selectedUpgrade.isSelected();
+        this.totalCost = selectedUpgrade.getTotalCost();
+        this.name = selectedUpgrade.getUpgrade().getName();
+        this.pointsCost = selectedUpgrade.getUpgrade().getPointsCost();
     }
+
 }

@@ -6,8 +6,8 @@
     import java.util.List;
 
     @Repository
-    public interface SelectedUpgradesRepository extends JpaRepository<SelectedUpgrades, Integer> {
+    public interface SelectedUpgradeRepository extends JpaRepository<SelectedUpgrade, Integer> {
 
 
-        List<SelectedUpgrades> findAllBySelectedUnitId(Integer unitId);
+        List<SelectedUpgrade> findAllBySelectedUnitId(Integer unitId);
     }

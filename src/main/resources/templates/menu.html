@@ -59,6 +59,11 @@
         .points-limits-by-type {
             margin-top: 10px;
         }
+        .selected-icon {
+            width: 15px;
+            height: auto;
+        }
+
     </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
@@ -186,11 +191,7 @@
                             <span th:text="${upgrade.name}">Upgrade Name</span>
                             <div class="button-container">
                                 <button class="select-upgrade-button" th:data-upgrade-id="${upgrade.id}">Select</button>
-
-
-                                <button class="unselect-upgrade-button" th:data-selected-unit-id="${unit.id}"
-                                        th:data-upgrade-id="${upgrade.id}" style="display:none;">Unselect
-                                </button>
+                                <button class="remove-upgrade-button" th:data-upgrade-id="${upgrade.id}" style="display:none;">Remove</button>
                             </div>
                         </div>
                     </li>
@@ -277,14 +278,14 @@
                             .data('unit-id', unitId)
                             .click(function () {
                                 var upgradeId = $(this).data('upgrade-id');
-                                var unitId = $(this).data('unit-id');
 
                                 $.ajax({
                                     type: 'POST',
                                     url: '/addUpgrade',
-                                    data: {unitId: unitId, upgradeId: upgradeId},
+                                    data: $.param({upgradeId: upgradeId}),
                                     success: function () {
                                         listItem.prepend('<img src="/selectedUpgrade.png" alt="selected" class="selected-icon" />');
+                                        $('.remove-upgrade-button').show(); // Show remove button after selecting
                                     },
                                     error: function () {
                                         alert('Error adding upgrade.');
@@ -292,7 +293,28 @@
                                 });
                             });
 
-                        listItem.append(selectButton);
+                        var removeButton = $('<button>')
+                            .text('Remove')
+                            .addClass('remove-upgrade-button')
+                            .data('upgrade-id', upgrade.id)
+                            .click(function () {
+                                var upgradeId = $(this).data('upgrade-id');
+
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '/removeSelectedUpgrade',
+                                    data: $.param({upgradeId: upgradeId}),
+                                    success: function () {
+                                        listItem.find('.selected-icon').remove(); // Remove the selected icon
+                                        removeButton.hide(); // Hide remove button after removing
+                                    },
+                                    error: function () {
+                                        alert('Error removing upgrade.');
+                                    }
+                                });
+                            });
+
+                        listItem.append(selectButton).append(removeButton);
                         $('#upgrades-list').append(listItem);
                     });
                 },
@@ -303,6 +325,7 @@
             });
         });
     });
+
 
 </script>
 

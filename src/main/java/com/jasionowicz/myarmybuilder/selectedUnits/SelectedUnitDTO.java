@@ -1,7 +1,7 @@
 package com.jasionowicz.myarmybuilder.selectedUnits;
 
 import com.jasionowicz.myarmybuilder.armyComposition.selectedStats.SelectedStatsDTO;
-import com.jasionowicz.myarmybuilder.selectedUpgrades.SelectedUpgradesDTO;
+import com.jasionowicz.myarmybuilder.selectedUpgrades.SelectedUpgradeDTO;
 import com.jasionowicz.myarmybuilder.unit.Unit;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,7 +21,7 @@ public class SelectedUnitDTO {
     @Setter
     private SelectedStatsDTO selectedStatsDTO;
     @Setter
-    private List<SelectedUpgradesDTO> selectedUpgrades = new ArrayList<>();
+    private List<SelectedUpgradeDTO> selectedUpgrades = new ArrayList<>();
     private Unit unit;
 
 }

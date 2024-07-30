@@ -1,7 +1,6 @@
 package com.jasionowicz.myarmybuilder.upgrade;
 
-import com.jasionowicz.myarmybuilder.selectedUpgrades.SelectedUpgrades;
-import com.jasionowicz.myarmybuilder.selectedUpgrades.SelectedUpgradesRepository;
+import com.jasionowicz.myarmybuilder.selectedUpgrades.SelectedUpgradeRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
@@ -9,7 +8,7 @@ import java.util.List;
 public class UpgradesService {
 
     private final UpgradeRepository upgradeRepository;
-    private SelectedUpgradesRepository selectedUpgradesRepository;
+    private SelectedUpgradeRepository selectedUpgradeRepository;
     public UpgradesService(UpgradeRepository upgradeRepository) {
         this.upgradeRepository = upgradeRepository;
     }

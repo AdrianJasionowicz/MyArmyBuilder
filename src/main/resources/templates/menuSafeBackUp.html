@@ -59,6 +59,11 @@
         .points-limits-by-type {
             margin-top: 10px;
         }
+        .selected-icon {
+            width: 15px;
+            height: auto;
+        }
+
     </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
@@ -220,6 +225,14 @@
             <h3>
                 <span th:text="'Total Points: ' + (${totalPoints} + ' / ' + ${pointsRestriction > 0 ? pointsRestriction : '0.0'})"></span>
             </h3>
+            <!--Points restriction section -->
+            <div class="points-form">
+                <h3>Set Points Restriction</h3>
+                <form th:action="@{/setPointsRestriction}" method="post">
+                    <input type="number" id="points" name="points" min="0" required/>
+                    <button type="submit">Set Points</button>
+                </form>
+            </div>
             <!-- Section displaying points for each unit type -->
             <div class="points-limits-by-type">
                 <h3>Points Limits by Unit Type</h3>

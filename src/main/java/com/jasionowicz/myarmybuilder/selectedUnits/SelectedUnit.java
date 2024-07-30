@@ -3,7 +3,7 @@ package com.jasionowicz.myarmybuilder.selectedUnits;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.jasionowicz.myarmybuilder.armyComposition.selectedStats.SelectedStats;
 import com.jasionowicz.myarmybuilder.armyComposition.selectedStats.SelectedStatsDTO;
-import com.jasionowicz.myarmybuilder.selectedUpgrades.SelectedUpgrades;
+import com.jasionowicz.myarmybuilder.selectedUpgrades.SelectedUpgrade;
 import com.jasionowicz.myarmybuilder.unit.Unit;
 import com.jasionowicz.myarmybuilder.unit.UnitStats;
 import jakarta.persistence.*;
@@ -35,9 +35,9 @@ public class SelectedUnit {
     @OneToOne
     @JoinColumn(name = "selectedStats_id")
     private SelectedStats selectedStats;
-    @OneToMany(mappedBy = "selectedUnit", orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "selectedUnit", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference
-    private List<SelectedUpgrades> selectedUpgrades = new ArrayList<>();
+    private List<SelectedUpgrade> selectedUpgrades = new ArrayList<>();
 
 
     public String getUnitType() {
@@ -59,7 +59,7 @@ public class SelectedUnit {
         this.quantity = unit.getMinQuantity();
         this.selectedStats = new SelectedStats(unit.getUnitStats());
         this.selectedUpgrades = unit.getUpgradesList().stream()
-                .map(upgrade -> new SelectedUpgrades(upgrade, this))
+                .map(upgrade -> new SelectedUpgrade(upgrade, this))
                 .collect(Collectors.toList());
     }
 
@@ -79,7 +79,7 @@ public class SelectedUnit {
         return new SelectedStats(unitStats);
     }
 
-    public void addUpgrade(SelectedUpgrades upgrade) {
+    public void addUpgrade(SelectedUpgrade upgrade) {
         if (this.selectedUpgrades == null) {
             this.selectedUpgrades = new ArrayList<>();
         }

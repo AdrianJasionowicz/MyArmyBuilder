@@ -1,40 +1,39 @@
 package com.jasionowicz.myarmybuilder.selectedUnits;
 
-import com.jasionowicz.myarmybuilder.selectedUpgrades.SelectedUpgrades;
-import com.jasionowicz.myarmybuilder.selectedUpgrades.SelectedUpgradesDTO;
-import com.jasionowicz.myarmybuilder.selectedUpgrades.SelectedUpgradesRepository;
+import com.jasionowicz.myarmybuilder.selectedUpgrades.SelectedUpgrade;
+import com.jasionowicz.myarmybuilder.selectedUpgrades.SelectedUpgradeRepository;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class SelectedService {
 
 
     @Autowired
-    private SelectedUpgradesRepository selectedUpgradesRepository;
+    private SelectedUpgradeRepository selectedUpgradeRepository;
     @Autowired
     private SelectedUnitRepository selectedUnitRepository;
     @Autowired
     private SelectedUnit selectedUnit;
     private SelectedUnitDTO selectedUnitDTO;
     @Autowired
-    private SelectedUpgrades selectedUpgrades;
+    private SelectedUpgrade selectedUpgrade;
 
     public SelectedService() {
     }
 
-    @PostConstruct
-    public void clear() {
-        selectedUnitRepository.deleteAll();
-    }
+//    @PostConstruct
+//    public void clear() {
+//        selectedUpgradeRepository.deleteAll();
+//
+//        selectedUnitRepository.deleteAll();
+//    }
 
 
     public ResponseEntity<String> removeUnitById(int id) {

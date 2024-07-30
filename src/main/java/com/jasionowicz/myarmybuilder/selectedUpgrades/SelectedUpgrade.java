@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class SelectedUpgrades {
+public class SelectedUpgrade {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -32,12 +32,12 @@ public class SelectedUpgrades {
     private Upgrade upgrade;
 
 
-    public SelectedUpgrades(Upgrade upgrade, SelectedUnit selectedUnit) {
+    public SelectedUpgrade(Upgrade upgrade, SelectedUnit selectedUnit) {
         this.selectedUnit = selectedUnit;
         this.upgrade = upgrade;
     }
 
-    public SelectedUpgrades(SelectedUpgradesDTO dto, SelectedUnit selectedUnit) {
+    public SelectedUpgrade(SelectedUpgradeDTO dto, SelectedUnit selectedUnit) {
         this.id = dto.getId();
         this.quantity = dto.getQuantity();
         this.selected = dto.isSelected();
@@ -45,9 +45,18 @@ public class SelectedUpgrades {
         this.selectedUnit = selectedUnit;
     }
 
-    public SelectedUpgrades(SelectedUpgrades selectedUpgrades) {
+    public SelectedUpgrade(SelectedUpgrade selectedUpgrade) {
     }
 
-
-
+    @Override
+    public String toString() {
+        return "SelectedUpgrade{" +
+                "id=" + id +
+                ", quantity=" + quantity +
+                ", selected=" + selected +
+                ", totalCost=" + totalCost +
+                ", selectedUnit=" + selectedUnit +
+                ", upgrade=" + upgrade +
+                '}';
+    }
 }

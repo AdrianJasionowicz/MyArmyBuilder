@@ -4,20 +4,17 @@ import com.jasionowicz.myarmybuilder.armyComposition.ArmyComposition;
 import com.jasionowicz.myarmybuilder.armyComposition.ArmyCompositionService;
 import com.jasionowicz.myarmybuilder.armyComposition.selectedStats.SelectedStatsRepository;
 import com.jasionowicz.myarmybuilder.selectedUnits.*;
-import com.jasionowicz.myarmybuilder.selectedUpgrades.SelectedUpgrades;
-import com.jasionowicz.myarmybuilder.selectedUpgrades.SelectedUpgradesDTO;
-import com.jasionowicz.myarmybuilder.selectedUpgrades.SelectedUpgradesRepository;
-import com.jasionowicz.myarmybuilder.selectedUpgrades.SelectedUpgradesService;
+import com.jasionowicz.myarmybuilder.selectedUpgrades.SelectedUpgrade;
+import com.jasionowicz.myarmybuilder.selectedUpgrades.SelectedUpgradeDTO;
+import com.jasionowicz.myarmybuilder.selectedUpgrades.SelectedUpgradeRepository;
+import com.jasionowicz.myarmybuilder.selectedUpgrades.SelectedUpgradeService;
 import com.jasionowicz.myarmybuilder.unit.Unit;
-import com.jasionowicz.myarmybuilder.unit.UnitDTO;
 import com.jasionowicz.myarmybuilder.unit.UnitRepository;
 import com.jasionowicz.myarmybuilder.unit.UnitService;
-import com.jasionowicz.myarmybuilder.upgrade.Upgrade;
 import com.jasionowicz.myarmybuilder.upgrade.UpgradeDTO;
 import com.jasionowicz.myarmybuilder.upgrade.UpgradeRepository;
 import com.jasionowicz.myarmybuilder.upgrade.UpgradesService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,8 +22,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 import java.util.stream.Collectors;
-
-import static org.hibernate.Hibernate.map;
 
 @Controller
 public class MenuController {
@@ -39,12 +34,12 @@ public class MenuController {
     private final ArmyCompositionService armyCompositionService;
     private final UnitService unitService;
     private final SelectedUnitRepository selectedUnitRepository;
-    private final SelectedUpgradesRepository selectedUpgradesRepository;
+    private final SelectedUpgradeRepository selectedUpgradeRepository;
     private SelectedUnitDTO selectedUnitDTO;
     private double pointsRestriction = 0;
     private final SelectedUnit selectedUnit;
-    private SelectedUpgradesDTO selectedUpgradesDTO;
-    private final SelectedUpgrades selectedUpgrades;
+    private SelectedUpgradeDTO selectedUpgradeDTO;
+    private final SelectedUpgrade selectedUpgrade;
     @Autowired
     private SelectedStatsRepository selectedStatsRepository;
     @Autowired
@@ -52,10 +47,10 @@ public class MenuController {
     @Autowired
     private UpgradeDTO upgradeDTO;
     @Autowired
-    private SelectedUpgradesService selectedUpgradesService;
+    private SelectedUpgradeService selectedUpgradeService;
 
     @Autowired
-    public MenuController(UnitRepository unitRepository, UpgradesService upgradesService, ArmyComposition armyComposition, ArmyCompositionService armyCompositionService, UnitService unitService, SelectedService selectedService, SelectedUnitRepository selectedUnitRepository, SelectedUpgradesRepository selectedUpgradesRepository, SelectedUnit selectedUnit, SelectedUpgradesDTO selectedUpgradesDTO, SelectedUpgrades selectedUpgrades) {
+    public MenuController(UnitRepository unitRepository, UpgradesService upgradesService, ArmyComposition armyComposition, ArmyCompositionService armyCompositionService, UnitService unitService, SelectedService selectedService, SelectedUnitRepository selectedUnitRepository, SelectedUpgradeRepository selectedUpgradeRepository, SelectedUnit selectedUnit, SelectedUpgradeDTO selectedUpgradeDTO, SelectedUpgrade selectedUpgrade) {
         this.unitRepository = unitRepository;
         this.upgradesService = upgradesService;
         this.armyComposition = armyComposition;
@@ -63,20 +58,19 @@ public class MenuController {
         this.unitService = unitService;
         this.selectedService = selectedService;
         this.selectedUnitRepository = selectedUnitRepository;
-        this.selectedUpgradesRepository = selectedUpgradesRepository;
+        this.selectedUpgradeRepository = selectedUpgradeRepository;
         this.selectedUnit = selectedUnit;
-        this.selectedUpgradesDTO = selectedUpgradesDTO;
-        this.selectedUpgrades = selectedUpgrades;
+        this.selectedUpgradeDTO = selectedUpgradeDTO;
+        this.selectedUpgrade = selectedUpgrade;
     }
 
 
     @GetMapping("/menu")
     public String showMenu(Model model) {
         List<Unit> availableUnits = unitRepository.findAll();
-
         List<SelectedUnit> selectedUnits = selectedService.getSelectedUnits();
-
-        Map<String, List<SelectedUnit>> unitsByType = selectedUnits.stream().collect(Collectors.groupingBy(SelectedUnit::getUnitType));
+        Map<String, List<SelectedUnit>> unitsByType = selectedUnits.stream()
+                .collect(Collectors.groupingBy(SelectedUnit::getUnitType));
 
         model.addAttribute("unitsByType", unitsByType);
         model.addAttribute("availableUnits", availableUnits);
@@ -117,10 +111,12 @@ public class MenuController {
 
             selectedUnitRepository.save(selectedUnit);
 
-            List<SelectedUpgrades> selectedUpgradesList = selectedUnit.getSelectedUpgrades().stream().filter(Objects::nonNull).collect(Collectors.toList());
-            if (!selectedUpgradesList.isEmpty()) {
-                selectedUpgradesRepository.saveAll(selectedUpgradesList);
+            List<SelectedUpgrade> selectedUpgradeList = selectedUnit.getSelectedUpgrades().stream().filter(Objects::nonNull).collect(Collectors.toList());
+            if (!selectedUpgradeList.isEmpty()) {
+                selectedUpgradeRepository.saveAll(selectedUpgradeList);
             }
+
+
         }
 
         return "redirect:/menu";
@@ -130,6 +126,10 @@ public class MenuController {
     @PostMapping("/removeUnit")
     public String removeUnit(@RequestParam("id") Integer selectedId) {
         selectedService.removeUnitById(selectedId);
+        double totalPoints = armyCompositionService.calculateTotalPoints();
+        armyComposition.setTotalPoints(totalPoints);
+
+        Map<String, Double> dedicatedPoints = armyCompositionService.calculateDedicatedPoints();
 
         return "redirect:/menu";
     }
@@ -157,21 +157,59 @@ public class MenuController {
 
 
     @PostMapping("/addUpgrade")
-    public ResponseEntity<String> addUpgrade(@RequestParam Integer unitId, @RequestParam Integer upgradeId) {
-        try {
-            List<SelectedUpgrades> upgrades = selectedUpgradesRepository.findAllBySelectedUnitId(unitId);
-            if (upgrades != null && !upgrades.isEmpty()) {
-                selectedUpgradesService.setSelectedUpgrades(unitId, upgradeId);
-                double totalPoints = armyCompositionService.calculateTotalPoints();
-                return ResponseEntity.ok("Upgrade added successfully. Total points: " + totalPoints);
-            } else {
-                return ResponseEntity.notFound().build();
+    public ResponseEntity<String> addUpgrade(@RequestParam Integer upgradeId) {
+        Optional<SelectedUpgrade> optionalSelectedUpgrade = selectedUpgradeRepository.findById(upgradeId);
+
+
+        if (optionalSelectedUpgrade.isPresent()) {
+
+            SelectedUpgrade selectedUpgrade = optionalSelectedUpgrade.get();
+            SelectedUnit selectedUnit = selectedUpgrade.getSelectedUnit();
+            int id = selectedUnit.getId();
+            boolean isWeaponTeamTaken = selectedUpgradeService.checkWeaponTeams(id);
+            if (isWeaponTeamTaken) {
+                selectedUpgrade.setSelected(false);
+                selectedUpgradeRepository.save(selectedUpgrade);
+                return ResponseEntity.badRequest().body("Unit can take only one Weapon team");
             }
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error adding upgrade: " + e.getMessage());
+
+
+
+            if (selectedUpgrade.isSelected()) {
+
+                return ResponseEntity.badRequest().body("Upgrade already selected");
+            }
+
+
+            selectedUpgrade.setSelected(true);
+            if (selectedUpgrade.getUpgrade().getUpgradeType().equals("Weapon Team")) {
+                selectedUpgrade.setQuantity(1);
+            }
+            if (selectedUpgrade.getUpgrade().getUpgradeType().equals("SingleBuy")) {
+                selectedUpgrade.setQuantity(1);
+            } else {
+                selectedUpgrade.setQuantity(selectedUpgrade.getQuantity());
+            }
+            selectedUpgradeRepository.save(selectedUpgrade);
+
+
+            return ResponseEntity.ok().body("Upgrade added successfully");
         }
+        return ResponseEntity.badRequest().body("Upgrade not found");
     }
 
+    @PostMapping("/removeSelectedUpgrade")
+    public ResponseEntity<String> removeSelectedUpgrade(int upgradeId) {
+        Optional<SelectedUpgrade> optionalSelectedUpgrade = selectedUpgradeRepository.findById(upgradeId);
+        if (optionalSelectedUpgrade.isPresent()) {
+            SelectedUpgrade selectedUpgrade = optionalSelectedUpgrade.get();
+            selectedUpgrade.setSelected(false);
+            selectedUpgradeRepository.save(selectedUpgrade);
+
+            return ResponseEntity.ok().body("Upgrade removed successfully");
+        }
+        return ResponseEntity.badRequest().body("Upgrade not found");
+    }
 
     @PostMapping("/resetPoints")
     public String resetPoints() {
@@ -197,25 +235,20 @@ public class MenuController {
 
     public Map<String, Double> calculateUtilizedPointsByType(Map<String, List<SelectedUnit>> unitsByType) {
         Map<String, Double> utilizedPointsByType = new HashMap<>();
-        unitsByType.forEach((type, Selectedunit) -> {
-            double utilizedPoints = Selectedunit.stream().mapToDouble(selectedunit -> selectedunit.getUnit().getPointsCostPerUnit() * selectedunit.getQuantity()).sum();
-            utilizedPointsByType.put(type, utilizedPoints);
-        });
+        utilizedPointsByType = armyCompositionService.calculateDedicatedPoints();
         return utilizedPointsByType;
     }
 
 
     @GetMapping("/units/{id}/upgrades")
-    public ResponseEntity<List<SelectedUpgradesDTO>> getSelectedUpgrades(@PathVariable Integer id) {
+    public ResponseEntity<List<SelectedUpgradeDTO>> getSelectedUpgrades(@PathVariable Integer id) {
 
         Optional<SelectedUnit> optionalSelectedUnit = selectedUnitRepository.findById(id);
         if (optionalSelectedUnit.isPresent()) {
             SelectedUnit selectedUnit = optionalSelectedUnit.get();
-            List<SelectedUpgradesDTO> selectedUpgradesList = selectedUnit.getSelectedUpgrades().stream()
-                    .map(SelectedUpgradesDTO::new)
+            List<SelectedUpgradeDTO> selectedUpgradesList = selectedUnit.getSelectedUpgrades().stream()
+                    .map(SelectedUpgradeDTO::new)
                     .collect(Collectors.toList());
-
-            System.out.println(selectedUpgradesList);
             return ResponseEntity.ok(selectedUpgradesList);
 
         } else {
@@ -224,6 +257,8 @@ public class MenuController {
         }
 
     }
+
+
 }
 /*
  * Unit
