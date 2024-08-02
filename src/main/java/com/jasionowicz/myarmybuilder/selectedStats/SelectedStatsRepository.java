@@ -1,4 +1,4 @@
-package com.jasionowicz.myarmybuilder.armyComposition.selectedStats;
+package com.jasionowicz.myarmybuilder.selectedStats;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

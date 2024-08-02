@@ -9,29 +9,24 @@
             flex-direction: column;
             align-items: center;
         }
-
         .list {
             margin: 10px;
             padding: 10px;
             border: 1px solid #e21a1a;
             width: 30%;
         }
-
         .quantity-control {
             display: flex;
             align-items: center;
         }
-
         .quantity-input {
             width: 50px;
             text-align: center;
             margin: 0 10px;
         }
-
         .quantity-button {
             padding: 5px 10px;
         }
-
         .army-composition {
             width: 100%;
             background-color: #ca5757;
@@ -40,22 +35,18 @@
             box-sizing: border-box;
             margin-top: 20px;
         }
-
         .units-container {
             display: flex;
             justify-content: space-between;
             width: 100%;
         }
-
         .units-container .list {
             margin: 10px;
         }
-
         .total-points {
             margin-top: 20px;
             text-align: center;
         }
-
         .points-limits-by-type {
             margin-top: 10px;
         }
@@ -63,25 +54,41 @@
             width: 15px;
             height: auto;
         }
-
+        .nation-selector {
+            margin-left: 20px;
+        }
+        .nation-selector label {
+            margin-right: 10px;
+        }
+        .nation-selector select {
+            padding: 5px;
+            font-size: 16px;
+        }
     </style>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
 
 <h1>Warhammer Builder</h1>
+<div class="nation-selector">
+    <label for="nationSelect">Select Nation:</label>
+    <select id="nationSelect" name="nation">
+        <option value="All">All</option>
+        <option value="Skaven">Skaven</option>
+        <option value="Empire">Empire</option>
+        <option value="Dark Elves">Dark Elves</option>
+        <option value="Dwarfs">Dwarfs</option>
+    </select>
+</div>
 <div style="border: 1px solid red;">
     <div class="container">
-
         <div class="units-container">
-            <!-- Section for available units -->
+            <!-- Sekcja dostępnych jednostek -->
             <div class="list">
                 <h2>Available Units</h2>
-
-                <!-- Section for Lord units -->
+                <!-- Sekcja jednostek Lord -->
                 <h3>Lord</h3>
                 <ul>
-                    <li th:each="unit : ${availableUnits}" th:if="${unit.unitType == 'Lords'}">
+                    <li th:each="unit : ${availableUnits}" th:data-nation="${unit.nation}" th:if="${unit.unitType == 'Lords'}">
                         <span th:text="${unit.name}">Unit Name</span>
                         <form th:action="@{/addUnit}" method="post" style="display:inline;">
                             <input type="hidden" name="unitId" th:value="${unit.id}"/>
@@ -89,11 +96,10 @@
                         </form>
                     </li>
                 </ul>
-
-                <!-- Section for Hero units -->
+                <!-- Sekcja jednostek Hero -->
                 <h3>Hero</h3>
                 <ul>
-                    <li th:each="unit : ${availableUnits}" th:if="${unit.unitType == 'Hero'}">
+                    <li th:each="unit : ${availableUnits}" th:data-nation="${unit.nation}" th:if="${unit.unitType == 'Hero'}">
                         <span th:text="${unit.name}">Unit Name</span>
                         <form th:action="@{/addUnit}" method="post" style="display:inline;">
                             <input type="hidden" name="unitId" th:value="${unit.id}"/>
@@ -101,11 +107,10 @@
                         </form>
                     </li>
                 </ul>
-
-                <!-- Section for Core units -->
+                <!-- Sekcja jednostek Core -->
                 <h3>Core</h3>
                 <ul>
-                    <li th:each="unit : ${availableUnits}" th:if="${unit.unitType == 'Core'}">
+                    <li th:each="unit : ${availableUnits}" th:data-nation="${unit.nation}" th:if="${unit.unitType == 'Core'}">
                         <span th:text="${unit.name}">Unit Name</span>
                         <form th:action="@{/addUnit}" method="post" style="display:inline;">
                             <input type="hidden" name="unitId" th:value="${unit.id}"/>
@@ -113,11 +118,10 @@
                         </form>
                     </li>
                 </ul>
-
-                <!-- Section for Special units -->
+                <!-- Sekcja jednostek Special -->
                 <h3>Special</h3>
                 <ul>
-                    <li th:each="unit : ${availableUnits}" th:if="${unit.unitType == 'Special'}">
+                    <li th:each="unit : ${availableUnits}" th:data-nation="${unit.nation}" th:if="${unit.unitType == 'Special'}">
                         <span th:text="${unit.name}">Unit Name</span>
                         <form th:action="@{/addUnit}" method="post" style="display:inline;">
                             <input type="hidden" name="unitId" th:value="${unit.id}"/>
@@ -125,11 +129,10 @@
                         </form>
                     </li>
                 </ul>
-
-                <!-- Section for Rare units -->
+                <!-- Sekcja jednostek Rare -->
                 <h3>Rare</h3>
                 <ul>
-                    <li th:each="unit : ${availableUnits}" th:if="${unit.unitType == 'Rare'}">
+                    <li th:each="unit : ${availableUnits}" th:data-nation="${unit.nation}" th:if="${unit.unitType == 'Rare'}">
                         <span th:text="${unit.name}">Unit Name</span>
                         <form th:action="@{/addUnit}" method="post" style="display:inline;">
                             <input type="hidden" name="unitId" th:value="${unit.id}"/>
@@ -137,10 +140,9 @@
                         </form>
                     </li>
                 </ul>
-
             </div>
 
-            <!-- Section for selected units -->
+            <!-- Sekcja wybranych jednostek -->
             <div class="list">
                 <h2>Selected Units</h2>
                 <ul>
@@ -154,26 +156,19 @@
                                 th:data-id="${unit.id}"
                                 th:id="'selectUpgradesBtn_' + ${unitIndex.index}">Select Upgrades
                         </button>
-
-
                         <div class="quantity-control"
                              th:unless="${unit.unitType == 'Lords' or unit.unitType == 'Hero' or unit.unitType == 'Rare'}">
-                            <!-- Formularz do zmniejszenia ilości -->
+                            <!-- Formularz zmniejszenia ilości -->
                             <form th:action="@{/decreaseUnitQuantity}" method="post" style="display: inline;">
-                                <!-- Przekazanie id jednostki jako parametr -->
                                 <input type="hidden" name="id" th:value="${unit.id}"/>
                                 <button type="submit" th:id="'decreaseQuantityBtn_' + ${unitIndex.index}">-</button>
                             </form>
-
-                            <!-- Pole wyświetlające aktualną ilość jednostek -->
+                            <!-- Wyświetl bieżącą ilość -->
                             <span>
-                    <input type="number" class="quantity-input" name="quantity" th:value="${unit.quantity}" min="0"
-                           disabled/>
-                </span>
-
-                            <!-- Formularz do zwiększenia ilości -->
+                                <input type="number" class="quantity-input" name="quantity" th:value="${unit.quantity}" min="0" disabled/>
+                            </span>
+                            <!-- Formularz zwiększenia ilości -->
                             <form th:action="@{/increaseUnitQuantity}" method="post" style="display: inline;">
-                                <!-- Przekazanie id jednostki jako parametr -->
                                 <input type="hidden" name="id" th:value="${unit.id}"/>
                                 <button type="submit" th:id="'increaseQuantityBtn_' + ${unitIndex.index}">+</button>
                             </form>
@@ -181,7 +176,7 @@
                     </li>
                 </ul>
             </div>
-            <!-- Section for available upgrades -->
+            <!-- Sekcja dostępnych ulepszeń -->
             <div class="list">
                 <h2>Upgrades</h2>
                 <div id="upgrades-list"></div>
@@ -191,32 +186,27 @@
                             <span th:text="${upgrade.name}">Upgrade Name</span>
                             <div class="button-container">
                                 <button class="select-upgrade-button" th:data-upgrade-id="${upgrade.id}">Select</button>
-
-
-                                <button class="unselect-upgrade-button" th:data-selected-unit-id="${unit.id}"
-                                        th:data-upgrade-id="${upgrade.id}" style="display:none;">Unselect
-                                </button>
+                                <button class="remove-upgrade-button" th:data-upgrade-id="${upgrade.id}" style="display:none;">Remove</button>
                             </div>
                         </div>
                     </li>
                 </ul>
             </div>
-
         </div> <!-- units-container -->
 
-        <!-- Section for army composition -->
+        <!-- Sekcja składu armii -->
         <div class="army-composition">
             <h2>Army Composition</h2>
             <div th:if="${armyCompositions != null}">
-                <!-- Number of Lords -->
+                <!-- Liczba Lordów -->
                 <p>Lords: <span id="total-lords" th:text="${armyComposition.totalLords}"></span></p>
-                <!-- Number of Heroes -->
+                <!-- Liczba Bohaterów -->
                 <p>Heroes: <span id="total-heroes" th:text="${armyComposition.totalHeroes}"></span></p>
-                <!-- Number of Core -->
+                <!-- Liczba Core -->
                 <p>Core: <span id="total-core" th:text="${armyComposition.totalCore}"></span></p>
-                <!-- Number of Special -->
+                <!-- Liczba Special -->
                 <p>Special: <span id="total-special" th:text="${armyComposition.totalSpecial}"></span></p>
-                <!-- Number of Rare -->
+                <!-- Liczba Rare -->
                 <p>Rare: <span id="total-rare" th:text="${armyComposition.totalRare}"></span></p>
             </div>
         </div>
@@ -225,7 +215,7 @@
             <h3>
                 <span th:text="'Total Points: ' + (${totalPoints} + ' / ' + ${pointsRestriction > 0 ? pointsRestriction : '0.0'})"></span>
             </h3>
-            <!--Points restriction section -->
+            <!-- Sekcja ustawienia limitu punktów -->
             <div class="points-form">
                 <h3>Set Points Restriction</h3>
                 <form th:action="@{/setPointsRestriction}" method="post">
@@ -233,7 +223,7 @@
                     <button type="submit">Set Points</button>
                 </form>
             </div>
-            <!-- Section displaying points for each unit type -->
+            <!-- Sekcja wyświetlania punktów dla każdego typu jednostki -->
             <div class="points-limits-by-type">
                 <h3>Points Limits by Unit Type</h3>
                 <ul>
@@ -262,19 +252,36 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function () {
+        function filterUnitsByNation(nation) {
+            $('.list ul li').each(function () {
+                var unitNation = $(this).data('nation');
+                if (unitNation === nation || nation === 'All') {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
+        }
+
+        // Początkowo pokazuj wszystkie jednostki
+        filterUnitsByNation('All');
+
+        // Obsługuje zdarzenie zmiany na selektorze nacji
+        $('#nationSelect').on('change', function () {
+            var selectedNation = $(this).val();
+            filterUnitsByNation(selectedNation);
+        });
+
         $('.select-upgrades').on('click', function () {
             var unitId = $(this).data('id');
-
             $.ajax({
                 type: 'GET',
                 url: '/units/' + unitId + '/upgrades',
                 success: function (data) {
                     console.log('Received data:', data);
                     $('#upgrades-list').empty();
-
                     data.forEach(function (upgrade) {
                         var listItem = $('<li>').text(upgrade.name + ' (+' + upgrade.pointsCost + ' pts)');
-
                         var selectButton = $('<button>')
                             .text('Add')
                             .addClass('select-upgrade-button')
@@ -282,22 +289,39 @@
                             .data('unit-id', unitId)
                             .click(function () {
                                 var upgradeId = $(this).data('upgrade-id');
-                                var unitId = $(this).data('unit-id');
-
                                 $.ajax({
                                     type: 'POST',
                                     url: '/addUpgrade',
-                                    data: {unitId: unitId, upgradeId: upgradeId},
+                                    data: $.param({upgradeId: upgradeId}),
                                     success: function () {
                                         listItem.prepend('<img src="/selectedUpgrade.png" alt="selected" class="selected-icon" />');
+                                        $('.remove-upgrade-button').show();
                                     },
                                     error: function () {
                                         alert('Error adding upgrade.');
                                     }
                                 });
                             });
-
-                        listItem.append(selectButton);
+                        var removeButton = $('<button>')
+                            .text('Remove')
+                            .addClass('remove-upgrade-button')
+                            .data('upgrade-id', upgrade.id)
+                            .click(function () {
+                                var upgradeId = $(this).data('upgrade-id');
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '/removeSelectedUpgrade',
+                                    data: $.param({upgradeId: upgradeId}),
+                                    success: function () {
+                                        listItem.find('.selected-icon').remove();
+                                        removeButton.hide();
+                                    },
+                                    error: function () {
+                                        alert('Error removing upgrade.');
+                                    }
+                                });
+                            });
+                        listItem.append(selectButton).append(removeButton);
                         $('#upgrades-list').append(listItem);
                     });
                 },
@@ -308,8 +332,6 @@
             });
         });
     });
-
 </script>
-
 </body>
 </html>

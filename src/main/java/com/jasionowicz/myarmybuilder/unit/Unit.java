@@ -60,17 +60,4 @@ public class Unit {
         this.unitType = unitType;
     }
 
-    @Override
-    public String toString() {
-        return "Unit{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", pointsCostPerUnit=" + pointsCostPerUnit +
-                ", minQuantity=" + minQuantity +
-                ", unitType='" + unitType + '\'' +
-                ", nation='" + nation + '\'' +
-                ", unitStats=" + unitStats +
-                ", upgradesList=" + upgradesList +
-                '}';
-    }
 }

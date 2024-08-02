@@ -113,4 +113,28 @@ public class SelectedUpgradeService {
 
         return ResponseEntity.ok().body("Done");
     }
+
+    public void checkAmmountOfStandardBannersInArmy() {
+        int bsbsInArmy = 0;
+        List<SelectedUpgrade> selectedUpgradeList = selectedUpgradeRepository.findAll();
+        for (SelectedUpgrade upgrade : selectedUpgradeList) {
+            if (upgrade.isSelected() && upgrade.getUpgrade().getUpgradeType().equals("Standard Banner")) {
+                bsbsInArmy++;
+            }
+        }
+        if (bsbsInArmy > 1) {
+            throw new RuntimeException("Army can hold only one bsb");
+        }
+    }
+
+
+    public void checkUpgradesQuantities(Integer id, int quantity) {
+       List<SelectedUpgrade> selectedUpgradeList =  selectedUpgradeRepository.findAllBySelectedUnitId(id);
+        for (SelectedUpgrade upgrade : selectedUpgradeList) {
+            if (upgrade.isSelected() && upgrade.getUpgrade().getUpgradeType().equals("Weapon")) {
+                upgrade.setQuantity(quantity);
+                selectedUpgradeRepository.save(upgrade);
+            }
+        }
+    }
 }

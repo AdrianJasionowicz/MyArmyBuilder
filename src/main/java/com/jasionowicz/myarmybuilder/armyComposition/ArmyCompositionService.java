@@ -56,15 +56,6 @@ public class ArmyCompositionService {
     }
 
 
-    public void resetPoints() {
-        armyComposition.setTotalPoints(0);
-        armyComposition.setTotalSpecial(0);
-        armyComposition.setTotalLords(0);
-        armyComposition.setTotalCore(0);
-        armyComposition.setTotalHeroes(0);
-        armyComposition.setTotalRare(0);
-    }
-
     public Map<String, Double> calculateDedicatedPoints() {
         List<SelectedUnit> selectedUnitsList = selectedUnitRepository.findAll();
         List<SelectedUpgrade> selectedUpgradeList = selectedUpgradeRepository.findAll();

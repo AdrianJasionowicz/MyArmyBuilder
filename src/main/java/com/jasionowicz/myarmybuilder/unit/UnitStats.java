@@ -1,6 +1,6 @@
 package com.jasionowicz.myarmybuilder.unit;
 
-import com.jasionowicz.myarmybuilder.armyComposition.selectedStats.SelectedStats;
+import com.jasionowicz.myarmybuilder.selectedStats.SelectedStats;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;

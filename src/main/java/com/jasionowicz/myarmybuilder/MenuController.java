@@ -2,7 +2,7 @@ package com.jasionowicz.myarmybuilder;
 
 import com.jasionowicz.myarmybuilder.armyComposition.ArmyComposition;
 import com.jasionowicz.myarmybuilder.armyComposition.ArmyCompositionService;
-import com.jasionowicz.myarmybuilder.armyComposition.selectedStats.SelectedStatsRepository;
+import com.jasionowicz.myarmybuilder.selectedStats.SelectedStatsRepository;
 import com.jasionowicz.myarmybuilder.selectedUnits.*;
 import com.jasionowicz.myarmybuilder.selectedUpgrades.SelectedUpgrade;
 import com.jasionowicz.myarmybuilder.selectedUpgrades.SelectedUpgradeDTO;
@@ -35,17 +35,12 @@ public class MenuController {
     private final UnitService unitService;
     private final SelectedUnitRepository selectedUnitRepository;
     private final SelectedUpgradeRepository selectedUpgradeRepository;
-    private SelectedUnitDTO selectedUnitDTO;
     private double pointsRestriction = 0;
     private final SelectedUnit selectedUnit;
     private SelectedUpgradeDTO selectedUpgradeDTO;
     private final SelectedUpgrade selectedUpgrade;
     @Autowired
     private SelectedStatsRepository selectedStatsRepository;
-    @Autowired
-    private UpgradeRepository upgradeRepository;
-    @Autowired
-    private UpgradeDTO upgradeDTO;
     @Autowired
     private SelectedUpgradeService selectedUpgradeService;
 
@@ -106,7 +101,6 @@ public class MenuController {
 
             if (selectedUnit.getSelectedStats() != null) {
                 selectedStatsRepository.save(selectedUnit.getSelectedStats());
-            } else {
             }
 
             selectedUnitRepository.save(selectedUnit);
@@ -127,8 +121,6 @@ public class MenuController {
     public String removeUnit(@RequestParam("id") Integer selectedId) {
         selectedService.removeUnitById(selectedId);
         double totalPoints = armyCompositionService.calculateTotalPoints();
-        armyComposition.setTotalPoints(totalPoints);
-
         Map<String, Double> dedicatedPoints = armyCompositionService.calculateDedicatedPoints();
 
         return "redirect:/menu";
@@ -159,20 +151,39 @@ public class MenuController {
     @PostMapping("/addUpgrade")
     public ResponseEntity<String> addUpgrade(@RequestParam Integer upgradeId) {
         Optional<SelectedUpgrade> optionalSelectedUpgrade = selectedUpgradeRepository.findById(upgradeId);
-
+        selectedUpgradeService.checkAmmountOfStandardBannersInArmy();
 
         if (optionalSelectedUpgrade.isPresent()) {
 
             SelectedUpgrade selectedUpgrade = optionalSelectedUpgrade.get();
             SelectedUnit selectedUnit = selectedUpgrade.getSelectedUnit();
             int id = selectedUnit.getId();
+            SelectedUnit selectedUnitForQuantity =  selectedUnitRepository.getReferenceById(id);
+            System.out.println(selectedUnitForQuantity);
             boolean isWeaponTeamTaken = selectedUpgradeService.checkWeaponTeams(id);
+
+
             if (isWeaponTeamTaken) {
                 selectedUpgrade.setSelected(false);
                 selectedUpgradeRepository.save(selectedUpgrade);
                 return ResponseEntity.badRequest().body("Unit can take only one Weapon team");
             }
 
+            if (selectedUnit.getUnitType().equals("Lords")) {
+                selectedUpgradeService.checkLordsUpgrades(id);
+            }
+
+            if (selectedUnit.getUnitType().equals("Hero")) {
+                boolean hasAStandardBanner = false;
+                hasAStandardBanner = selectedUpgradeService.checkChieftainStandardBanner(id);
+                if (!hasAStandardBanner) {
+                    selectedUpgradeService.checkHeroUpgrades(id);
+                } else {
+                    throw new RuntimeException("Hero with Standard banner cannont take Magic items");
+                }
+
+
+            }
 
 
             if (selectedUpgrade.isSelected()) {
@@ -183,12 +194,13 @@ public class MenuController {
 
             selectedUpgrade.setSelected(true);
             if (selectedUpgrade.getUpgrade().getUpgradeType().equals("Weapon Team")) {
+
                 selectedUpgrade.setQuantity(1);
             }
             if (selectedUpgrade.getUpgrade().getUpgradeType().equals("SingleBuy")) {
                 selectedUpgrade.setQuantity(1);
             } else {
-                selectedUpgrade.setQuantity(selectedUpgrade.getQuantity());
+                selectedUpgrade.setQuantity(selectedUnitForQuantity.getQuantity());
             }
             selectedUpgradeRepository.save(selectedUpgrade);
 
@@ -209,12 +221,6 @@ public class MenuController {
             return ResponseEntity.ok().body("Upgrade removed successfully");
         }
         return ResponseEntity.badRequest().body("Upgrade not found");
-    }
-
-    @PostMapping("/resetPoints")
-    public String resetPoints() {
-        armyCompositionService.resetPoints();
-        return "redirect:/menu";
     }
 
     @PostMapping("/setPointsRestriction")

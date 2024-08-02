@@ -44,5 +44,8 @@ public class UnitController {
     public void deleteUnit(@PathVariable Integer id) {
         unitService.deleteById(id);
     }
-
+    @GetMapping("/nation/{nation}")
+    public List<Unit> getUnitsByNation(@PathVariable String nation) {
+        return unitService.getUnitsByNation(nation);
+    }
 }

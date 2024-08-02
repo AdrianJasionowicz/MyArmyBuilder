@@ -1,8 +1,8 @@
 package com.jasionowicz.myarmybuilder.selectedUnits;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.jasionowicz.myarmybuilder.armyComposition.selectedStats.SelectedStats;
-import com.jasionowicz.myarmybuilder.armyComposition.selectedStats.SelectedStatsDTO;
+import com.jasionowicz.myarmybuilder.selectedStats.SelectedStats;
+import com.jasionowicz.myarmybuilder.selectedStats.SelectedStatsDTO;
 import com.jasionowicz.myarmybuilder.selectedUpgrades.SelectedUpgrade;
 import com.jasionowicz.myarmybuilder.unit.Unit;
 import com.jasionowicz.myarmybuilder.unit.UnitStats;
@@ -27,7 +27,6 @@ public class SelectedUnit {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Integer id;
     private int quantity;
     @ManyToOne
@@ -47,12 +46,6 @@ public class SelectedUnit {
         return unit.getUnitType();
     }
 
-    public Integer getUnitId() {
-        if (unit == null) {
-            return null;
-        }
-        return unit.getId();
-    }
 
     public SelectedUnit(Unit unit) {
         this.unit = unit;
@@ -85,7 +78,6 @@ public class SelectedUnit {
         }
         this.selectedUpgrades.add(upgrade);
     }
-
 
 
     public String getName() {

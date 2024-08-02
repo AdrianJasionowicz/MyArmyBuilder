@@ -48,15 +48,5 @@ public class SelectedUpgrade {
     public SelectedUpgrade(SelectedUpgrade selectedUpgrade) {
     }
 
-    @Override
-    public String toString() {
-        return "SelectedUpgrade{" +
-                "id=" + id +
-                ", quantity=" + quantity +
-                ", selected=" + selected +
-                ", totalCost=" + totalCost +
-                ", selectedUnit=" + selectedUnit +
-                ", upgrade=" + upgrade +
-                '}';
-    }
+
 }

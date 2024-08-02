@@ -1,4 +1,4 @@
-package com.jasionowicz.myarmybuilder.armyComposition.selectedStats;
+package com.jasionowicz.myarmybuilder.selectedStats;
 
 import com.jasionowicz.myarmybuilder.unit.UnitStats;
 import jakarta.persistence.Entity;

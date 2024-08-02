@@ -1,6 +1,6 @@
 package com.jasionowicz.myarmybuilder.selectedUnits;
 
-import com.jasionowicz.myarmybuilder.armyComposition.selectedStats.SelectedStatsDTO;
+import com.jasionowicz.myarmybuilder.selectedStats.SelectedStatsDTO;
 import com.jasionowicz.myarmybuilder.selectedUpgrades.SelectedUpgradeDTO;
 import com.jasionowicz.myarmybuilder.unit.Unit;
 import lombok.AllArgsConstructor;

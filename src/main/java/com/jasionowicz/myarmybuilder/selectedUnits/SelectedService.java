@@ -2,6 +2,7 @@ package com.jasionowicz.myarmybuilder.selectedUnits;
 
 import com.jasionowicz.myarmybuilder.selectedUpgrades.SelectedUpgrade;
 import com.jasionowicz.myarmybuilder.selectedUpgrades.SelectedUpgradeRepository;
+import com.jasionowicz.myarmybuilder.selectedUpgrades.SelectedUpgradeService;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +25,8 @@ public class SelectedService {
     private SelectedUnitDTO selectedUnitDTO;
     @Autowired
     private SelectedUpgrade selectedUpgrade;
+    @Autowired
+    private SelectedUpgradeService selectedUpgradeService;
 
     public SelectedService() {
     }
@@ -52,6 +55,8 @@ public class SelectedService {
             SelectedUnit unit = selectedUnit.get();
             unit.setQuantity(unit.getQuantity() + 1);
             selectedUnitRepository.save(unit);
+            selectedUpgradeService.checkUpgradesQuantities(id,unit.getQuantity());
+
             return ResponseEntity.ok("Quantity increased");
         }
         return ResponseEntity.badRequest().body("Unit not found");
@@ -66,6 +71,7 @@ public class SelectedService {
             if (selectedUnit.getQuantity() > 0) {
                 selectedUnit.setQuantity(selectedUnit.getQuantity() - 1);
                 selectedUnitRepository.save(selectedUnit);
+                selectedUpgradeService.checkUpgradesQuantities(id,selectedUnit.getQuantity());
 
                 return ResponseEntity.ok("Quantity decreased");
             } else {

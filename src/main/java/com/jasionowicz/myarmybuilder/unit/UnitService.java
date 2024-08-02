@@ -80,4 +80,7 @@ public class UnitService {
         return unit;
     }
 
+    public List<Unit> getUnitsByNation(String nation) {
+        return unitRepository.findByNation(nation);
+    }
 }
