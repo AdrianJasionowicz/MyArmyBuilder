@@ -70,7 +70,7 @@ INSERT INTO UPGRADE (ID, POINTS_COST, UNIT_ID, DESCRIPTION, NAME, UPGRADE_TYPE) 
 (9, 55, 1, 'Special Weapon Team', 'Doom-flayer', 'Weapon Team'),
 (10, 0, 1, 'Free hand weapons to fight', 'Hand Weapon', 'Free upgrade'),
 (11, 0, 1, 'Free Light armors grants 6+ save', 'Light Armor', 'Free upgrade'),
-(12, 0, 1, 'Flee 1" more', 'Scurry Away', 'Race special Rule'),
+(12, 0, 1, 'Flee 1" more', 'Scurry Away', 'Race special rule'),
 (13, 0, 1, 'Grants More Ld for each rank (max 10Ld)', 'Strength in numbers', 'Race special rule'),
 
 -- Stormvermin
@@ -85,7 +85,7 @@ INSERT INTO UPGRADE (ID, POINTS_COST, UNIT_ID, DESCRIPTION, NAME, UPGRADE_TYPE) 
 (22, 55, 2, 'Doom-flayer', 'Doom-flayer', 'Weapon Team'),
 (23, 0, 2, 'Free hand weapons to fight', 'Hand Weapon', 'Free upgrade'),
 (24, 0, 2, 'Free Heavy armors grants 5+ save', 'Heavy Armor', 'Free upgrade'),
-(25, 0, 2, 'Flee 1" more', 'Scurry Away', 'Race special Rule'),
+(25, 0, 2, 'Flee 1" more', 'Scurry Away', 'Race special rule'),
 (26, 0, 2, 'Grants More Ld for each rank (max 10Ld)', 'Strength in numbers', 'Race special rule'),
 
 -- Skavenslaves
@@ -96,7 +96,7 @@ INSERT INTO UPGRADE (ID, POINTS_COST, UNIT_ID, DESCRIPTION, NAME, UPGRADE_TYPE) 
 (31, 0.5, 9, 'Shields grants 6+ save and 6+ ward save in front', 'Shield', 'Weapon'),
 (32, 0, 9, 'Automatically passes all Panic test except of other skavenslaves', 'Expendable', 'Free upgrade'),
 (33, 0, 9, 'If unit breaks from combat all unit within d6" suffers d3 s3 dmg from each rank left', 'Cornered rats', 'Free upgrade'),
-(34, 0, 9, 'Flee 1" more', 'Scurry Away', 'Race special Rule'),
+(34, 0, 9, 'Flee 1" more', 'Scurry Away', 'Race special rule'),
 (35, 0, 9, 'Grants More Ld for each rank (max 10Ld)', 'Strength in numbers', 'Race special rule'),
 
 -- Plague Priest
@@ -109,7 +109,7 @@ INSERT INTO UPGRADE (ID, POINTS_COST, UNIT_ID, DESCRIPTION, NAME, UPGRADE_TYPE) 
 (42, 150, 14, 'Plague Furnace', 'Plague Furnace', 'RARE'),
 (43, 200, 14, 'Hand Weapon', 'Hand Weapon', 'Free'),
 (44, 0, 14, 'Frenzy grants +1 attack', 'Frenzy', 'Free'),
-(45, 0, 14, 'Flee 1" more', 'Scurry Away', 'Race special Rule'),
+(45, 0, 14, 'Flee 1" more', 'Scurry Away', 'Race special rule'),
 (46, 0, 14, 'Grants More Ld for each rank (max 10Ld)', 'Strength in numbers', 'Race special rule'),
 
 
@@ -131,5 +131,5 @@ INSERT INTO UPGRADE (ID, POINTS_COST, UNIT_ID, DESCRIPTION, NAME, UPGRADE_TYPE) 
 (58, 0, 22, 'Add armor save', 'Warp Armor', 'Armor'),
 (59, 15, 22, 'Add 15 points for a shield', 'Shield', 'Armor'),
 (60, 20, 22, 'Add 20 points for a Warplock Pistol', 'Warplock Pistol', 'Weapon'),
-(61, 0, 22, 'Flee 1" more', 'Scurry Away', 'Race special Rule'),
+(61, 0, 22, 'Flee 1" more', 'Scurry Away', 'Race special rule'),
 (62, 0, 2, 'Grants More Ld for each rank (max 10Ld)', 'Strength in numbers', 'Race special rule');

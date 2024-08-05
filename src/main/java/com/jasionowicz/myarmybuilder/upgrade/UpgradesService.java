@@ -1,7 +1,9 @@
 package com.jasionowicz.myarmybuilder.upgrade;
 
+import com.jasionowicz.myarmybuilder.selectedUpgrades.SelectedUpgrade;
 import com.jasionowicz.myarmybuilder.selectedUpgrades.SelectedUpgradeRepository;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 @Service
@@ -9,6 +11,7 @@ public class UpgradesService {
 
     private final UpgradeRepository upgradeRepository;
     private SelectedUpgradeRepository selectedUpgradeRepository;
+
     public UpgradesService(UpgradeRepository upgradeRepository) {
         this.upgradeRepository = upgradeRepository;
     }
@@ -37,4 +40,5 @@ public class UpgradesService {
         existingUpgrade.setPointsCost(upgrade.getPointsCost());
         upgradeRepository.save(existingUpgrade);
     }
+
 }

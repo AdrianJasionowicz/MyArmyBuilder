@@ -50,10 +50,10 @@ public class SelectedUpgradeService {
 
     }
 
-    public boolean checkChieftainStandardBanner(Integer selectedId) {
+    public boolean checkChieftainBattleStandard(Integer selectedId) {
         List<SelectedUpgrade> checkUpgrades = selectedUpgradeRepository.findAllBySelectedUnitId(selectedId);
         for (SelectedUpgrade checkUpgrade : checkUpgrades) {
-            if (checkUpgrade.isSelected() && "Standard Banner".equals(checkUpgrade.getUpgrade().getUpgradeType())) {
+            if (checkUpgrade.isSelected() && "Battle Standard".equals(checkUpgrade.getUpgrade().getUpgradeType())) {
                 return true;
             }
         }
@@ -114,22 +114,23 @@ public class SelectedUpgradeService {
         return ResponseEntity.ok().body("Done");
     }
 
-    public void checkAmmountOfStandardBannersInArmy() {
+    public ResponseEntity<String> checkAmmountOfSBattleStandardsInArmy() {
         int bsbsInArmy = 0;
         List<SelectedUpgrade> selectedUpgradeList = selectedUpgradeRepository.findAll();
         for (SelectedUpgrade upgrade : selectedUpgradeList) {
-            if (upgrade.isSelected() && upgrade.getUpgrade().getUpgradeType().equals("Standard Banner")) {
+            if (upgrade.isSelected() && upgrade.getUpgrade().getUpgradeType().equals("Battle Standard")) {
                 bsbsInArmy++;
             }
         }
         if (bsbsInArmy > 1) {
-            throw new RuntimeException("Army can hold only one bsb");
+            return ResponseEntity.badRequest().body("Army can hold only one bsb");
         }
+        return ResponseEntity.ok().body("Army hold one bsb");
     }
 
 
     public void checkUpgradesQuantities(Integer id, int quantity) {
-       List<SelectedUpgrade> selectedUpgradeList =  selectedUpgradeRepository.findAllBySelectedUnitId(id);
+        List<SelectedUpgrade> selectedUpgradeList = selectedUpgradeRepository.findAllBySelectedUnitId(id);
         for (SelectedUpgrade upgrade : selectedUpgradeList) {
             if (upgrade.isSelected() && upgrade.getUpgrade().getUpgradeType().equals("Weapon")) {
                 upgrade.setQuantity(quantity);
@@ -137,4 +138,17 @@ public class SelectedUpgradeService {
             }
         }
     }
+
+    public void addFreeUpgradesAndSpecialRaceUpgrades(int unitId) {
+        List<SelectedUpgrade> selectedUpgradeList = selectedUpgradeRepository.findAllBySelectedUnitId(unitId);
+        if (!selectedUpgradeList.isEmpty()) {
+            for (SelectedUpgrade selectedUpgrade : selectedUpgradeList) {
+                if (selectedUpgrade.getUpgrade().getUpgradeType().equals("Free upgrade") || selectedUpgrade.getUpgrade().equals("Race special rule")) {
+                    selectedUpgrade.setSelected(true);
+                    selectedUpgradeRepository.save(selectedUpgrade);
+                }
+            }
+        }
+    }
+
 }

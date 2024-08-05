@@ -1,6 +1,7 @@
 package com.jasionowicz.myarmybuilder.armyComposition;
 
 import com.jasionowicz.myarmybuilder.selectedUnits.SelectedUnit;
+import com.jasionowicz.myarmybuilder.selectedUpgrades.SelectedUpgrade;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -25,6 +26,8 @@ public class ArmyComposition {
     @OneToMany
     @JoinColumn(name = "selectedUnit_id")
     List<SelectedUnit> selectedUnitList = new ArrayList<>();
-
+    @OneToMany
+    @JoinColumn(name = "selectedUpgrade_id")
+    List<SelectedUpgrade> selectedUpgradeList = new ArrayList<>();
 
 }

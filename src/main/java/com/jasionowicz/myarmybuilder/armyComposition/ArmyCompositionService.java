@@ -25,14 +25,16 @@ public class ArmyCompositionService {
     private final ArmyComposition armyComposition = new ArmyComposition();
     private final SelectedUnitRepository selectedUnitRepository;
     private final SelectedUpgradeRepository selectedUpgradeRepository;
+    private final ArmyCompositionRepository armyCompositionRepository;
     private SelectedService selectedService;
 
     @Autowired
-    public ArmyCompositionService(SelectedUnit selectedUnit, SelectedService selectedService, SelectedUnitRepository selectedUnitRepository, SelectedUpgradeRepository selectedUpgradeRepository) {
+    public ArmyCompositionService(SelectedUnit selectedUnit, SelectedService selectedService, SelectedUnitRepository selectedUnitRepository, SelectedUpgradeRepository selectedUpgradeRepository, ArmyCompositionRepository armyCompositionRepository) {
         this.selectedUnit = selectedUnit;
         this.selectedService = selectedService;
         this.selectedUnitRepository = selectedUnitRepository;
         this.selectedUpgradeRepository = selectedUpgradeRepository;
+        this.armyCompositionRepository = armyCompositionRepository;
     }
 
 
@@ -80,5 +82,20 @@ public class ArmyCompositionService {
         return pointsByType;
     }
 
+    public void addNewArmyTemplate(List<SelectedUnit> selectedUnits,List<SelectedUpgrade> selectedUpgrades) {
+        ArmyComposition armyComposition = new ArmyComposition();
+        armyComposition.setSelectedUnitList(selectedUnits);
+        armyComposition.setSelectedUpgradeList(selectedUpgrades);
+        armyCompositionRepository.save(armyComposition);
+    }
+
+    public void removeTemplate(int id) {
+        armyCompositionRepository.deleteById(id);
+    }
+
+    public void updateArmyTemplate(ArmyComposition armyComposition) {
+       int id = armyComposition.getId();
+       armyCompositionRepository.getReferenceById(id);
+    }
 
 }
