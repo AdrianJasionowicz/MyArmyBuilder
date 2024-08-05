@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 @Getter
 @Setter
@@ -85,7 +84,6 @@ public class ArmyCompositionService {
     public void addNewArmyTemplate(List<SelectedUnit> selectedUnits,List<SelectedUpgrade> selectedUpgrades) {
         ArmyComposition armyComposition = new ArmyComposition();
         armyComposition.setSelectedUnitList(selectedUnits);
-        armyComposition.setSelectedUpgradeList(selectedUpgrades);
         armyCompositionRepository.save(armyComposition);
     }
 

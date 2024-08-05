@@ -25,4 +25,19 @@ public class MyArmyBuilderApplication {
     }
 
 
+    /*
+    * SelectedUnit
+    * -> fields -> selected unit details (quantity etc)
+    * -> UnitDto -> basic unit info (+ all upgrades pool)
+    * -> SelectedUpgradesDtos -> selected upgrades
+    * */
+
+    /*
+    * SelectedUnitView
+    * ile wzięto
+    * jakie ma wszystkie upgrady
+    * Które z nich sią wzięte
+    * */
+
+
 }

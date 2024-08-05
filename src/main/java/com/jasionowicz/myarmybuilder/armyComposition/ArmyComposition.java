@@ -26,8 +26,6 @@ public class ArmyComposition {
     @OneToMany
     @JoinColumn(name = "selectedUnit_id")
     List<SelectedUnit> selectedUnitList = new ArrayList<>();
-    @OneToMany
-    @JoinColumn(name = "selectedUpgrade_id")
-    List<SelectedUpgrade> selectedUpgradeList = new ArrayList<>();
+
 
 }

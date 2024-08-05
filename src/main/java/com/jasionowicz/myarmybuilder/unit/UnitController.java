@@ -21,8 +21,8 @@ public class UnitController {
 
 
     @GetMapping("/{id}")
-    public Optional<Optional> getUnitById(@PathVariable Integer id) {
-        return Optional.ofNullable(unitService.findById(id));
+    public UnitDTO getUnitById(@PathVariable Integer id) {
+        return unitService.findById(id).orElseThrow();
     }
 
     @GetMapping("/getUnits")

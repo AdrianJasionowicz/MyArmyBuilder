@@ -250,13 +250,14 @@ public class MenuController {
 
     @GetMapping("/units/{id}/upgrades")
     public ResponseEntity<List<SelectedUpgradeDTO>> getSelectedUpgrades(@PathVariable Integer id) {
-
+        System.out.println("Loading upgrades");
         Optional<SelectedUnit> optionalSelectedUnit = selectedUnitRepository.findById(id);
         if (optionalSelectedUnit.isPresent()) {
             SelectedUnit selectedUnit = optionalSelectedUnit.get();
             List<SelectedUpgradeDTO> selectedUpgradesList = selectedUnit.getSelectedUpgrades().stream()
                     .map(SelectedUpgradeDTO::new)
                     .collect(Collectors.toList());
+
             return ResponseEntity.ok(selectedUpgradesList);
 
         } else {
@@ -282,18 +283,3 @@ public class MenuController {
 //    }
 
 }
-/*
- * Unit
- *
- * name
- * baseStats
- * type
- * startingUpgrades
- *
- * Armia
- * List<SelectedUnit>
-
- * SelectedUnit
- * unit
- * selectedUpgrades
- * */
