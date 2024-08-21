@@ -4,6 +4,8 @@ import com.jasionowicz.myarmybuilder.armyComposition.ArmyComposition;
 import com.jasionowicz.myarmybuilder.armyComposition.ArmyCompositionRepository;
 import com.jasionowicz.myarmybuilder.armyComposition.ArmyCompositionService;
 import com.jasionowicz.myarmybuilder.selectedStats.SelectedStatsRepository;
+import com.jasionowicz.myarmybuilder.selectedUnitView.SelectedUnitView;
+import com.jasionowicz.myarmybuilder.selectedUnitView.SelectedUnitViewService;
 import com.jasionowicz.myarmybuilder.selectedUnits.*;
 import com.jasionowicz.myarmybuilder.selectedUpgrades.SelectedUpgrade;
 import com.jasionowicz.myarmybuilder.selectedUpgrades.SelectedUpgradeDTO;
@@ -44,6 +46,8 @@ public class MenuController {
     private SelectedUpgradeService selectedUpgradeService;
     @Autowired
     private ArmyCompositionRepository armyCompositionRepository;
+    @Autowired
+    private SelectedUnitViewService selectedUnitViewService;
 
     @Autowired
     public MenuController(UnitRepository unitRepository, UpgradesService upgradesService, ArmyComposition armyComposition, ArmyCompositionService armyCompositionService, UnitService unitService, SelectedService selectedService, SelectedUnitRepository selectedUnitRepository, SelectedUpgradeRepository selectedUpgradeRepository, SelectedUnit selectedUnit, SelectedUpgradeDTO selectedUpgradeDTO, SelectedUpgrade selectedUpgrade) {
@@ -108,8 +112,8 @@ public class MenuController {
 
             List<SelectedUpgrade> selectedUpgradeList = selectedUnit.getSelectedUpgrades().stream().filter(Objects::nonNull).collect(Collectors.toList());
             if (!selectedUpgradeList.isEmpty()) {
-                selectedUpgradeRepository.saveAll(selectedUpgradeList);
                 selectedUpgradeService.addFreeUpgradesAndSpecialRaceUpgrades(selectedUnit.getId());
+                selectedUpgradeRepository.saveAll(selectedUpgradeList);
 
             }
 
@@ -192,8 +196,6 @@ public class MenuController {
 
                 return ResponseEntity.badRequest().body("Upgrade already selected");
             }
-
-
             selectedUpgrade.setSelected(true);
             if (selectedUpgrade.getUpgrade().getUpgradeType().equals("Weapon Team")) {
 
@@ -250,36 +252,28 @@ public class MenuController {
 
     @GetMapping("/units/{id}/upgrades")
     public ResponseEntity<List<SelectedUpgradeDTO>> getSelectedUpgrades(@PathVariable Integer id) {
-        System.out.println("Loading upgrades");
-        Optional<SelectedUnit> optionalSelectedUnit = selectedUnitRepository.findById(id);
-        if (optionalSelectedUnit.isPresent()) {
-            SelectedUnit selectedUnit = optionalSelectedUnit.get();
-            List<SelectedUpgradeDTO> selectedUpgradesList = selectedUnit.getSelectedUpgrades().stream()
-                    .map(SelectedUpgradeDTO::new)
-                    .collect(Collectors.toList());
-
-            return ResponseEntity.ok(selectedUpgradesList);
-
-        } else {
-            return ResponseEntity.notFound().build();
-
-        }
+        SelectedUnitView selectedUnitView = selectedUnitViewService.getSelectedSingleUnitView(id);
+        List<SelectedUpgradeDTO> selectedUpgradeDTO = selectedUnitView.getUpgrades();
+        return ResponseEntity.ok().body(selectedUpgradeDTO);
 
     }
 
-//    @PostMapping("/saveRoaster")
-//    public ResponseEntity<String> saveArmyComposition() {
+
+    @PostMapping("/saveRoaster")
+    public ResponseEntity<String> saveArmyComposition() {
+
+        List<SelectedUnit> selectedUnits = selectedUnitRepository.findAll();
+        armyCompositionService.addNewArmyTemplate(selectedUnits);
+        if (selectedUnits.isEmpty()) {
+            return ResponseEntity.badRequest().body("Army composition is empty");
+        }
+        return ResponseEntity.ok().body("Army composition saved");
+    }
+
+//    @GetMapping("/loadRoaster")
+//    public ResponseEntity<String> loadArmyComposition(@RequestParam int armyId) {
 //
-//        List<SelectedUnit> selectedUnits = selectedUnitRepository.findAll();
-//        List<SelectedUpgrade> selectedUpgrades = selectedUpgradeRepository.findAll();
-//        if (!selectedUnits.isEmpty() && !selectedUpgrades.isEmpty()) {
-//            ArmyComposition armyComposition = new ArmyComposition();
-//            armyComposition.setSelectedUnitList(selectedUnits);
-//            armyComposition.setSelectedUpgradeList(selectedUpgrades);
-//            armyCompositionRepository.save(armyComposition);
-//            ResponseEntity.ok().body("Done");
-//        }
-//        return ResponseEntity.badRequest().body("Army composition not saved");
 //    }
+
 
 }

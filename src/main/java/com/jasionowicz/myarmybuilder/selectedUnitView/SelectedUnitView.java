@@ -23,4 +23,5 @@ public class SelectedUnitView {
                 .map(upgrade -> new SelectedUpgradeDTO(upgrade))
                 .toList();
     }
+
 }

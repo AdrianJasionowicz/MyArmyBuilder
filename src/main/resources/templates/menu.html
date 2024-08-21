@@ -9,24 +9,29 @@
             flex-direction: column;
             align-items: center;
         }
+
         .list {
             margin: 10px;
             padding: 10px;
             border: 1px solid #e21a1a;
             width: 30%;
         }
+
         .quantity-control {
             display: flex;
             align-items: center;
         }
+
         .quantity-input {
             width: 50px;
             text-align: center;
             margin: 0 10px;
         }
+
         .quantity-button {
             padding: 5px 10px;
         }
+
         .army-composition {
             width: 100%;
             background-color: #ca5757;
@@ -35,31 +40,70 @@
             box-sizing: border-box;
             margin-top: 20px;
         }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            background-color: #e21a1a;
+            color: white;
+        }
+
+        .login-buttons {
+            display: flex;
+            gap: 10px;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+
+        .login-buttons button {
+            padding: 5px 10px;
+            background-color: white;
+            color: #e21a1a;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .login-buttons button:hover {
+            background-color: #ca5757;
+        }
+
         .units-container {
             display: flex;
             justify-content: space-between;
             width: 100%;
         }
+
         .units-container .list {
             margin: 10px;
         }
+
         .total-points {
             margin-top: 20px;
             text-align: center;
         }
+
         .points-limits-by-type {
             margin-top: 10px;
         }
+
         .selected-icon {
             width: 15px;
             height: auto;
         }
+
         .nation-selector {
             margin-left: 20px;
         }
+
         .nation-selector label {
             margin-right: 10px;
         }
+
         .nation-selector select {
             padding: 5px;
             font-size: 16px;
@@ -70,6 +114,10 @@
 
 <h1>Warhammer Builder</h1>
 <div class="nation-selector">
+    <div class="login-buttons">
+        <button onclick="window.location.href='/login'">Log In</button>
+        <button onclick="window.location.href='/logout'">Log Out</button>
+    </div>
     <label for="nationSelect">Select Nation:</label>
     <select id="nationSelect" name="nation">
         <option value="All">All</option>
@@ -93,8 +141,6 @@
         <option value="Wood Elves">Wood Elves</option>
 
 
-
-
     </select>
 </div>
 <div style="border: 1px solid red;">
@@ -106,7 +152,8 @@
                 <!-- Sekcja jednostek Lord -->
                 <h3>Lord</h3>
                 <ul>
-                    <li th:each="unit : ${availableUnits}" th:data-nation="${unit.nation}" th:if="${unit.unitType == 'Lords'}">
+                    <li th:each="unit : ${availableUnits}" th:data-nation="${unit.nation}"
+                        th:if="${unit.unitType == 'Lords'}">
                         <span th:text="${unit.name}">Unit Name</span>
                         <form th:action="@{/addUnit}" method="post" style="display:inline;">
                             <input type="hidden" name="unitId" th:value="${unit.id}"/>
@@ -117,7 +164,8 @@
                 <!-- Sekcja jednostek Hero -->
                 <h3>Hero</h3>
                 <ul>
-                    <li th:each="unit : ${availableUnits}" th:data-nation="${unit.nation}" th:if="${unit.unitType == 'Hero'}">
+                    <li th:each="unit : ${availableUnits}" th:data-nation="${unit.nation}"
+                        th:if="${unit.unitType == 'Hero'}">
                         <span th:text="${unit.name}">Unit Name</span>
                         <form th:action="@{/addUnit}" method="post" style="display:inline;">
                             <input type="hidden" name="unitId" th:value="${unit.id}"/>
@@ -128,7 +176,8 @@
                 <!-- Sekcja jednostek Core -->
                 <h3>Core</h3>
                 <ul>
-                    <li th:each="unit : ${availableUnits}" th:data-nation="${unit.nation}" th:if="${unit.unitType == 'Core'}">
+                    <li th:each="unit : ${availableUnits}" th:data-nation="${unit.nation}"
+                        th:if="${unit.unitType == 'Core'}">
                         <span th:text="${unit.name}">Unit Name</span>
                         <form th:action="@{/addUnit}" method="post" style="display:inline;">
                             <input type="hidden" name="unitId" th:value="${unit.id}"/>
@@ -139,7 +188,8 @@
                 <!-- Sekcja jednostek Special -->
                 <h3>Special</h3>
                 <ul>
-                    <li th:each="unit : ${availableUnits}" th:data-nation="${unit.nation}" th:if="${unit.unitType == 'Special'}">
+                    <li th:each="unit : ${availableUnits}" th:data-nation="${unit.nation}"
+                        th:if="${unit.unitType == 'Special'}">
                         <span th:text="${unit.name}">Unit Name</span>
                         <form th:action="@{/addUnit}" method="post" style="display:inline;">
                             <input type="hidden" name="unitId" th:value="${unit.id}"/>
@@ -150,7 +200,8 @@
                 <!-- Sekcja jednostek Rare -->
                 <h3>Rare</h3>
                 <ul>
-                    <li th:each="unit : ${availableUnits}" th:data-nation="${unit.nation}" th:if="${unit.unitType == 'Rare'}">
+                    <li th:each="unit : ${availableUnits}" th:data-nation="${unit.nation}"
+                        th:if="${unit.unitType == 'Rare'}">
                         <span th:text="${unit.name}">Unit Name</span>
                         <form th:action="@{/addUnit}" method="post" style="display:inline;">
                             <input type="hidden" name="unitId" th:value="${unit.id}"/>
@@ -183,7 +234,8 @@
                             </form>
                             <!-- Wyświetl bieżącą ilość -->
                             <span>
-                                <input type="number" class="quantity-input" name="quantity" th:value="${unit.quantity}" min="0" disabled/>
+                                <input type="number" class="quantity-input" name="quantity" th:value="${unit.quantity}"
+                                       min="0" disabled/>
                             </span>
                             <!-- Formularz zwiększenia ilości -->
                             <form th:action="@{/increaseUnitQuantity}" method="post" style="display: inline;">
@@ -204,7 +256,9 @@
                             <span th:text="${upgrade.name}">Upgrade Name</span>
                             <div class="button-container">
                                 <button class="select-upgrade-button" th:data-upgrade-id="${upgrade.id}">Select</button>
-                                <button class="remove-upgrade-button" th:data-upgrade-id="${upgrade.id}" style="display:none;">Remove</button>
+                                <button class="remove-upgrade-button" th:data-upgrade-id="${upgrade.id}"
+                                        style="display:none;">Remove
+                                </button>
                             </div>
                         </div>
                     </li>
@@ -266,10 +320,46 @@
 
     </div> <!-- container -->
 </div>
-
+<button id="save-roster-button">Save Roster</button>
+<div>
+    <label for="roster-id-input">Enter Roster ID:</label>
+    <input type="number" id="roster-id-input" name="roster-id" min="1" required>
+    <button id="load-roster-button">Load Roster</button>
+</div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function () {
+        $('#save-roster-button').on('click', function () {
+        $.ajax({
+            type: 'POST',
+            url: '/saveRoaster',
+            success: function (response) {
+                alert(response);
+            },
+            error: function (xhr, status, error) {
+                alert("Error saving army composition: " + xhr.responseText);
+            }
+        });
+    });
+    $('#load-roster-button').on('click', function () {
+    let rosterId = $('#roster-id-input').val();
+    
+    if (rosterId) {
+        $.ajax({
+            type: 'GET',
+            url: '/loadRoaster?armyId=' + rosterId,
+            success: function (response) {
+                alert(response);
+            },
+            error: function (xhr, status, error) {
+                alert("Error loading army composition: " + xhr.responseText);
+            }
+        });
+    } else {
+        alert('Please enter a Roster ID.');
+    }
+});
+        // Funkcja do filtrowania jednostek na podstawie wybranej nacji
         function filterUnitsByNation(nation) {
             $('.list ul li').each(function () {
                 var unitNation = $(this).data('nation');
@@ -286,12 +376,12 @@
 
         // Obsługuje zdarzenie zmiany na selektorze nacji
         $('#nationSelect').on('change', function () {
-            var selectedNation = $(this).val();
+            let selectedNation = $(this).val();
             filterUnitsByNation(selectedNation);
         });
 
         $('.select-upgrades').on('click', function () {
-            var unitId = $(this).data('id');
+            let unitId = $(this).data('id');
             $.ajax({
                 type: 'GET',
                 url: '/units/' + unitId + '/upgrades',
@@ -299,27 +389,33 @@
                     console.log('Received data:', data);
                     $('#upgrades-list').empty();
                     data.forEach(function (upgrade) {
-                        var listItem = $('<li>').text(upgrade.name + ' (+' + upgrade.pointsCost + ' pts)');
-                        var selectButton = $('<button>')
+                        let listItem = $('<li>').text(upgrade.name + ' (+' + upgrade.pointsCost + ' pts)');
+                        if (upgrade.selected) {
+                            listItem.prepend('<img src="/selectedUpgrade.png" alt="selected" class="selected-icon" />');
+                        }
+                        let selectButton = $('<button>')
                             .text('Add')
                             .addClass('select-upgrade-button')
                             .data('upgrade-id', upgrade.id)
                             .data('unit-id', unitId)
                             .click(function () {
-                                var upgradeId = $(this).data('upgrade-id');
+                                let upgradeId = $(this).data('upgrade-id');
                                 $.ajax({
                                     type: 'POST',
                                     url: '/addUpgrade',
                                     data: $.param({upgradeId: upgradeId}),
                                     success: function () {
                                         listItem.prepend('<img src="/selectedUpgrade.png" alt="selected" class="selected-icon" />');
-                                        $('.remove-upgrade-button').show(); // Pokaż przycisk usuwania po wybraniu
+                                        selectButton.hide();
+                                        removeButton.show();
                                     },
                                     error: function () {
                                         alert('Error adding upgrade.');
                                     }
                                 });
                             });
+
+                        // Dodanie przycisku usuwania ulepszenia
                         var removeButton = $('<button>')
                             .text('Remove')
                             .addClass('remove-upgrade-button')
@@ -330,21 +426,17 @@
                                     type: 'POST',
                                     url: '/removeSelectedUpgrade',
                                     data: $.param({upgradeId: upgradeId}),
-                                    success: function () {
-                                        listItem.find('.selected-icon').remove(); // Usuń ikonę wybraną
-                                        removeButton.hide(); // Ukryj przycisk usuwania po usunięciu
-                                    },
                                     error: function () {
                                         alert('Error removing upgrade.');
                                     }
                                 });
                             });
+
                         listItem.append(selectButton).append(removeButton);
                         $('#upgrades-list').append(listItem);
                     });
                 },
                 error: function () {
-                    console.log('Error fetching upgrades.');
                     alert('Error fetching upgrades.');
                 }
             });

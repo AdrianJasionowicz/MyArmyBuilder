@@ -10,7 +10,7 @@ import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -81,10 +81,24 @@ public class ArmyCompositionService {
         return pointsByType;
     }
 
-    public void addNewArmyTemplate(List<SelectedUnit> selectedUnits,List<SelectedUpgrade> selectedUpgrades) {
+    @Transactional
+    public void addNewArmyTemplate(List<SelectedUnit> selectedUnits) {
         ArmyComposition armyComposition = new ArmyComposition();
-        armyComposition.setSelectedUnitList(selectedUnits);
+        System.out.println(selectedUnits);
+        System.out.println(armyComposition);
         armyCompositionRepository.save(armyComposition);
+    }
+
+    public void loadExistingArmyTemplate(int armyId) {
+        List<SelectedUnit> selectedUnitList = new ArrayList<>();
+
+        ArmyComposition armyComposition = getArmyCompositionRepository().getReferenceById(armyId);
+        for (SelectedUnit unit : selectedUnitList) {
+            selectedUnitList.add(unit);
+        }
+
+
+
     }
 
     public void removeTemplate(int id) {

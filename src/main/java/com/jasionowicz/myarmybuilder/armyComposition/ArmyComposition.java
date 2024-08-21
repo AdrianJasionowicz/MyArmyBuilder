@@ -1,12 +1,8 @@
 package com.jasionowicz.myarmybuilder.armyComposition;
 
 import com.jasionowicz.myarmybuilder.selectedUnits.SelectedUnit;
-import com.jasionowicz.myarmybuilder.selectedUpgrades.SelectedUpgrade;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -18,14 +14,15 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Component
+@ToString
 public class ArmyComposition {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "selectedUnit_id")
-    List<SelectedUnit> selectedUnitList = new ArrayList<>();
+    private List<SelectedUnit> selectedUnitList;
 
 
 }

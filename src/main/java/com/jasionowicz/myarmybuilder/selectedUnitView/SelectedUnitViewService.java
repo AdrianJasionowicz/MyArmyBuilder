@@ -10,10 +10,12 @@ import java.util.stream.Stream;
 
 @Service
 public class SelectedUnitViewService {
-private SelectedUnitRepository selectedUnitRepository;
+    private final SelectedUnit selectedUnit;
+    private SelectedUnitRepository selectedUnitRepository;
 
-    public SelectedUnitViewService(SelectedUnitRepository selectedUnitRepository) {
+    public SelectedUnitViewService(SelectedUnitRepository selectedUnitRepository, SelectedUnit selectedUnit) {
         this.selectedUnitRepository = selectedUnitRepository;
+        this.selectedUnit = selectedUnit;
     }
 
 
@@ -21,5 +23,9 @@ private SelectedUnitRepository selectedUnitRepository;
         return selectedUnitRepository.findAllByUnitId(unitId).stream()
                 .map(selectedUnit -> new SelectedUnitView(selectedUnit))
                 .toList();
+    }
+
+    public SelectedUnitView getSelectedSingleUnitView(int unitId) {
+        return new SelectedUnitView(selectedUnitRepository.getReferenceById(unitId));
     }
 }

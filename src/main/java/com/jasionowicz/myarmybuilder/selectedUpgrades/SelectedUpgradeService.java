@@ -143,7 +143,12 @@ public class SelectedUpgradeService {
         List<SelectedUpgrade> selectedUpgradeList = selectedUpgradeRepository.findAllBySelectedUnitId(unitId);
         if (!selectedUpgradeList.isEmpty()) {
             for (SelectedUpgrade selectedUpgrade : selectedUpgradeList) {
-                if (selectedUpgrade.getUpgrade().getUpgradeType().equals("Free upgrade") || selectedUpgrade.getUpgrade().equals("Race special rule")) {
+                if (selectedUpgrade.getUpgrade().getUpgradeType().equals("Free upgrade")) {
+                    selectedUpgrade.setSelected(true);
+                    selectedUpgradeRepository.save(selectedUpgrade);
+
+                }
+                if (selectedUpgrade.getUpgrade().getUpgradeType().equals("Race special rule")) {
                     selectedUpgrade.setSelected(true);
                     selectedUpgradeRepository.save(selectedUpgrade);
                 }
