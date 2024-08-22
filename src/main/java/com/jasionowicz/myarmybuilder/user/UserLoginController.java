@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class UserLoginController {
-private UserLoginService userLoginService;
+    private UserLoginService userLoginService;
 
     public UserLoginController(UserLoginService userLoginService) {
         this.userLoginService = userLoginService;
@@ -23,7 +23,7 @@ private UserLoginService userLoginService;
 
     @PostMapping("/login")
     public String login(@RequestParam String username, @RequestParam String password, Model model) {
-        boolean isLoggedIn = userLoginService.login(username,password);
+        boolean isLoggedIn = userLoginService.login(username, password);
         if (isLoggedIn) {
 
 
@@ -32,6 +32,10 @@ private UserLoginService userLoginService;
         return "redirect:/login";
     }
 
+    @GetMapping("/logout")
+    public String logout() {
+        userLoginService.logout();
+        return "redirect:/menu";
 
-
+    }
 }

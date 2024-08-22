@@ -15,8 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Getter
-@Setter
+
 @Service
 public class ArmyCompositionService {
     private final SelectedUnit selectedUnit;
@@ -92,7 +91,7 @@ public class ArmyCompositionService {
     public void loadExistingArmyTemplate(int armyId) {
         List<SelectedUnit> selectedUnitList = new ArrayList<>();
 
-        ArmyComposition armyComposition = getArmyCompositionRepository().getReferenceById(armyId);
+        ArmyComposition armyComposition = armyCompositionRepository.getReferenceById(armyId);
         for (SelectedUnit unit : selectedUnitList) {
             selectedUnitList.add(unit);
         }

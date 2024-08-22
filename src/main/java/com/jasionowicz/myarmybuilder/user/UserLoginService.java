@@ -2,7 +2,6 @@ package com.jasionowicz.myarmybuilder.user;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
 import java.util.Optional;
 
 @Service
@@ -15,7 +14,6 @@ public class UserLoginService {
         this.userRepository = userRepository;
         this.userLoginRepository = userLoginRepository;
     }
-
 
     public Optional<UserLogin> getLoggedUser() {
         return Optional.ofNullable(loggedUser);
@@ -31,7 +29,6 @@ public class UserLoginService {
         if (!user.getPassword().equals(password)) {
             return false;
         }
-
 
         loggedUser = user;
         return true;
@@ -65,6 +62,9 @@ public class UserLoginService {
         userLogin.setEmail(email);
         userLoginRepository.save(userLogin);
         return true;
+    }
 
+    public void logout() {
+        loggedUser = null;
     }
 }

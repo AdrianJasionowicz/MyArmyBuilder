@@ -87,14 +87,14 @@
 
 <script>
     document.getElementById('registerForm').addEventListener('submit', function(event) {
-        var password = document.getElementById('password').value;
-        var confirmPassword = document.getElementById('confirmPassword').value;
-        var email = document.getElementById('email').value;
-        var confirmEmail = document.getElementById('confirmEmail').value;
-        var passwordError = document.getElementById('passwordError');
-        var emailError = document.getElementById('emailError');
+        let password = document.getElementById('password').value;
+        let confirmPassword = document.getElementById('confirmPassword').value;
+        let email = document.getElementById('email').value;
+        let confirmEmail = document.getElementById('confirmEmail').value;
+        let passwordError = document.getElementById('passwordError');
+        let emailError = document.getElementById('emailError');
 
-        var valid = true;
+        let valid = true;
 
         // Reset error messages
         passwordError.textContent = '';
@@ -113,7 +113,7 @@
         }
 
         if (!valid) {
-            event.preventDefault(); // Prevent form submission
+            event.preventDefault();
         }
     });
 </script>
