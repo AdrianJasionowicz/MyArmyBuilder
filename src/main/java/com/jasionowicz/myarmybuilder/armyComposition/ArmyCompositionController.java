@@ -2,6 +2,7 @@ package com.jasionowicz.myarmybuilder.armyComposition;
 
 import com.jasionowicz.myarmybuilder.selectedUnits.SelectedUnit;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,10 +18,10 @@ public class ArmyCompositionController {
         this.armyCompositionRepository = armyCompositionRepository;
     }
 
-//    @GetMapping("/showComposition/{id}")
-//    public SelectedUnit armyComposition(Integer armyId) {
-//     return armyCompositionRepository.getSelectedUnitsList(armyId);
-//    }
+    @GetMapping("/showComposition/{armyId}")
+    public ArmyComposition armyComposition(@PathVariable Integer armyId) {
+        return   armyCompositionRepository.findById(armyId).orElseThrow();
+    }
 
 
 

@@ -83,8 +83,7 @@ public class ArmyCompositionService {
     @Transactional
     public void addNewArmyTemplate(List<SelectedUnit> selectedUnits) {
         ArmyComposition armyComposition = new ArmyComposition();
-        System.out.println(selectedUnits);
-        System.out.println(armyComposition);
+        armyComposition.setSelectedUnitList(selectedUnits);
         armyCompositionRepository.save(armyComposition);
     }
 

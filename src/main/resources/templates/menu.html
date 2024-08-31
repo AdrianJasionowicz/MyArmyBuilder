@@ -99,7 +99,14 @@
         .nation-selector {
             margin-left: 20px;
         }
-
+        .common-button {
+            padding: 5px 10px;
+            background-color: white;
+            color: #e21a1a;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+        }
         .nation-selector label {
             margin-right: 10px;
         }
@@ -115,8 +122,12 @@
 <h1>Warhammer Builder</h1>
 <div class="nation-selector">
     <div class="login-buttons">
-        <button onclick="window.location.href='/login'">Log In</button>
-        <button onclick="window.location.href='/logout'">Log Out</button>
+        <button class="common-button" onclick="window.location.href='/login'">Log In</button>
+        <form action="#" th:action="@{/logout}" method="POST" style="display:inline;">
+            <input type="submit" value="Log Out" class="common-button"/>
+        </form>
+    </div>
+
     </div>
     <label for="nationSelect">Select Nation:</label>
     <select id="nationSelect" name="nation">
@@ -125,7 +136,6 @@
         <option value="Bretonnia">Bretonnia</option>
         <option value="Chaos Dwarfs">Chaos Dwarfs</option>
         <option value="Daemons of Chaos">Daemons of Chaos</option>
-        <option value="Bretonnia">Bretonnia</option>
         <option value="Dark Elves">Dark Elves</option>
         <option value="Dwarfs">Dwarfs</option>
         <option value="Empire">Empire</option>
