@@ -5,7 +5,6 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Setter
@@ -23,6 +22,5 @@ public class ArmyComposition {
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "selectedUnit_id")
     private List<SelectedUnit> selectedUnitList;
-
 
 }
