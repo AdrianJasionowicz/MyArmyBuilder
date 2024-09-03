@@ -82,7 +82,7 @@
         <i>Sorry! You entered wrong username/password.</i>
     </div>
 
-    <form th:action="@{/authenticateTheUser}" method="post">
+    <form action="/login" method="post">
         <input type="text" name="username" placeholder="Username" required>
         <input type="password" name="password" placeholder="Password" required>
         <button type="submit">Login</button>

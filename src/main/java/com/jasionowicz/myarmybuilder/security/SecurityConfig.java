@@ -19,6 +19,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 import javax.sql.DataSource;
 
@@ -37,13 +38,20 @@ public class SecurityConfig {
         return httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(registry -> {
-                    registry.requestMatchers("/menu","/register/**").permitAll()
+                    registry.requestMatchers("/register/**").permitAll()
                             .requestMatchers("/admin/**").hasRole("ADMIN")
 
                             .anyRequest().authenticated();
 
                 })
-                .formLogin(AbstractAuthenticationFilterConfigurer::permitAll)
+                .formLogin(httpSecurityFormLoginConfigurer -> {
+                    httpSecurityFormLoginConfigurer.loginPage("/login")
+                            .successHandler(new AuthenticationSuccesHandler())
+                            .permitAll();
+
+
+
+                })
 
 
                 .build();
@@ -56,7 +64,6 @@ public class SecurityConfig {
 
         return builderUserService;
     }
-
     @Bean
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
