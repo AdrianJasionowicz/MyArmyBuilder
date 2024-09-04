@@ -8,6 +8,7 @@ import com.jasionowicz.myarmybuilder.selectedUpgrades.SelectedUpgradeRepository;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
@@ -81,7 +82,7 @@ public class ArmyCompositionService {
         return pointsByType;
     }
 
-    @Transactional
+
     public void addNewArmyTemplate(List<SelectedUnit> selectedUnits) {
         ArmyComposition armyComposition = new ArmyComposition();
         armyComposition.setSelectedUnitList(selectedUnits);
@@ -109,4 +110,12 @@ public class ArmyCompositionService {
        armyCompositionRepository.getReferenceById(id);
     }
 
+    public ResponseEntity<String> saveSelectedUnitsList() {
+     List<SelectedUnit> selectedUnitList = selectedUnitRepository.findAll();
+        addNewArmyTemplate(selectedUnitList);
+        if (selectedUnitList.isEmpty()) {
+            return ResponseEntity.badRequest().body("Army composition is empty");
+        }
+        return ResponseEntity.ok().body("Army Composition saved");
+    }
 }

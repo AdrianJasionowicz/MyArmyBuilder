@@ -31,15 +31,6 @@ public class UpgradeDTO {
     }
 
 
-    public Upgrade toEntity() {
-        Upgrade upgrade = new Upgrade();
-        upgrade.setId(this.id);
-        upgrade.setName(this.name);
-        upgrade.setPointsCost(this.pointsCost);
-
-        return upgrade;
-    }
-
     public UpgradeDTO(UpgradeRepository upgradeRepository) {
         this.upgradeRepository = upgradeRepository;
     }

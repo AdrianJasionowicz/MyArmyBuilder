@@ -156,4 +156,15 @@ public class SelectedUpgradeService {
         }
     }
 
+    public ResponseEntity<String> removeSelectedUpgrade(int upgradeId) {
+        Optional<SelectedUpgrade> optionalSelectedUpgrade = selectedUpgradeRepository.findById(upgradeId);
+        if (optionalSelectedUpgrade.isPresent()) {
+            SelectedUpgrade selectedUpgrade = optionalSelectedUpgrade.get();
+            selectedUpgrade.setSelected(false);
+            selectedUpgradeRepository.save(selectedUpgrade);
+            return ResponseEntity.ok().body("Upgrade removed");
+        }
+        return ResponseEntity.badRequest().body("Upgrade not found");
+    }
+
 }

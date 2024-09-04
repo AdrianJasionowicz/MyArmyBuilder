@@ -30,38 +30,28 @@ public class MenuController {
 
     private final SelectedService selectedService;
     private final UnitRepository unitRepository;
-    private final UpgradesService upgradesService;
     private final ArmyComposition armyComposition;
     private final ArmyCompositionService armyCompositionService;
     private final UnitService unitService;
     private final SelectedUnitRepository selectedUnitRepository;
     private final SelectedUpgradeRepository selectedUpgradeRepository;
     private double pointsRestriction = 0;
-    private final SelectedUnit selectedUnit;
-    private SelectedUpgradeDTO selectedUpgradeDTO;
-    private final SelectedUpgrade selectedUpgrade;
     @Autowired
     private SelectedStatsRepository selectedStatsRepository;
     @Autowired
     private SelectedUpgradeService selectedUpgradeService;
-    @Autowired
-    private ArmyCompositionRepository armyCompositionRepository;
     @Autowired
     private SelectedUnitViewService selectedUnitViewService;
 
     @Autowired
     public MenuController(UnitRepository unitRepository, UpgradesService upgradesService, ArmyComposition armyComposition, ArmyCompositionService armyCompositionService, UnitService unitService, SelectedService selectedService, SelectedUnitRepository selectedUnitRepository, SelectedUpgradeRepository selectedUpgradeRepository, SelectedUnit selectedUnit, SelectedUpgradeDTO selectedUpgradeDTO, SelectedUpgrade selectedUpgrade) {
         this.unitRepository = unitRepository;
-        this.upgradesService = upgradesService;
         this.armyComposition = armyComposition;
         this.armyCompositionService = armyCompositionService;
         this.unitService = unitService;
         this.selectedService = selectedService;
         this.selectedUnitRepository = selectedUnitRepository;
         this.selectedUpgradeRepository = selectedUpgradeRepository;
-        this.selectedUnit = selectedUnit;
-        this.selectedUpgradeDTO = selectedUpgradeDTO;
-        this.selectedUpgrade = selectedUpgrade;
     }
 
 
@@ -211,8 +201,19 @@ public class MenuController {
         return ResponseEntity.badRequest().body("Upgrade not found");
     }
 
+//    @PostMapping("/removeSelectedUpgrade")
+//    public ResponseEntity<String> removeSelectedUpgrade(int upgradeId) {
+//      ResponseEntity<String> response =  selectedUpgradeService.removeSelectedUpgrade(upgradeId);
+//        if (response.getStatusCode().is2xxSuccessful()) {
+//            return ResponseEntity.ok().body("Upgrade removed successfully");
+//        }
+//        return ResponseEntity.badRequest().body("Upgrade not found");
+//    }
+
     @PostMapping("/removeSelectedUpgrade")
     public ResponseEntity<String> removeSelectedUpgrade(int upgradeId) {
+        selectedUpgradeService.removeSelectedUpgrade(upgradeId);
+
         Optional<SelectedUpgrade> optionalSelectedUpgrade = selectedUpgradeRepository.findById(upgradeId);
         if (optionalSelectedUpgrade.isPresent()) {
             SelectedUpgrade selectedUpgrade = optionalSelectedUpgrade.get();
@@ -258,12 +259,8 @@ public class MenuController {
 
     @PostMapping("/saveRoaster")
     public ResponseEntity<String> saveArmyComposition() {
+        armyCompositionService.saveSelectedUnitsList();
 
-        List<SelectedUnit> selectedUnits = selectedUnitRepository.findAll();
-        armyCompositionService.addNewArmyTemplate(selectedUnits);
-        if (selectedUnits.isEmpty()) {
-            return ResponseEntity.badRequest().body("Army composition is empty");
-        }
         return ResponseEntity.ok().body("Army composition saved");
     }
 
