@@ -129,21 +129,18 @@ public class MenuController {
         selectedService.removeUnitById(selectedId);
         double totalPoints = armyCompositionService.calculateTotalPoints();
         Map<String, Double> dedicatedPoints = armyCompositionService.calculateDedicatedPoints();
-
         return "redirect:/menu";
     }
 
     @PostMapping("/increaseUnitQuantity")
     public String increaseUnitQuantity(@RequestParam("id") Integer selectedId) {
         selectedService.increaseUnitQuantity(selectedId);
-
         return "redirect:/menu";
     }
 
     @PostMapping("/decreaseUnitQuantity")
     public String decreaseUnitQuantity(@RequestParam("id") Integer selectedId) {
         selectedService.decreaseUnitQuantity(selectedId);
-
         return "redirect:/menu";
     }
 

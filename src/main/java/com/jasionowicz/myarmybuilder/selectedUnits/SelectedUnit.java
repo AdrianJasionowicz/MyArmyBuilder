@@ -46,7 +46,6 @@ public class SelectedUnit {
         return unit.getUnitType();
     }
 
-
     public SelectedUnit(Unit unit) {
         this.unit = unit;
         this.quantity = unit.getMinQuantity();
@@ -56,30 +55,6 @@ public class SelectedUnit {
                 .collect(Collectors.toList());
     }
 
-    private SelectedStats convertToSelectedStats(SelectedStatsDTO dto) {
-        UnitStats unitStats = new UnitStats();
-        unitStats.setM(dto.getM());
-        unitStats.setWs(dto.getWs());
-        unitStats.setBs(dto.getBs());
-        unitStats.setS(dto.getS());
-        unitStats.setT(dto.getT());
-        unitStats.setW(dto.getW());
-        unitStats.setI(dto.getI());
-        unitStats.setA(dto.getA());
-        unitStats.setLd(dto.getLd());
-        unitStats.setBasicSave(dto.getBasicSave());
-        unitStats.setWardSave(dto.getWardSave());
-        return new SelectedStats(unitStats);
-    }
-
-    public void addUpgrade(SelectedUpgrade upgrade) {
-        if (this.selectedUpgrades == null) {
-            this.selectedUpgrades = new ArrayList<>();
-        }
-        this.selectedUpgrades.add(upgrade);
-    }
-
-
     public String getName() {
         return unit.getName();
     }
@@ -88,16 +63,6 @@ public class SelectedUnit {
         unit.setName(name);
     }
 
-    @Override
-    public String toString() {
-        return "SelectedUnit{" +
-                "id=" + id +
-                ", quantity=" + quantity +
-                ", unit=" + unit +
-                ", selectedStats=" + selectedStats +
-                ", selectedUpgrades=" + selectedUpgrades +
-                '}';
-    }
 }
 
 //POST: armies

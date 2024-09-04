@@ -18,6 +18,7 @@ import java.util.Map;
 
 @Service
 public class ArmyCompositionService {
+
     private final SelectedUnit selectedUnit;
     @Getter
     private final ArmyComposition armyComposition = new ArmyComposition();

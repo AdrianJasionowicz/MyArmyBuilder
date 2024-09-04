@@ -8,13 +8,11 @@ import java.util.List;
 
 public class SelectedStatsService {
     private SelectedStats selectedStats;
-    private SelectedStatsService selectedStatsService;
     private SelectedUnitRepository selectedUnitRepository;
     private SelectedStatsRepository selectedStatsRepository;
 
-    public SelectedStatsService(SelectedStats selectedStats, SelectedStatsService selectedStatsService, SelectedUnitRepository selectedUnitRepository, SelectedStatsRepository selectedStatsRepository) {
+    public SelectedStatsService(SelectedStats selectedStats, SelectedUnitRepository selectedUnitRepository, SelectedStatsRepository selectedStatsRepository) {
         this.selectedStats = selectedStats;
-        this.selectedStatsService = selectedStatsService;
         this.selectedUnitRepository = selectedUnitRepository;
         this.selectedStatsRepository = selectedStatsRepository;
     }

@@ -17,26 +17,15 @@ public class SelectedService {
 
 
     @Autowired
-    private SelectedUpgradeRepository selectedUpgradeRepository;
-    @Autowired
     private SelectedUnitRepository selectedUnitRepository;
     @Autowired
     private SelectedUnit selectedUnit;
     private SelectedUnitDTO selectedUnitDTO;
     @Autowired
-    private SelectedUpgrade selectedUpgrade;
-    @Autowired
     private SelectedUpgradeService selectedUpgradeService;
 
     public SelectedService() {
     }
-
-//    @PostConstruct
-//    public void clear() {
-//        selectedUpgradeRepository.deleteAll();
-//
-//        selectedUnitRepository.deleteAll();
-//    }
 
 
     public ResponseEntity<String> removeUnitById(int id) {

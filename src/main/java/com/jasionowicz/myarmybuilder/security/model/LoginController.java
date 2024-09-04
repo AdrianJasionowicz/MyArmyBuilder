@@ -15,6 +15,7 @@ public class LoginController {
     public String loadHomePage() {
         return "menu";
     }
+
     @GetMapping("/register")
     public String getRegisterPage() {
         return "register";

@@ -30,8 +30,6 @@ public class UpgradeDTO {
         this.pointsCost = upgrade.getPointsCost();
     }
 
-    public UpgradeDTO(Upgrade upgrade) {
-    }
 
     public Upgrade toEntity() {
         Upgrade upgrade = new Upgrade();

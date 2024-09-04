@@ -40,30 +40,21 @@ public class SecurityConfig {
                 .authorizeHttpRequests(registry -> {
                     registry.requestMatchers("/register/**").permitAll()
                             .requestMatchers("/admin/**").hasRole("ADMIN")
-
                             .anyRequest().authenticated();
-
                 })
                 .formLogin(httpSecurityFormLoginConfigurer -> {
                     httpSecurityFormLoginConfigurer.loginPage("/login")
                             .successHandler(new AuthenticationSuccesHandler())
                             .permitAll();
-
-
-
                 })
-
-
                 .build();
-
     }
 
     @Bean
     public UserDetailsService userDetailsService() {
-
-
         return builderUserService;
     }
+
     @Bean
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();

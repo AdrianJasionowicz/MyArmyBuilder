@@ -43,21 +43,7 @@ public class UnitStats {
         this.m = m;
         this.i = i;
     }
-    public UnitStats toUnitStats() {
-        return new UnitStats(
-                this.getWs(),
-                this.getBs(),
-                this.getS(),
-                this.getT(),
-                this.getW(),
-                this.getA(),
-                this.getLd(),
-                this.getBasicSave(),
-                this.getWardSave(),
-                this.getM(),
-                this.getI()
-        );
-    }
+
     public UnitStats(SelectedStats selectedStats) {
         this.ws = selectedStats.getWs();
         this.bs = selectedStats.getBs();

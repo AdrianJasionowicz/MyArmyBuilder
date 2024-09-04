@@ -13,7 +13,6 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Component
-@ToString
 public class ArmyComposition {
 
     @Id

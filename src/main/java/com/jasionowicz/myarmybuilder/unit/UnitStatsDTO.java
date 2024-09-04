@@ -20,29 +20,4 @@ public class UnitStatsDTO {
     private Integer ld;
     private Integer basicSave;
     private Integer wardSave;
-
-    public UnitStatsDTO(UnitStats unitStats) {
-        this.id = unitStats.getId();
-        this.ws = unitStats.getWs();
-        this.bs = unitStats.getBs();
-        this.s = unitStats.getS();
-        this.t = unitStats.getT();
-        this.w = unitStats.getW();
-        this.a = unitStats.getA();
-        this.ld = unitStats.getLd();
-        this.basicSave = unitStats.getBasicSave();
-        this.wardSave = unitStats.getWardSave();
-    }
-
-    public void copyToEntity(UnitStats unitStats) {
-        unitStats.setWs(this.ws);
-        unitStats.setBs(this.bs);
-        unitStats.setS(this.s);
-        unitStats.setT(this.t);
-        unitStats.setW(this.w);
-        unitStats.setA(this.a);
-        unitStats.setLd(this.ld);
-        unitStats.setBasicSave(this.basicSave);
-        unitStats.setWardSave(this.wardSave);
-    }
 }

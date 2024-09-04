@@ -16,12 +16,6 @@ public class UpgradesService {
         this.upgradeRepository = upgradeRepository;
     }
 
-    public List<Upgrade> getUnitUpgradesById(Integer id) {
-        List<Upgrade> upgrades = upgradeRepository.findAllByUnitId(id);
-
-        return upgrades;
-    }
-
     public void addUpgrade(Upgrade upgrade) {
         upgradeRepository.save(upgrade);
     }

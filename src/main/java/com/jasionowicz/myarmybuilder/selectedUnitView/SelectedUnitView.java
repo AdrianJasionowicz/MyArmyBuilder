@@ -20,7 +20,7 @@ public class SelectedUnitView {
         this.id = selectedUnit.getId();
         this.quantity = selectedUnit.getQuantity();
         this.upgrades = selectedUnit.getSelectedUpgrades().stream()
-                .map(upgrade -> new SelectedUpgradeDTO(upgrade))
+                .map(SelectedUpgradeDTO::new)
                 .toList();
     }
 

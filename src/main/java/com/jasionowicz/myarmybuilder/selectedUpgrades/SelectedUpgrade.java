@@ -45,8 +45,4 @@ public class SelectedUpgrade {
         this.selectedUnit = selectedUnit;
     }
 
-    public SelectedUpgrade(SelectedUpgrade selectedUpgrade) {
-    }
-
-
 }
