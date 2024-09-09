@@ -24,9 +24,6 @@ public class SelectedService {
     @Autowired
     private SelectedUpgradeService selectedUpgradeService;
 
-    public SelectedService() {
-    }
-
 
     public void removeUnitById(int id) {
             selectedUnitRepository.deleteById(id);

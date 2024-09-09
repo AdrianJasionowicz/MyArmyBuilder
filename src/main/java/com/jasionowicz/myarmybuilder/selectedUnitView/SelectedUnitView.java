@@ -4,6 +4,7 @@ import com.jasionowicz.myarmybuilder.selectedUnits.SelectedUnit;
 import com.jasionowicz.myarmybuilder.selectedUpgrades.SelectedUpgradeDTO;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 @Getter
 @Setter
@@ -23,5 +24,7 @@ public class SelectedUnitView {
                 .map(SelectedUpgradeDTO::new)
                 .toList();
     }
+
+
 
 }

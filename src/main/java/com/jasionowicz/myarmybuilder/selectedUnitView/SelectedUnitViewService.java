@@ -5,6 +5,7 @@ import com.jasionowicz.myarmybuilder.selectedUnits.SelectedUnitRepository;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -28,4 +29,17 @@ public class SelectedUnitViewService {
     public SelectedUnitView getSelectedSingleUnitView(int unitId) {
         return new SelectedUnitView(selectedUnitRepository.getReferenceById(unitId));
     }
+
+    public List<SelectedUnitView> getSelectedUnitViews() {
+        List<SelectedUnitView> selectedUnitViews = new ArrayList<>();
+        List<SelectedUnit> selectedUnits = selectedUnitRepository.findAll();
+        for (SelectedUnit unit : selectedUnits) {
+            if (selectedUnits.contains(selectedUnit)) {
+                selectedUnitViews.add(new SelectedUnitView(unit));
+            }
+        }
+        return selectedUnitViews;
+    }
+
+
 }
