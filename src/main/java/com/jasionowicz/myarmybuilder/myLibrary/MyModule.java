@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class MyModule {
 
- private MyModuleConfig myModuleConfig;
+    private MyModuleConfig myModuleConfig;
 
     public MyModule(@Autowired(required = false) MyModuleConfig myModuleConfig) {
         this.myModuleConfig = myModuleConfig;
@@ -16,6 +16,7 @@ public class MyModule {
             this.myModuleConfig = new MyModuleDefaultImpl();
         }
     }
+
     @PostConstruct
     public void init() {
         System.out.println("Wladuje biblioteke");

@@ -1,12 +1,11 @@
 package com.jasionowicz.myarmybuilder.armyComposition;
 
-import com.jasionowicz.myarmybuilder.selectedUnits.SelectedService;
+import com.jasionowicz.myarmybuilder.selectedUnits.SelectedUnitService;
 import com.jasionowicz.myarmybuilder.selectedUnits.SelectedUnit;
 import com.jasionowicz.myarmybuilder.selectedUnits.SelectedUnitRepository;
 import com.jasionowicz.myarmybuilder.selectedUpgrades.SelectedUpgrade;
 import com.jasionowicz.myarmybuilder.selectedUpgrades.SelectedUpgradeRepository;
 import lombok.Getter;
-import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -26,12 +25,12 @@ public class ArmyCompositionService {
     private final SelectedUnitRepository selectedUnitRepository;
     private final SelectedUpgradeRepository selectedUpgradeRepository;
     private final ArmyCompositionRepository armyCompositionRepository;
-    private SelectedService selectedService;
+    private SelectedUnitService selectedUnitService;
 
     @Autowired
-    public ArmyCompositionService(SelectedUnit selectedUnit, SelectedService selectedService, SelectedUnitRepository selectedUnitRepository, SelectedUpgradeRepository selectedUpgradeRepository, ArmyCompositionRepository armyCompositionRepository) {
+    public ArmyCompositionService(SelectedUnit selectedUnit, SelectedUnitService selectedUnitService, SelectedUnitRepository selectedUnitRepository, SelectedUpgradeRepository selectedUpgradeRepository, ArmyCompositionRepository armyCompositionRepository) {
         this.selectedUnit = selectedUnit;
-        this.selectedService = selectedService;
+        this.selectedUnitService = selectedUnitService;
         this.selectedUnitRepository = selectedUnitRepository;
         this.selectedUpgradeRepository = selectedUpgradeRepository;
         this.armyCompositionRepository = armyCompositionRepository;
@@ -71,7 +70,7 @@ public class ArmyCompositionService {
 
             pointsByType.put(unitType, pointsByType.getOrDefault(unitType, 0.0) + unitPoints);
         }
-
+        System.out.println(pointsByType);
         for (SelectedUpgrade selectedUpgrade : selectedUpgradeList) {
             if (selectedUpgrade.isSelected()) {
                 String unitType = selectedUpgrade.getSelectedUnit().getUnitType();
@@ -79,9 +78,24 @@ public class ArmyCompositionService {
                 pointsByType.put(unitType, pointsByType.getOrDefault(unitType, 0.0) + upgradePoints);
             }
         }
+        System.out.println(pointsByType);
         return pointsByType;
     }
+    public Map<String, Double> calculatePointsLimitsByType(double pointsRestriction) {
+        Map<String, Double> pointsLimitsByType = new HashMap<>();
+        pointsLimitsByType.put("Lords", pointsRestriction * 0.5);
+        pointsLimitsByType.put("Hero", pointsRestriction * 0.5);
+        pointsLimitsByType.put("Core", pointsRestriction * 0.25);
+        pointsLimitsByType.put("Special", pointsRestriction * 0.5);
+        pointsLimitsByType.put("Rare", pointsRestriction * 0.25);
+        return pointsLimitsByType;
+    }
 
+    public Map<String, Double> calculateUtilizedPointsByType(Map<String, List<SelectedUnit>> unitsByType) {
+        Map<String, Double> utilizedPointsByType = new HashMap<>();
+        utilizedPointsByType = calculateDedicatedPoints();
+        return utilizedPointsByType;
+    }
 
     public void addNewArmyTemplate(List<SelectedUnit> selectedUnits) {
         ArmyComposition armyComposition = new ArmyComposition();

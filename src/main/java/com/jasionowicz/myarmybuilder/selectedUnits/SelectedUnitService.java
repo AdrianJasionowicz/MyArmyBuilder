@@ -1,19 +1,21 @@
 package com.jasionowicz.myarmybuilder.selectedUnits;
 
+import com.jasionowicz.myarmybuilder.selectedStats.SelectedStatsRepository;
 import com.jasionowicz.myarmybuilder.selectedUpgrades.SelectedUpgrade;
 import com.jasionowicz.myarmybuilder.selectedUpgrades.SelectedUpgradeRepository;
 import com.jasionowicz.myarmybuilder.selectedUpgrades.SelectedUpgradeService;
-import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
-public class SelectedService {
+public class SelectedUnitService {
 
 
     @Autowired
@@ -23,11 +25,18 @@ public class SelectedService {
     private SelectedUnitDTO selectedUnitDTO;
     @Autowired
     private SelectedUpgradeService selectedUpgradeService;
+    private SelectedStatsRepository selectedStatsRepository;
+    private SelectedUpgradeRepository selectedUpgradeRepository;
+
+    public SelectedUnitService(SelectedStatsRepository selectedStatsRepository, SelectedUpgradeRepository selectedUpgradeRepository) {
+        this.selectedStatsRepository = selectedStatsRepository;
+        this.selectedUpgradeRepository = selectedUpgradeRepository;
+    }
 
 
     public void removeUnitById(int id) {
-            selectedUnitRepository.deleteById(id);
-        }
+        selectedUnitRepository.deleteById(id);
+    }
 
 
     public ResponseEntity<String> increaseUnitQuantity(Integer id) {
@@ -36,7 +45,7 @@ public class SelectedService {
             SelectedUnit unit = selectedUnit.get();
             unit.setQuantity(unit.getQuantity() + 1);
             selectedUnitRepository.save(unit);
-            selectedUpgradeService.checkUpgradesQuantities(id,unit.getQuantity());
+            selectedUpgradeService.checkUpgradesQuantities(id, unit.getQuantity());
 
             return ResponseEntity.ok("Quantity increased");
         }
@@ -50,9 +59,12 @@ public class SelectedService {
             SelectedUnit selectedUnit = optionalSelectedUnit.get();
 
             if (selectedUnit.getQuantity() > 0) {
+                if (selectedUnit.getQuantity() == selectedUnit.getUnit().getMinQuantity()) {
+                    return ResponseEntity.badRequest().body("Cant decrease quantity");
+                }
                 selectedUnit.setQuantity(selectedUnit.getQuantity() - 1);
                 selectedUnitRepository.save(selectedUnit);
-                selectedUpgradeService.checkUpgradesQuantities(id,selectedUnit.getQuantity());
+                selectedUpgradeService.checkUpgradesQuantities(id, selectedUnit.getQuantity());
 
                 return ResponseEntity.ok("Quantity decreased");
             } else {
@@ -68,4 +80,21 @@ public class SelectedService {
     }
 
 
+    public void saveSelectedUnit(SelectedUnit selectedUnit) {
+
+        if (selectedUnit.getSelectedStats() != null) {
+            selectedStatsRepository.save(selectedUnit.getSelectedStats());
+        }
+
+        selectedUnitRepository.save(selectedUnit);
+
+        List<SelectedUpgrade> selectedUpgradeList = selectedUnit.getSelectedUpgrades().stream()
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
+
+        if (!selectedUpgradeList.isEmpty()) {
+            selectedUpgradeService.addFreeUpgradesAndSpecialRaceUpgrades(selectedUnit.getId());
+            selectedUpgradeRepository.saveAll(selectedUpgradeList);
+        }
+    }
 }

@@ -1,5 +1,6 @@
 package com.jasionowicz.myarmybuilder.selectedUpgrades;
 
+import com.jasionowicz.myarmybuilder.armyComposition.ArmyCompositionService;
 import com.jasionowicz.myarmybuilder.selectedUnits.SelectedUnit;
 import com.jasionowicz.myarmybuilder.selectedUnits.SelectedUnitRepository;
 import jakarta.annotation.PostConstruct;
@@ -156,15 +157,57 @@ public class SelectedUpgradeService {
         }
     }
 
-    public ResponseEntity<String> removeSelectedUpgrade(int upgradeId) {
+    public void removeSelectedUpgrade(int upgradeId) {
         Optional<SelectedUpgrade> optionalSelectedUpgrade = selectedUpgradeRepository.findById(upgradeId);
         if (optionalSelectedUpgrade.isPresent()) {
             SelectedUpgrade selectedUpgrade = optionalSelectedUpgrade.get();
             selectedUpgrade.setSelected(false);
             selectedUpgradeRepository.save(selectedUpgrade);
-            return ResponseEntity.ok().body("Upgrade removed");
         }
-        return ResponseEntity.badRequest().body("Upgrade not found");
     }
+
+    public void addUpgrade(Integer upgradeId) {
+        Optional<SelectedUpgrade> optionalSelectedUpgrade = selectedUpgradeRepository.findById(upgradeId);
+        if (optionalSelectedUpgrade.isEmpty()) {
+            throw new RuntimeException("Upgrade not found");
+        }
+
+        SelectedUpgrade selectedUpgrade = optionalSelectedUpgrade.get();
+        SelectedUnit selectedUnit = selectedUpgrade.getSelectedUnit();
+        int unitId = selectedUnit.getId();
+
+        if (checkWeaponTeams(unitId)) {
+            selectedUpgrade.setSelected(false);
+            selectedUpgradeRepository.save(selectedUpgrade);
+            throw new RuntimeException("Unit can take only one Weapon team");
+        }
+
+        if (selectedUnit.getUnitType().equals("Lords")) {
+            checkLordsUpgrades(unitId);
+        } else if (selectedUnit.getUnitType().equals("Hero")) {
+            if (checkChieftainBattleStandard(unitId)) {
+                throw new RuntimeException("Hero with Standard banner cannot take Magic items");
+            }
+            checkHeroUpgrades(unitId);
+        }
+
+        if (selectedUpgrade.isSelected()) {
+            throw new RuntimeException("Upgrade already selected");
+        }
+        selectedUpgrade.setSelected(true);
+        updateSelectedUpgradeQuantity(selectedUpgrade, selectedUnit);
+        selectedUpgradeRepository.save(selectedUpgrade);
+    }
+
+    private void updateSelectedUpgradeQuantity(SelectedUpgrade selectedUpgrade, SelectedUnit selectedUnit) {
+        String upgradeType = selectedUpgrade.getUpgrade().getUpgradeType();
+        if (upgradeType.equals("Weapon Team") || upgradeType.equals("SingleBuy")) {
+            selectedUpgrade.setQuantity(1);
+        } else {
+            SelectedUnit selectedUnitForQuantity = selectedUnitRepository.findById(selectedUnit.getId()).orElseThrow();
+            selectedUpgrade.setQuantity(selectedUnitForQuantity.getQuantity());
+        }
+    }
+
 
 }

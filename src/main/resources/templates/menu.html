@@ -340,35 +340,37 @@
 <script>
     $(document).ready(function () {
         $('#save-roster-button').on('click', function () {
-        $.ajax({
-            type: 'POST',
-            url: '/saveRoaster',
-            success: function (response) {
-                alert(response);
-            },
-            error: function (xhr, status, error) {
-                alert("Error saving army composition: " + xhr.responseText);
+            $.ajax({
+                type: 'POST',
+                url: '/saveRoaster',
+                success: function (response) {
+                    alert(response);
+                },
+                error: function (xhr, status, error) {
+                    alert("Error saving army composition: " + xhr.responseText);
+                }
+            });
+        });
+
+        $('#load-roster-button').on('click', function () {
+            let rosterId = $('#roster-id-input').val();
+
+            if (rosterId) {
+                $.ajax({
+                    type: 'GET',
+                    url: '/loadRoaster?armyId=' + rosterId,
+                    success: function (response) {
+                        alert(response);
+                    },
+                    error: function (xhr, status, error) {
+                        alert("Error loading army composition: " + xhr.responseText);
+                    }
+                });
+            } else {
+                alert('Please enter a Roster ID.');
             }
         });
-    });
-    $('#load-roster-button').on('click', function () {
-    let rosterId = $('#roster-id-input').val();
-    
-    if (rosterId) {
-        $.ajax({
-            type: 'GET',
-            url: '/loadRoaster?armyId=' + rosterId,
-            success: function (response) {
-                alert(response);
-            },
-            error: function (xhr, status, error) {
-                alert("Error loading army composition: " + xhr.responseText);
-            }
-        });
-    } else {
-        alert('Please enter a Roster ID.');
-    }
-});
+
         // Funkcja do filtrowania jednostek na podstawie wybranej nacji
         function filterUnitsByNation(nation) {
             $('.list ul li').each(function () {
@@ -396,13 +398,9 @@
                 type: 'GET',
                 url: '/units/' + unitId + '/upgrades',
                 success: function (data) {
-                    console.log('Received data:', data);
                     $('#upgrades-list').empty();
                     data.forEach(function (upgrade) {
                         let listItem = $('<li>').text(upgrade.name + ' (+' + upgrade.pointsCost + ' pts)');
-                        if (upgrade.selected) {
-                            listItem.prepend('<img src="/selectedUpgrade.png" alt="selected" class="selected-icon" />');
-                        }
                         let selectButton = $('<button>')
                             .text('Add')
                             .addClass('select-upgrade-button')
@@ -413,7 +411,7 @@
                                 $.ajax({
                                     type: 'POST',
                                     url: '/addUpgrade',
-                                    data: $.param({upgradeId: upgradeId}),
+                                    data: $.param({ upgradeId: upgradeId }),
                                     success: function () {
                                         listItem.prepend('<img src="/selectedUpgrade.png" alt="selected" class="selected-icon" />');
                                         selectButton.hide();
@@ -435,12 +433,26 @@
                                 $.ajax({
                                     type: 'POST',
                                     url: '/removeSelectedUpgrade',
-                                    data: $.param({upgradeId: upgradeId}),
+                                    data: $.param({ upgradeId: upgradeId }),
+                                    success: function () {
+                                        listItem.find('img.selected-icon').remove();
+                                        selectButton.show();
+                                        removeButton.hide();
+                                    },
                                     error: function () {
                                         alert('Error removing upgrade.');
                                     }
                                 });
                             });
+
+                        // Jeżeli ulepszenie jest już wybrane, pokaż ikonę i ukryj przycisk 'Add'
+                        if (upgrade.selected) {
+                            listItem.prepend('<img src="/selectedUpgrade.png" alt="selected" class="selected-icon" />');
+                            selectButton.hide();
+                            removeButton.show();
+                        } else {
+                            removeButton.hide();
+                        }
 
                         listItem.append(selectButton).append(removeButton);
                         $('#upgrades-list').append(listItem);
@@ -452,6 +464,7 @@
             });
         });
     });
+
 </script>
 </body>
 </html>
