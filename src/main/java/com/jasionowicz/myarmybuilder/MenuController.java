@@ -12,6 +12,7 @@ import com.jasionowicz.myarmybuilder.selectedUpgrades.SelectedUpgradeDTO;
 import com.jasionowicz.myarmybuilder.selectedUpgrades.SelectedUpgradeRepository;
 import com.jasionowicz.myarmybuilder.selectedUpgrades.SelectedUpgradeService;
 import com.jasionowicz.myarmybuilder.unit.Unit;
+import com.jasionowicz.myarmybuilder.unit.UnitDTO;
 import com.jasionowicz.myarmybuilder.unit.UnitRepository;
 import com.jasionowicz.myarmybuilder.unit.UnitService;
 import com.jasionowicz.myarmybuilder.upgrade.UpgradesService;
@@ -57,7 +58,7 @@ public class MenuController {
 
     @GetMapping("/menu")
     public String showMenu(Model model) {
-        List<Unit> availableUnits = unitRepository.findAll();
+        List<UnitDTO> availableUnits = unitService.getUnitDtoList();
         List<SelectedUnit> selectedUnits = selectedService.getSelectedUnits();
         Map<String, List<SelectedUnit>> unitsByType = selectedUnits.stream()
                 .collect(Collectors.groupingBy(SelectedUnit::getUnitType));
@@ -87,12 +88,11 @@ public class MenuController {
 
     @PostMapping("/addUnit")
     public String addUnit(@RequestParam("unitId") Integer unitId) {
-        Optional<Unit> unitOptional = unitRepository.findById(unitId);
+        Optional<UnitDTO> unitOptional = unitService.getUnitDTO(unitId);
 
         if (unitOptional.isPresent()) {
-            Unit unit = unitOptional.get();
-
-            SelectedUnit selectedUnit = new SelectedUnit(unit);
+            UnitDTO unit = unitOptional.get();
+            SelectedUnit selectedUnit = new SelectedUnit(unitService.getUnitAndSendItToSelected(unitId));
 
             if (selectedUnit.getSelectedStats() != null) {
                 selectedStatsRepository.save(selectedUnit.getSelectedStats());
@@ -106,10 +106,7 @@ public class MenuController {
                 selectedUpgradeRepository.saveAll(selectedUpgradeList);
 
             }
-
-
         }
-
         return "redirect:/menu";
     }
 

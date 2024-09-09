@@ -2,6 +2,7 @@ package com.jasionowicz.myarmybuilder.selectedUnitView;
 
 import com.jasionowicz.myarmybuilder.selectedUnits.SelectedUnit;
 import com.jasionowicz.myarmybuilder.selectedUpgrades.SelectedUpgradeDTO;
+import com.jasionowicz.myarmybuilder.unit.Unit;
 import lombok.*;
 
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ public class SelectedUnitView {
     private int id;
     private int quantity;
     private List<SelectedUpgradeDTO> upgrades;
+    private String unitType;
 
     public SelectedUnitView (SelectedUnit selectedUnit){
         this.id = selectedUnit.getId();
@@ -23,6 +25,7 @@ public class SelectedUnitView {
         this.upgrades = selectedUnit.getSelectedUpgrades().stream()
                 .map(SelectedUpgradeDTO::new)
                 .toList();
+        this.unitType = selectedUnit.getUnitType();
     }
 
 
