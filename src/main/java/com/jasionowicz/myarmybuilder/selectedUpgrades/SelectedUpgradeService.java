@@ -1,6 +1,8 @@
 package com.jasionowicz.myarmybuilder.selectedUpgrades;
 
 import com.jasionowicz.myarmybuilder.armyComposition.ArmyCompositionService;
+import com.jasionowicz.myarmybuilder.exceptions.GlobalExceptionHandler;
+import com.jasionowicz.myarmybuilder.exceptions.WeaponTeamException;
 import com.jasionowicz.myarmybuilder.selectedUnits.SelectedUnit;
 import com.jasionowicz.myarmybuilder.selectedUnits.SelectedUnitRepository;
 import jakarta.annotation.PostConstruct;
@@ -177,9 +179,11 @@ public class SelectedUpgradeService {
         int unitId = selectedUnit.getId();
 
         if (checkWeaponTeams(unitId)) {
+
+
             selectedUpgrade.setSelected(false);
             selectedUpgradeRepository.save(selectedUpgrade);
-            throw new RuntimeException("Unit can take only one Weapon team");
+            throw new WeaponTeamException("Unit can take only one Weapon team");
         }
 
         if (selectedUnit.getUnitType().equals("Lords")) {

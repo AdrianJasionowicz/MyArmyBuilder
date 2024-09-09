@@ -351,6 +351,7 @@
                 }
             });
         });
+
         $('#load-roster-button').on('click', function () {
             let rosterId = $('#roster-id-input').val();
 
@@ -369,6 +370,7 @@
                 alert('Please enter a Roster ID.');
             }
         });
+
         // Funkcja do filtrowania jednostek na podstawie wybranej nacji
         function filterUnitsByNation(nation) {
             $('.list ul li').each(function () {
@@ -396,13 +398,9 @@
                 type: 'GET',
                 url: '/units/' + unitId + '/upgrades',
                 success: function (data) {
-                    console.log('Received data:', data);
                     $('#upgrades-list').empty();
                     data.forEach(function (upgrade) {
                         let listItem = $('<li>').text(upgrade.name + ' (+' + upgrade.pointsCost + ' pts)');
-                        if (upgrade.selected) {
-                            listItem.prepend('<img src="/selectedUpgrade.png" alt="selected" class="selected-icon" />');
-                        }
                         let selectButton = $('<button>')
                             .text('Add')
                             .addClass('select-upgrade-button')
@@ -413,14 +411,17 @@
                                 $.ajax({
                                     type: 'POST',
                                     url: '/addUpgrade',
-                                    data: $.param({upgradeId: upgradeId}),
+                                    data: $.param({ upgradeId: upgradeId }),
                                     success: function () {
                                         listItem.prepend('<img src="/selectedUpgrade.png" alt="selected" class="selected-icon" />');
                                         selectButton.hide();
                                         removeButton.show();
                                     },
-                                    error: function () {
-                                        alert('Error adding upgrade.');
+                                    error: function (xhr, status, error) {
+                                        console.error("XHR Error:", xhr);
+                                        console.error("Status:", status);
+                                        console.error("Error:", error);
+                                        alert('Error adding upgrade: ' + xhr.responseText);
                                     }
                                 });
                             });
@@ -435,12 +436,26 @@
                                 $.ajax({
                                     type: 'POST',
                                     url: '/removeSelectedUpgrade',
-                                    data: $.param({upgradeId: upgradeId}),
+                                    data: $.param({ upgradeId: upgradeId }),
+                                    success: function () {
+                                        listItem.find('img.selected-icon').remove();
+                                        selectButton.show();
+                                        removeButton.hide();
+                                    },
                                     error: function () {
                                         alert('Error removing upgrade.');
                                     }
                                 });
                             });
+
+                        // Jeżeli ulepszenie jest już wybrane, pokaż ikonę i ukryj przycisk 'Add'
+                        if (upgrade.selected) {
+                            listItem.prepend('<img src="/selectedUpgrade.png" alt="selected" class="selected-icon" />');
+                            selectButton.hide();
+                            removeButton.show();
+                        } else {
+                            removeButton.hide();
+                        }
 
                         listItem.append(selectButton).append(removeButton);
                         $('#upgrades-list').append(listItem);
@@ -452,6 +467,7 @@
             });
         });
     });
+
 </script>
 </body>
 </html>

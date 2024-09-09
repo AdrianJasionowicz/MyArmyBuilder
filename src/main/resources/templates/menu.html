@@ -417,8 +417,11 @@
                                         selectButton.hide();
                                         removeButton.show();
                                     },
-                                    error: function () {
-                                        alert('Error adding upgrade.');
+                                    error: function (xhr, status, error) {
+                                        console.error("XHR Error:", xhr);
+                                        console.error("Status:", status);
+                                        console.error("Error:", error);
+                                        alert('Error adding upgrade: ' + xhr.responseText);
                                     }
                                 });
                             });

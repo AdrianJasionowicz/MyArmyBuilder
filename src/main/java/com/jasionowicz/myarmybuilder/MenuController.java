@@ -141,13 +141,9 @@ public class MenuController {
 
     @PostMapping("/addUpgrade")
     public ResponseEntity<String> addUpgrade(@RequestParam Integer upgradeId) {
-        try {
             selectedUpgradeService.addUpgrade(upgradeId);
             armyCompositionService.calculateDedicatedPoints();
             return ResponseEntity.ok("Upgrade added successfully");
-        } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
     }
 
 
