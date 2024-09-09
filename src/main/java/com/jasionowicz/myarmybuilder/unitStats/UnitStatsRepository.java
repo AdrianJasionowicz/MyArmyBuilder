@@ -1,4 +1,4 @@
-package com.jasionowicz.myarmybuilder.unit;
+package com.jasionowicz.myarmybuilder.unitStats;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

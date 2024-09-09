@@ -18,6 +18,6 @@ public class SelectedUnitViewController {
     @GetMapping("/view/units/{unitId}")
     public List<SelectedUnitView> getSelectedUnitView(@PathVariable int unitId) {
         return selectedUnitViewService.getSelectedUnitView(unitId);
-
     }
+
 }

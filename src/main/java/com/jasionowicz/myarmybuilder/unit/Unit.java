@@ -1,6 +1,7 @@
 package com.jasionowicz.myarmybuilder.unit;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.jasionowicz.myarmybuilder.unitStats.UnitStats;
 import com.jasionowicz.myarmybuilder.upgrade.Upgrade;
 import jakarta.persistence.*;
 import lombok.*;

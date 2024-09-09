@@ -28,14 +28,9 @@ public class SelectedService {
     }
 
 
-    public ResponseEntity<String> removeUnitById(int id) {
-        SelectedUnit selectedUnit = selectedUnitRepository.findById(id).orElse(null);
-        if (selectedUnit != null) {
-            selectedUnitRepository.delete(selectedUnit);
-            return ResponseEntity.ok("Done");
+    public void removeUnitById(int id) {
+            selectedUnitRepository.deleteById(id);
         }
-        return ResponseEntity.badRequest().body(null);
-    }
 
 
     public ResponseEntity<String> increaseUnitQuantity(Integer id) {

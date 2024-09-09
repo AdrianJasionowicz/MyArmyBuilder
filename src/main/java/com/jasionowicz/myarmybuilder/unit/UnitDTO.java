@@ -1,5 +1,6 @@
 package com.jasionowicz.myarmybuilder.unit;
 
+import com.jasionowicz.myarmybuilder.unitStats.UnitStats;
 import com.jasionowicz.myarmybuilder.upgrade.Upgrade;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,8 +23,6 @@ public class UnitDTO {
     private String nation;
     private UnitStats unitStats;
     List<Upgrade> upgradeList = new ArrayList<>();
-
-    private Unit unit;
 
 
 }

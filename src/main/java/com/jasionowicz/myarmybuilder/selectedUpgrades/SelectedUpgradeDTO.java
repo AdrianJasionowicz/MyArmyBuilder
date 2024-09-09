@@ -21,11 +21,7 @@ public class SelectedUpgradeDTO {
     private double pointsCost;
 
 
-    public SelectedUpgradeDTO(UpgradeDTO upgradeDTO) {
-        this.id = upgradeDTO.getId();
-        this.name = upgradeDTO.getName();
-        this.quantity = upgradeDTO.getQuantity();
-    }
+
 
     public SelectedUpgradeDTO(SelectedUpgrade selectedUpgrade) {
         this.id = selectedUpgrade.getId();

@@ -1,4 +1,4 @@
-package com.jasionowicz.myarmybuilder.unit;
+package com.jasionowicz.myarmybuilder.unitStats;
 
 import com.jasionowicz.myarmybuilder.selectedStats.SelectedStats;
 import jakarta.persistence.Entity;
@@ -15,6 +15,7 @@ import lombok.*;
 @NoArgsConstructor
 @Entity
 public class UnitStats {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;

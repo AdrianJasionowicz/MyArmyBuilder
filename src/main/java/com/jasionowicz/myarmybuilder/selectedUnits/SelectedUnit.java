@@ -2,10 +2,8 @@ package com.jasionowicz.myarmybuilder.selectedUnits;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.jasionowicz.myarmybuilder.selectedStats.SelectedStats;
-import com.jasionowicz.myarmybuilder.selectedStats.SelectedStatsDTO;
 import com.jasionowicz.myarmybuilder.selectedUpgrades.SelectedUpgrade;
 import com.jasionowicz.myarmybuilder.unit.Unit;
-import com.jasionowicz.myarmybuilder.unit.UnitStats;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

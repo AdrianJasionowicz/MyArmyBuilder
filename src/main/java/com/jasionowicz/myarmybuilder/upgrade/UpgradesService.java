@@ -1,22 +1,18 @@
 package com.jasionowicz.myarmybuilder.upgrade;
 
-import com.jasionowicz.myarmybuilder.selectedUpgrades.SelectedUpgrade;
-import com.jasionowicz.myarmybuilder.selectedUpgrades.SelectedUpgradeRepository;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class UpgradesService {
 
     private final UpgradeRepository upgradeRepository;
-    private SelectedUpgradeRepository selectedUpgradeRepository;
 
     public UpgradesService(UpgradeRepository upgradeRepository) {
         this.upgradeRepository = upgradeRepository;
     }
 
-    public void addUpgrade(Upgrade upgrade) {
+    public void addUpgrade(UpgradeDTO upgradeDTO) {
+       Upgrade upgrade = convertDtoToEntity(upgradeDTO);
         upgradeRepository.save(upgrade);
     }
 
@@ -24,15 +20,22 @@ public class UpgradesService {
         upgradeRepository.deleteById(id);
     }
 
-    public Upgrade getUpgradeById(Integer id) {
-        return upgradeRepository.findById(id).orElse(null);
-    }
-
-    public void updateUpgrade(Integer id, Upgrade upgrade) {
+    public void updateUpgrade(Integer id, UpgradeDTO upgradeDTO) {
+        Upgrade upgrade = convertDtoToEntity(upgradeDTO);
         Upgrade existingUpgrade = upgradeRepository.findById(id).orElseThrow(() -> new RuntimeException("Upgrade not found"));
         existingUpgrade.setName(upgrade.getName());
         existingUpgrade.setPointsCost(upgrade.getPointsCost());
+        existingUpgrade.setDescription(upgrade.getDescription());
+        existingUpgrade.setUpgradeType(upgrade.getUpgradeType());
         upgradeRepository.save(existingUpgrade);
     }
 
+    public Upgrade convertDtoToEntity(UpgradeDTO upgrade) {
+        Upgrade newUpgrade = new Upgrade();
+        newUpgrade.setName(upgrade.getName());
+        newUpgrade.setPointsCost(upgrade.getPointsCost());
+        newUpgrade.setUpgradeType(upgrade.getUpgradeType());
+        newUpgrade.setPointsCost(upgrade.getPointsCost());
+        return newUpgrade;
+    }
 }
