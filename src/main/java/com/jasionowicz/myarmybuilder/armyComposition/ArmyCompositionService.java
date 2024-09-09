@@ -70,7 +70,6 @@ public class ArmyCompositionService {
 
             pointsByType.put(unitType, pointsByType.getOrDefault(unitType, 0.0) + unitPoints);
         }
-        System.out.println(pointsByType);
         for (SelectedUpgrade selectedUpgrade : selectedUpgradeList) {
             if (selectedUpgrade.isSelected()) {
                 String unitType = selectedUpgrade.getSelectedUnit().getUnitType();
@@ -78,7 +77,6 @@ public class ArmyCompositionService {
                 pointsByType.put(unitType, pointsByType.getOrDefault(unitType, 0.0) + upgradePoints);
             }
         }
-        System.out.println(pointsByType);
         return pointsByType;
     }
     public Map<String, Double> calculatePointsLimitsByType(double pointsRestriction) {
