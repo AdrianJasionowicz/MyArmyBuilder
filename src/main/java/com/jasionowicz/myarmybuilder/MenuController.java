@@ -27,8 +27,6 @@ public class MenuController {
     private final SelectedUnitService selectedUnitService;
     private final ArmyCompositionService armyCompositionService;
     private final UnitService unitService;
-    private final SelectedUnitRepository selectedUnitRepository;   // TO USUNAC
-    private final SelectedUpgradeRepository selectedUpgradeRepository;   // TO USUNAC
     private double pointsRestriction = 0;
     @Autowired
     private SelectedUpgradeService selectedUpgradeService;
@@ -36,12 +34,10 @@ public class MenuController {
     private SelectedUnitViewService selectedUnitViewService;
 
     @Autowired
-    public MenuController(ArmyCompositionService armyCompositionService, UnitService unitService, SelectedUnitService selectedUnitService, SelectedUnitRepository selectedUnitRepository, SelectedUpgradeRepository selectedUpgradeRepository, SelectedUnit selectedUnit, SelectedUpgradeDTO selectedUpgradeDTO, SelectedUpgrade selectedUpgrade) {
+    public MenuController(ArmyCompositionService armyCompositionService, UnitService unitService, SelectedUnitService selectedUnitService, SelectedUnit selectedUnit, SelectedUpgradeDTO selectedUpgradeDTO, SelectedUpgrade selectedUpgrade) {
         this.armyCompositionService = armyCompositionService;
         this.unitService = unitService;
         this.selectedUnitService = selectedUnitService;
-        this.selectedUnitRepository = selectedUnitRepository;
-        this.selectedUpgradeRepository = selectedUpgradeRepository;
     }
 
 
@@ -165,7 +161,6 @@ public class MenuController {
         SelectedUnitView selectedUnitView = selectedUnitViewService.getSelectedSingleUnitView(id);
         List<SelectedUpgradeDTO> selectedUpgradeDTO = selectedUnitView.getUpgrades();
         return ResponseEntity.ok().body(selectedUpgradeDTO);
-
     }
 
 

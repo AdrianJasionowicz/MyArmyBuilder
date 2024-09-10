@@ -34,16 +34,4 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
     }
 
-
-    public class MagicItemsException extends RuntimeException {
-        public MagicItemsException(String message) {
-            super(message);
-        }
-    }
-
-    public class UpgradeAlreadySelectedException extends RuntimeException {
-        public UpgradeAlreadySelectedException(String message) {
-            super(message);
-        }
-    }
 }

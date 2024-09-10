@@ -2,6 +2,8 @@ package com.jasionowicz.myarmybuilder.selectedUpgrades;
 
 import com.jasionowicz.myarmybuilder.armyComposition.ArmyCompositionService;
 import com.jasionowicz.myarmybuilder.exceptions.GlobalExceptionHandler;
+import com.jasionowicz.myarmybuilder.exceptions.StandardBannerCannotTakeMagicWeapons;
+import com.jasionowicz.myarmybuilder.exceptions.UpgradeAlreadySelectedException;
 import com.jasionowicz.myarmybuilder.exceptions.WeaponTeamException;
 import com.jasionowicz.myarmybuilder.selectedUnits.SelectedUnit;
 import com.jasionowicz.myarmybuilder.selectedUnits.SelectedUnitRepository;
@@ -180,7 +182,6 @@ public class SelectedUpgradeService {
 
         if (checkWeaponTeams(unitId)) {
 
-
             selectedUpgrade.setSelected(false);
             selectedUpgradeRepository.save(selectedUpgrade);
             throw new WeaponTeamException("Unit can take only one Weapon team");
@@ -190,13 +191,13 @@ public class SelectedUpgradeService {
             checkLordsUpgrades(unitId);
         } else if (selectedUnit.getUnitType().equals("Hero")) {
             if (checkChieftainBattleStandard(unitId)) {
-                throw new RuntimeException("Hero with Standard banner cannot take Magic items");
+                throw new StandardBannerCannotTakeMagicWeapons("Hero with Standard banner cannot take Magic items");
             }
             checkHeroUpgrades(unitId);
         }
 
         if (selectedUpgrade.isSelected()) {
-            throw new RuntimeException("Upgrade already selected");
+            throw new UpgradeAlreadySelectedException("Upgrade already selected");
         }
         selectedUpgrade.setSelected(true);
         updateSelectedUpgradeQuantity(selectedUpgrade, selectedUnit);

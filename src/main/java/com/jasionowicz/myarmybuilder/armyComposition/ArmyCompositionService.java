@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -79,6 +80,7 @@ public class ArmyCompositionService {
         }
         return pointsByType;
     }
+
     public Map<String, Double> calculatePointsLimitsByType(double pointsRestriction) {
         Map<String, Double> pointsLimitsByType = new HashMap<>();
         pointsLimitsByType.put("Lords", pointsRestriction * 0.5);
@@ -110,7 +112,6 @@ public class ArmyCompositionService {
         }
 
 
-
     }
 
     public void removeTemplate(int id) {
@@ -118,12 +119,12 @@ public class ArmyCompositionService {
     }
 
     public void updateArmyTemplate(ArmyComposition armyComposition) {
-       int id = armyComposition.getId();
-       armyCompositionRepository.getReferenceById(id);
+        int id = armyComposition.getId();
+        armyCompositionRepository.getReferenceById(id);
     }
 
     public ResponseEntity<String> saveSelectedUnitsList() {
-     List<SelectedUnit> selectedUnitList = selectedUnitRepository.findAll();
+        List<SelectedUnit> selectedUnitList = selectedUnitRepository.findAll();
         addNewArmyTemplate(selectedUnitList);
         if (selectedUnitList.isEmpty()) {
             return ResponseEntity.badRequest().body("Army composition is empty");
