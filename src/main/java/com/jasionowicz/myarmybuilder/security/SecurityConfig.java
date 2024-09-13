@@ -29,10 +29,16 @@ public class SecurityConfig {
 
 
         return httpSecurity.csrf(AbstractHttpConfigurer::disable).authorizeHttpRequests(registry -> {
-            registry.requestMatchers("/register/**").permitAll().requestMatchers("/admin/**").hasRole("ADMIN").anyRequest().authenticated();
-        }).formLogin(httpSecurityFormLoginConfigurer -> {
-            httpSecurityFormLoginConfigurer.loginPage("/login").successHandler(new AuthenticationSuccesHandler()).permitAll();
-        }).build();
+                    registry.requestMatchers("/register/**", "/admin/h2-console/**")
+                            .permitAll().requestMatchers("/admin/**").hasRole("ADMIN")
+                            .anyRequest().authenticated();
+                })
+                .formLogin(httpSecurityFormLoginConfigurer -> {
+                    httpSecurityFormLoginConfigurer.loginPage("/login").successHandler(new AuthenticationSuccesHandler()).permitAll();
+                })
+                .headers(headers -> headers.frameOptions().sameOrigin()
+                )
+                .build();
     }
 
     @Bean

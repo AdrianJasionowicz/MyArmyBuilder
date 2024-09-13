@@ -1,5 +1,6 @@
 package com.jasionowicz.myarmybuilder.armyComposition;
 
+import com.jasionowicz.myarmybuilder.security.model.BuilderUser;
 import com.jasionowicz.myarmybuilder.selectedUnits.SelectedUnit;
 import jakarta.persistence.*;
 import lombok.*;
@@ -21,5 +22,7 @@ public class ArmyComposition {
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "selectedUnit_id")
     private List<SelectedUnit> selectedUnitList;
-
+    @ManyToOne
+    @JoinColumn(name = "builderUser_id")
+    private BuilderUser builderUser;
 }

@@ -20,5 +20,8 @@ public class LoginController {
     public String getRegisterPage() {
         return "register";
     }
-
+    @GetMapping("/")
+    public String showMenu() {
+        return "menu";
+    }
 }

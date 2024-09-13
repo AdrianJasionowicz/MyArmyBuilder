@@ -116,16 +116,19 @@
             font-size: 16px;
         }
     </style>
+
 </head>
 <body>
 
 <h1>Warhammer Builder</h1>
 <div class="nation-selector">
     <div class="login-buttons">
-        <button class="common-button" onclick="window.location.href='/login'">Log In</button>
+
         <form action="#" th:action="@{/logout}" method="POST" style="display:inline;">
             <input type="submit" value="Log Out" class="common-button"/>
         </form>
+        <button class="common-button" onclick="window.location.href='/template'">Check Your Templates</button>
+
     </div>
 
     </div>

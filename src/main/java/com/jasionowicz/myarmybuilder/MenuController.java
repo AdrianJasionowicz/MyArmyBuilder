@@ -1,6 +1,7 @@
 package com.jasionowicz.myarmybuilder;
 
 import com.jasionowicz.myarmybuilder.armyComposition.ArmyCompositionService;
+import com.jasionowicz.myarmybuilder.security.model.BuilderUser;
 import com.jasionowicz.myarmybuilder.selectedStats.SelectedStatsRepository;
 import com.jasionowicz.myarmybuilder.selectedUnitView.SelectedUnitView;
 import com.jasionowicz.myarmybuilder.selectedUnitView.SelectedUnitViewService;
@@ -13,6 +14,8 @@ import com.jasionowicz.myarmybuilder.unit.UnitDTO;
 import com.jasionowicz.myarmybuilder.unit.UnitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -88,30 +91,6 @@ public class MenuController {
     }
 
 
-//    @PostMapping("/addUnit")
-//    public String addUnit(@RequestParam("unitId") Integer unitId) {
-//        Optional<UnitDTO> unitOptional = unitService.getUnitDTO(unitId);
-//
-//        if (unitOptional.isPresent()) {
-//            UnitDTO unit = unitOptional.get();
-//            SelectedUnit selectedUnit = new SelectedUnit(unitService.getUnitAndSendItToSelected(unitId));
-//
-//            if (selectedUnit.getSelectedStats() != null) {
-//                selectedStatsRepository.save(selectedUnit.getSelectedStats());
-//            }
-//
-//            selectedUnitRepository.save(selectedUnit);
-//
-//            List<SelectedUpgrade> selectedUpgradeList = selectedUnit.getSelectedUpgrades().stream().filter(Objects::nonNull).collect(Collectors.toList());
-//            if (!selectedUpgradeList.isEmpty()) {
-//                selectedUpgradeService.addFreeUpgradesAndSpecialRaceUpgrades(selectedUnit.getId());
-//                selectedUpgradeRepository.saveAll(selectedUpgradeList);
-//
-//            }
-//        }
-//        return "redirect:/menu";
-//    }
-
 
     @PostMapping("/removeUnit")
     public String removeUnit(@RequestParam("id") Integer selectedId) {
@@ -170,6 +149,16 @@ public class MenuController {
 
         return ResponseEntity.ok().body("Army composition saved");
     }
+
+//    @GetMapping("/")
+//    public String showHomePage(Model model, Authentication authentication) {
+//        boolean isLoggedIn = authentication != null && authentication.getPrincipal() instanceof UserDetails;
+//        String username = isLoggedIn ? ((UserDetails) authentication.getPrincipal()).getUsername() : null;
+//
+//        model.addAttribute("loggedIn", isLoggedIn);
+//        model.addAttribute("username", username);
+//        return "index"; // Twoja strona z przyciskami
+//    }
 
 //    @GetMapping("/loadRoaster")
 //    public ResponseEntity<String> loadArmyComposition(@RequestParam int armyId) {
