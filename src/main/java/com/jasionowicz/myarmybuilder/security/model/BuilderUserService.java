@@ -76,9 +76,9 @@ public class BuilderUserService implements UserDetailsService {
         return Optional.of((User) principal);
     }
 
-    public Optional<BuilderUser> getLoggedBuilder() {
-       return getLoggedUser().map(user -> user.getBuilderUser());
-    }
+//    public Optional<BuilderUser> getLoggedBuilder() {
+//       return getLoggedUser().map(user -> user.getBuilderUser());
+//    }
 
 
 
