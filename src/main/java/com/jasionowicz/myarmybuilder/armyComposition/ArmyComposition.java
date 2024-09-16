@@ -18,7 +18,8 @@ public class ArmyComposition {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer id;
+    private Integer id;
+    private String roasterName;
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "selectedUnit_id")
     private List<SelectedUnit> selectedUnitList;

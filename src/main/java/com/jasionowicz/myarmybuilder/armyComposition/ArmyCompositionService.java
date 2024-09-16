@@ -1,5 +1,7 @@
 package com.jasionowicz.myarmybuilder.armyComposition;
 
+import com.jasionowicz.myarmybuilder.security.model.BuilderUser;
+import com.jasionowicz.myarmybuilder.security.model.BuilderUserService;
 import com.jasionowicz.myarmybuilder.selectedUnits.SelectedUnitService;
 import com.jasionowicz.myarmybuilder.selectedUnits.SelectedUnit;
 import com.jasionowicz.myarmybuilder.selectedUnits.SelectedUnitRepository;
@@ -7,7 +9,9 @@ import com.jasionowicz.myarmybuilder.selectedUpgrades.SelectedUpgrade;
 import com.jasionowicz.myarmybuilder.selectedUpgrades.SelectedUpgradeRepository;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,15 +30,19 @@ public class ArmyCompositionService {
     private final SelectedUnitRepository selectedUnitRepository;
     private final SelectedUpgradeRepository selectedUpgradeRepository;
     private final ArmyCompositionRepository armyCompositionRepository;
+    private final BuilderUserService builderUserService;
     private SelectedUnitService selectedUnitService;
+   //  private BuilderUser builderUser;
 
     @Autowired
-    public ArmyCompositionService(SelectedUnit selectedUnit, SelectedUnitService selectedUnitService, SelectedUnitRepository selectedUnitRepository, SelectedUpgradeRepository selectedUpgradeRepository, ArmyCompositionRepository armyCompositionRepository) {
+    public ArmyCompositionService(SelectedUnit selectedUnit, SelectedUnitService selectedUnitService, SelectedUnitRepository selectedUnitRepository, SelectedUpgradeRepository selectedUpgradeRepository, ArmyCompositionRepository armyCompositionRepository, BuilderUserService builderUserService) {
         this.selectedUnit = selectedUnit;
         this.selectedUnitService = selectedUnitService;
         this.selectedUnitRepository = selectedUnitRepository;
         this.selectedUpgradeRepository = selectedUpgradeRepository;
         this.armyCompositionRepository = armyCompositionRepository;
+        this.builderUserService = builderUserService;
+      //  this.builderUser = builderUser;
     }
 
 
@@ -130,5 +138,25 @@ public class ArmyCompositionService {
             return ResponseEntity.badRequest().body("Army composition is empty");
         }
         return ResponseEntity.ok().body("Army Composition saved");
+    }
+
+    public List<ArmyComposition> getArmyComposition() {
+        List<ArmyComposition> armyCompositionsList = new ArrayList<>();
+        BuilderUser builderUser = new BuilderUser();
+        Object object =  SecurityContextHolder.getContext().getAuthentication().getDetails();
+
+
+       // armyCompositionsList = builderUserService.getArmyTemplateById(userId);
+
+
+        return armyCompositionsList;
+    }
+
+    public void saveArmyTemplate(String name) {
+    ArmyComposition armyComposition = new ArmyComposition();
+    armyComposition.setRoasterName(name);
+    armyComposition.setSelectedUnitList(selectedUnitService.getSelectedUnits());
+    armyComposition.getBuilderUser(); // ??
+        armyCompositionRepository.save(armyComposition);
     }
 }

@@ -35,26 +35,6 @@ public class SelectedUpgradeService {
     }
 
 
-    public List<SelectedUpgrade> getUnitUpgradesById(Integer unitId) {
-        return selectedUpgradeRepository.findAllBySelectedUnitId(unitId);
-    }
-
-
-    public void setSelectedUpgrades(int selectedUnitId, int selectedUpgradeId) {
-        List<SelectedUpgrade> upgrades = selectedUpgradeRepository.findAllBySelectedUnitId(selectedUnitId);
-        for (SelectedUpgrade upgrade : upgrades) {
-            if (upgrade.getUpgrade().getId().equals(selectedUpgradeId)) {
-                upgrade.setSelected(true);
-                if (upgrade.getUpgrade().getUpgradeType().equals("SingleBuy")) {
-                    upgrade.setQuantity(1);
-
-                }
-            }
-            selectedUpgradeRepository.save(upgrade);
-        }
-
-    }
-
     public boolean checkChieftainBattleStandard(Integer selectedId) {
         List<SelectedUpgrade> checkUpgrades = selectedUpgradeRepository.findAllBySelectedUnitId(selectedId);
         for (SelectedUpgrade checkUpgrade : checkUpgrades) {

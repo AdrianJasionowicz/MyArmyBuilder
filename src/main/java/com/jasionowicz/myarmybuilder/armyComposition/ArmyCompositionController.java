@@ -1,11 +1,11 @@
 package com.jasionowicz.myarmybuilder.armyComposition;
 
 import com.jasionowicz.myarmybuilder.selectedUnits.SelectedUnit;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -17,14 +17,28 @@ public class ArmyCompositionController {
         this.armyCompositionService = armyCompositionService;
     }
 
-//    @GetMapping("/showComposition/{armyId}")
-//    public ArmyComposition armyComposition(@PathVariable Integer armyId) {
-//        return   armyCompositionRepository.findById(armyId).orElseThrow();
-//    }
+    @GetMapping("/loadTemplatesByUser")
+    public List<ArmyComposition> getTemplatesList() {
+        List<ArmyComposition> armyCompositionList = armyCompositionService.getArmyComposition();
+        return armyCompositionList;
+
+    }
 
     @GetMapping("/template")
     public String viewTemplates() {
         return "template";
     }
+
+    @PostMapping("/saveTemplate")
+    public String saveTemplate(@RequestParam String templateName) {
+        armyCompositionService.saveArmyTemplate(templateName);
+        return "redirect:/menu";
+    }
+
+    @DeleteMapping("/deleteTemplate")
+    public void deleteTemplate(@RequestParam int templateId) {
+        armyCompositionService.removeTemplate(templateId);
+    }
+
 
 }

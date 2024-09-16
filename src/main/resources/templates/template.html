@@ -95,10 +95,11 @@
                 <span th:text="${template.name}">Template Name</span>
                 <div class="template-actions">
                     <!-- Przycisk ładowania armii -->
-                    <form th:action="@{/loadTemplate}" method="post" style="display:inline;">
-                        <input type="hidden" name="templateId" th:value="${template.id}"/>
-                        <button type="submit" class="common-button">Load</button>
+                    <form th:action="@{/loadTemplatesByUser}" method="post" style="display:inline;">
+                        <input type="hidden" name="userId" th:value="${user.id}"/>
+                        <button type="submit" class="common-button">Load Templates</button>
                     </form>
+
 
                     <!-- Przycisk usuwania szablonu -->
                     <form th:action="@{/deleteTemplate}" method="post" style="display:inline;">
@@ -115,13 +116,7 @@
         </div>
     </div>
 
-    <!-- Sekcja tworzenia nowego szablonu -->
-    <h2>Create a New Army Template</h2>
-    <form th:action="@{/saveTemplate}" method="post">
-        <label for="templateName">Template Name:</label>
-        <input type="text" id="templateName" name="templateName" required/>
-        <button type="submit" class="common-button">Save</button>
-    </form>
+
 
     <div style="margin-top: 20px;">
         <button class="common-button" onclick="window.location.href='/menu'">Go Back to Army Builder</button>

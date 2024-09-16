@@ -116,16 +116,19 @@
             font-size: 16px;
         }
     </style>
+
 </head>
 <body>
 
 <h1>Warhammer Builder</h1>
 <div class="nation-selector">
     <div class="login-buttons">
-        <button class="common-button" onclick="window.location.href='/login'">Log In</button>
+
         <form action="#" th:action="@{/logout}" method="POST" style="display:inline;">
             <input type="submit" value="Log Out" class="common-button"/>
         </form>
+        <button class="common-button" onclick="window.location.href='/template'">Check Your Templates</button>
+
     </div>
 
 </div>
@@ -329,12 +332,6 @@
         </div>
 
     </div> <!-- container -->
-</div>
-<button id="save-roster-button">Save Roster</button>
-<div>
-    <label for="roster-id-input">Enter Roster ID:</label>
-    <input type="number" id="roster-id-input" name="roster-id" min="1" required>
-    <button id="load-roster-button">Load Roster</button>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
