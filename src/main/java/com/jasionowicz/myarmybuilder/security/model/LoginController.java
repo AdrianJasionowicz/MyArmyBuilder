@@ -33,8 +33,8 @@ public class LoginController {
     }
 
     @GetMapping("/isUserLogged")
-        public String isUserLogged(Model model) {
-        builderUserService.isUserLoggedIn(model);
+        public String isUserLogged() {
+        System.out.println(builderUserService.getLoggedUser());
         return "menu";
     }
 }

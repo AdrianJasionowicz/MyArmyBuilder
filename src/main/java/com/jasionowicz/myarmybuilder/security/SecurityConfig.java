@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -20,26 +21,29 @@ import javax.sql.DataSource;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    private DataSource dataSource;
-    @Autowired
-    private BuilderUserService builderUserService;
+    private final BuilderUserService builderUserService;
+
+    public SecurityConfig(BuilderUserService builderUserService) {
+        this.builderUserService = builderUserService;
+    }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http, HttpSecurity httpSecurity) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+        return httpSecurity.csrf(AbstractHttpConfigurer::disable)
+                .headers(AbstractHttpConfigurer::disable)
+                .authorizeHttpRequests(
+                        registry -> registry.requestMatchers("/register/**", "/admin/h2-console/**","/dej").permitAll()
 
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                            .anyRequest().authenticated()
+                )
+                .formLogin(httpSecurityFormLoginConfigurer -> httpSecurityFormLoginConfigurer.loginPage("/login")
+                        .successHandler(new AuthenticationSuccesHandler()).permitAll()
 
-        return httpSecurity.csrf(AbstractHttpConfigurer::disable).authorizeHttpRequests(registry -> {
-                    registry.requestMatchers("/register/**", "/admin/h2-console/**")
-                            .permitAll().requestMatchers("/admin/**").hasRole("ADMIN")
-                            .anyRequest().authenticated();
-                })
-                .formLogin(httpSecurityFormLoginConfigurer -> {
-                    httpSecurityFormLoginConfigurer.loginPage("/login").successHandler(new AuthenticationSuccesHandler()).permitAll();
-                })
-                .headers(headers -> headers.frameOptions().sameOrigin()
                 )
                 .build();
     }
+//          .headers(headers -> headers.frameOptions().sameOrigin()
 
     @Bean
     public UserDetailsService userDetailsService() {

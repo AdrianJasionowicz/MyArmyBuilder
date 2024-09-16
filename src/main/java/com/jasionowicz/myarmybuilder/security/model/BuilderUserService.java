@@ -61,4 +61,31 @@ public class BuilderUserService implements UserDetailsService {
             model.addAttribute("isLoggedIn", false);
         }
     }
+
+
+    public Optional<User> getLoggedUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || !authentication.isAuthenticated() || authentication.getPrincipal() instanceof String) {
+            return Optional.empty();
+        }
+        Object principal = authentication.getPrincipal();
+        System.out.println(principal.getClass());
+        if (!(principal instanceof User)) {
+            return Optional.empty();
+        }
+        return Optional.of((User) principal);
+    }
+
+    public Optional<BuilderUser> getLoggedBuilder() {
+       return getLoggedUser().map(user -> user.getBuilderUser());
+    }
+
+
+
+
+
 }
+
+
+//BuilderUser (security)
+//ArmyCompositor (budowanie armii)
