@@ -12,10 +12,4 @@ public class LoginRestController {
         this.builderUserService = builderUserService;
     }
 
-//    @GetMapping("/dej")
-//    public BuilderUser isUserLogged() {
-//        System.out.println(builderUserService.getLoggedUser());
-//       return builderUserService.getLoggedUser().orElseThrow();
-//
-//    }
 }

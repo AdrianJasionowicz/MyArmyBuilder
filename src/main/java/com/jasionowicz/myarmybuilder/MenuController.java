@@ -150,20 +150,5 @@ public class MenuController {
         return ResponseEntity.ok().body("Army composition saved");
     }
 
-//    @GetMapping("/")
-//    public String showHomePage(Model model, Authentication authentication) {
-//        boolean isLoggedIn = authentication != null && authentication.getPrincipal() instanceof UserDetails;
-//        String username = isLoggedIn ? ((UserDetails) authentication.getPrincipal()).getUsername() : null;
-//
-//        model.addAttribute("loggedIn", isLoggedIn);
-//        model.addAttribute("username", username);
-//        return "index"; // Twoja strona z przyciskami
-//    }
-
-//    @GetMapping("/loadRoaster")
-//    public ResponseEntity<String> loadArmyComposition(@RequestParam int armyId) {
-//
-//    }
-
 
 }
