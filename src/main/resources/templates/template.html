@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Templates - Warhammer Builder</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: #e21a1a;
+        }
+
+        .templates-list {
+            margin-top: 20px;
+            border: 1px solid #e21a1a;
+            padding: 10px;
+            background-color: #f9f9f9;
+        }
+
+        .template-item {
+            padding: 10px;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #e21a1a;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .template-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .common-button {
+            padding: 5px 10px;
+            background-color: #e21a1a;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .common-button:hover {
+            background-color: #ca5757;
+        }
+
+        .login-buttons {
+            display: flex;
+            gap: 10px;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+
+        .login-buttons button {
+            padding: 5px 10px;
+            background-color: white;
+            color: #e21a1a;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .login-buttons button:hover {
+            background-color: #ca5757;
+        }
+    </style>
+</head>
+<body>
+
+<div class="login-buttons">
+    <button class="common-button" onclick="window.location.href='/login'">Log In</button>
+    <form action="#" th:action="@{/logout}" method="POST" style="display:inline;">
+        <input type="submit" value="Log Out" class="common-button"/>
+    </form>
+</div>
+
+<div class="container">
+    <h1>Manage Army Templates</h1>
+
+    <div class="templates-list">
+        <h2>Your Saved Armies</h2>
+
+        <!-- Sekcja listy zapisanych armii -->
+        <div th:if="${templates != null && templates.size() > 0}">
+            <div th:each="template : ${templates}" class="template-item">
+                <span th:text="${template.name}">Template Name</span>
+                <div class="template-actions">
+                    <!-- Przycisk ładowania armii -->
+                    <form th:action="@{/loadTemplatesByUser}" method="post" style="display:inline;">
+                        <input type="hidden" name="userId" th:value="${user.id}"/>
+                        <button type="submit" class="common-button">Load Templates</button>
+                    </form>
+
+
+                    <!-- Przycisk usuwania szablonu -->
+                    <form th:action="@{/deleteTemplate}" method="post" style="display:inline;">
+                        <input type="hidden" name="templateId" th:value="${template.id}"/>
+                        <button type="submit" class="common-button" style="background-color: #b20000;">Delete</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sekcja, gdy brak zapisanych armii -->
+        <div th:if="${templates == null || templates.size() == 0}">
+            <p>You don't have any saved army templates yet. Start creating one!</p>
+        </div>
+    </div>
+
+
+
+    <div style="margin-top: 20px;">
+        <button class="common-button" onclick="window.location.href='/menu'">Go Back to Army Builder</button>
+    </div>
+</div>
+
+</body>
+</html>

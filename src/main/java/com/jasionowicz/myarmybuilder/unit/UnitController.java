@@ -1,53 +1,46 @@
 package com.jasionowicz.myarmybuilder.unit;
 
+import com.jasionowicz.myarmybuilder.selectedUnits.SelectedUnit;
+import com.jasionowicz.myarmybuilder.selectedUnits.SelectedUnitService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/units")
 public class UnitController {
 
     @Autowired
     private final UnitService unitService;
+    @Autowired
+    private SelectedUnitService selectedUnitService;
 
     public UnitController(UnitService unitService) {
         this.unitService = unitService;
     }
 
-
-    @PostMapping("/addUnits")
-    public void addUnit(@RequestParam("name") String name,@RequestParam("pointsCostPerUnit") Double pointsCostPerUnit, @RequestParam("quantity") int quantity,@RequestParam("minQuantity") int minQuantity,@RequestParam("unitType") String unitType) {
-        Unit unit = new Unit(name,pointsCostPerUnit, quantity, minQuantity,unitType);
-        System.out.println("Adding unit: " + unit.getName() + " with minimum quantity: " + minQuantity);
-        unitService.saveUnitToList(unit);
-    }
-
-    @GetMapping("/{id}")
-    public Optional<Optional> getUnitById(@PathVariable Integer id) {
-        return Optional.ofNullable(unitService.findById(id));
-    }
-
-    @GetMapping("/getUnits")
-    public List<Unit> getUnits() {
-        return unitService.findAll();
-    }
-
-    @PostMapping("/addUrUnit")
-    public Unit createUnit(@RequestBody Unit unit) {
-        return unitService.save(unit);
-    }
-
-    @PutMapping("/{id}")
-    public Unit updateUnit(@PathVariable Integer id, @RequestBody Unit updatedUnit) {
-        return unitService.updateUnit(id, updatedUnit);
-    }
-
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/admin/unit/{id}")
     public void deleteUnit(@PathVariable Integer id) {
         unitService.deleteById(id);
     }
 
+    @GetMapping("/getAvailableUnits")
+    public List<UnitDTO> getAvailableUnits() {
+        return unitService.getUnitDtoList();
+    }
+
+    @PostMapping("/addUnit")
+    public void addUnit(@RequestParam("unitId") Integer unitId) {
+        Optional<UnitDTO> unitOptional = unitService.getUnitDTO(unitId);
+
+        if (unitOptional.isPresent()) {
+            UnitDTO unit = unitOptional.get();
+            SelectedUnit selectedUnit = new SelectedUnit(unitService.getUnitAndSendItToSelected(unitId));
+            selectedUnitService.saveSelectedUnit(selectedUnit);
+        }
+
+    }
 }

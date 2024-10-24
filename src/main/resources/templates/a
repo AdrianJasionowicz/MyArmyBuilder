@@ -1,0 +1,4 @@
+ <div th:if="${!loggedIn}">
+        <button class="common-button" onclick="window.location.href='/login'">Log In</button>
+            <div th:if="${loggedIn}">
+                <span>Welcome, <span th:text="${username}">User</span>!</span>

@@ -1,8 +1,5 @@
 package com.jasionowicz.myarmybuilder.unit;
 
-import com.jasionowicz.myarmybuilder.armyComposition.ArmyCompositionRepository;
-import com.jasionowicz.myarmybuilder.upgrade.Upgrade;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,57 +7,52 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+
 @Service
 public class UnitService {
     @Autowired
     private UnitRepository unitRepository;
-    @Autowired
-    private ArmyCompositionRepository armyCompositionRepository;
-
-    private List<Unit> unitList = new ArrayList<>();
-
-
-    public void saveUnitToList(Unit unit) {
-        unitList.add(unit);
-        System.out.println("Adding unit to list" + unit.getName());
-    }
-
-    public Optional findById(Integer id) {
-        return unitRepository.findById(id);
-    }
-
-    public Unit updateUnit(Integer id, Unit updatedUnit) {
-        return unitRepository.findById(id).map(unit -> {
-            unit.setName(updatedUnit.getName());
-            unit.setPointsCostPerUnit(updatedUnit.getPointsCostPerUnit());
-            unit.setQuantity(updatedUnit.getQuantity());
-            unit.setUnitType(updatedUnit.getUnitType());
-            return unitRepository.save(unit);
-        }).orElseThrow(() -> new RuntimeException("Unit not found"));
-    }
 
     public void deleteById(Integer id) {
         unitRepository.deleteById(id);
     }
 
-    public Unit save(Unit unit) {
-        return unitRepository.save(unit);
+    public UnitDTO converToDto(Unit unit) {
+        UnitDTO unitDTO = new UnitDTO();
+        unitDTO.setId(unit.getId());
+        unitDTO.setName(unit.getName());
+        unitDTO.setNation(unit.getNation());
+        unitDTO.setUnitType(unit.getUnitType());
+        unitDTO.setMinQuantity(unit.getMinQuantity());
+        unitDTO.setPointsCostPerUnit(unit.getPointsCostPerUnit());
+        unitDTO.setUnitStats(unit.getUnitStats());
+        unitDTO.setUpgradeList(new ArrayList<>(unit.getUpgradesList()));
+        return unitDTO;
     }
 
-    public List<Unit> findAll() {
-        return unitRepository.findAll();
-    }
-
-    @Transactional
-    public void getUpgrades(Integer unitId, Integer upgradeId) {
-        List<Upgrade> upgrades = unitRepository.getReferenceById(unitId).getUpgradesList();
-        for (Upgrade upgrade : upgrades) {
-            if (upgrade.getUnitUpgradesId().equals(upgradeId)) {
-                upgrade.setSelected(!upgrade.isSelected());
-                break;
+    public List<UnitDTO> getUnitDtoList() {
+        List<UnitDTO> unitDTOList = new ArrayList<>();
+        List<Unit> units = unitRepository.findAll();
+        for (Unit unit : units) {
+            if (units.contains(unit)) {
+                unitDTOList.add(converToDto(unit));
             }
-            unitRepository.save(unitRepository.getReferenceById(unitId));
         }
+        return unitDTOList;
     }
 
+    public Optional<UnitDTO> getUnitDTO(Integer unitId) {
+        Optional<Unit> optUnit = unitRepository.findById(unitId);
+        if (optUnit.isPresent()) {
+            Unit unit = optUnit.get();
+            UnitDTO unitDTO = converToDto(unit);
+            return Optional.of(unitDTO);
+        }
+        return Optional.empty();
+    }
+
+    public Unit getUnitAndSendItToSelected(Integer id) {
+        return unitRepository.getReferenceById(id);
+    }
 }
+

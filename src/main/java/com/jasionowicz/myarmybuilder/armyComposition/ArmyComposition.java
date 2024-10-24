@@ -1,14 +1,12 @@
 package com.jasionowicz.myarmybuilder.armyComposition;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.jasionowicz.myarmybuilder.security.model.BuilderUser;
+import com.jasionowicz.myarmybuilder.selectedUnits.SelectedUnit;
+import jakarta.persistence.*;
+import lombok.*;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Setter
 @Getter
@@ -20,14 +18,12 @@ public class ArmyComposition {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer id;
-    private String armyName;
-    private double totalPoints;
-    private double totalLords;
-    private double totalHeroes;
-    private double totalCore;
-    private double totalSpecial;
-    private double totalRare;
-
-
+    private Integer id;
+    private String roasterName;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "selectedUnit_id")
+    private List<SelectedUnit> selectedUnitList;
+    @ManyToOne
+    @JoinColumn(name = "builderUser_id")
+    private BuilderUser builderUser;
 }

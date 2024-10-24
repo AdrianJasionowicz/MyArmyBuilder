@@ -1,29 +1,34 @@
 package com.jasionowicz.myarmybuilder.upgrade;
 
+import com.jasionowicz.myarmybuilder.selectedUnits.SelectedUnit;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
-@RequestMapping("/upgrades")
+@RequestMapping("/admin")
 public class UpgradeController {
-
-    private final UpgradeRepository upgradeRepository;
     private final UpgradesService upgradesService;
 
-    public UpgradeController(UpgradeRepository upgradeRepository, UpgradesService upgradesService) {
-        this.upgradeRepository = upgradeRepository;
+    public UpgradeController(UpgradesService upgradesService) {
         this.upgradesService = upgradesService;
     }
 
     @PostMapping("/addUpgrade")
-    public void addUpgrade(@RequestBody Upgrade upgrade) {
+    public ResponseEntity<String> addUpgrade(@RequestBody UpgradeDTO upgrade) {
         upgradesService.addUpgrade(upgrade);
+        return ResponseEntity.ok("Upgrade added");
     }
 
-    @GetMapping("/showall")
-    public List<Upgrade> getAllUpgrades() {
-        return upgradesService.findAll();
+    @DeleteMapping("/deleteUpgrade")
+    public ResponseEntity<String> deleteUpgrade(@RequestParam int id) {
+        upgradesService.deleteUpgradeById(id);
+        return ResponseEntity.ok("Upgrade deleted");
+    }
+
+    @PostMapping("/updateUpgrade")
+    public ResponseEntity<String> updateUpgrade(@RequestBody UpgradeDTO upgrade) {
+        upgradesService.updateUpgrade(upgrade.getId() , upgrade);
+        return ResponseEntity.ok("Upgrade updated");
     }
 
 }

@@ -5,9 +5,6 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.jasionowicz.myarmybuilder.unit.Unit;
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.stereotype.Component;
-
-@ToString
 @Getter
 @Setter
 @AllArgsConstructor
@@ -16,12 +13,11 @@ import org.springframework.stereotype.Component;
 public class Upgrade {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
     private String name;
-    private int quantity;
-    private boolean selected;
     private double pointsCost;
-    private Integer unitUpgradesId;
+    private String upgradeType;
+    private String description;
     @ManyToOne
     @JoinColumn(name = "unit_id")
     @JsonBackReference
@@ -31,10 +27,10 @@ public class Upgrade {
         this.name = name;
     }
 
-    public Upgrade(String name, int quantity, double pointsCost, Integer unitUpgradesId) {
+    public Upgrade(String name, double pointsCost) {
         this.name = name;
-        this.quantity = quantity;
         this.pointsCost = pointsCost;
-        this.unitUpgradesId = unitUpgradesId;
     }
+
+
 }

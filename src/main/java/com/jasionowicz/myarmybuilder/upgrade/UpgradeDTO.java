@@ -14,25 +14,8 @@ import org.springframework.stereotype.Component;
 public class UpgradeDTO {
     private int id;
     private String name;
-    private int quantity;
-    private boolean selected;
     private double pointsCost;
-    private Integer unitUpgradesId;
+    private String description;
+    private String upgradeType;
 
-    private Upgrade upgrade;
-
-    public UpgradeDTO(Upgrade upgrade) {
-        this.upgrade = upgrade;
-        getDTOFromEntity();
-    }
-
-
-    public void getDTOFromEntity() {
-        id = upgrade.getId();
-        name = upgrade.getName();
-        quantity = upgrade.getQuantity();
-        selected = upgrade.isSelected();
-        pointsCost = upgrade.getPointsCost();
-        unitUpgradesId = upgrade.getUnitUpgradesId();
-    }
 }

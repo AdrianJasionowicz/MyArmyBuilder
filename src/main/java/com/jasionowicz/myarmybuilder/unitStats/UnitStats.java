@@ -1,5 +1,6 @@
-package com.jasionowicz.myarmybuilder.unit;
+package com.jasionowicz.myarmybuilder.unitStats;
 
+import com.jasionowicz.myarmybuilder.selectedStats.SelectedStats;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -14,6 +15,7 @@ import lombok.*;
 @NoArgsConstructor
 @Entity
 public class UnitStats {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -42,4 +44,19 @@ public class UnitStats {
         this.m = m;
         this.i = i;
     }
+
+    public UnitStats(SelectedStats selectedStats) {
+        this.ws = selectedStats.getWs();
+        this.bs = selectedStats.getBs();
+        this.s = selectedStats.getS();
+        this.t = selectedStats.getT();
+        this.w = selectedStats.getW();
+        this.a = selectedStats.getA();
+        this.ld = selectedStats.getLd();
+        this.basicSave = selectedStats.getBasicSave();
+        this.wardSave = selectedStats.getWardSave();
+        this.m = selectedStats.getM();
+        this.i = selectedStats.getI();
+    }
+
 }

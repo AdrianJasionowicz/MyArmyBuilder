@@ -1,7 +1,6 @@
 package com.jasionowicz.myarmybuilder.upgrade;
 
 import org.springframework.stereotype.Service;
-import java.util.List;
 
 @Service
 public class UpgradesService {
@@ -12,15 +11,8 @@ public class UpgradesService {
         this.upgradeRepository = upgradeRepository;
     }
 
-    public List<Upgrade> findUpgradesByUnitId(Integer unitId) {
-        return upgradeRepository.findAllByUnitUpgradesId(unitId);
-    }
-
-    public List<Upgrade> findAll() {
-        return upgradeRepository.findAll();
-    }
-
-    public void addUpgrade(Upgrade upgrade) {
+    public void addUpgrade(UpgradeDTO upgradeDTO) {
+       Upgrade upgrade = convertDtoToEntity(upgradeDTO);
         upgradeRepository.save(upgrade);
     }
 
@@ -28,16 +20,22 @@ public class UpgradesService {
         upgradeRepository.deleteById(id);
     }
 
-    public Upgrade getUpgradeById(Integer id) {
-        return upgradeRepository.findById(id).orElse(null);
-    }
-
-    public void updateUpgrade(Integer id, Upgrade upgrade) {
+    public void updateUpgrade(Integer id, UpgradeDTO upgradeDTO) {
+        Upgrade upgrade = convertDtoToEntity(upgradeDTO);
         Upgrade existingUpgrade = upgradeRepository.findById(id).orElseThrow(() -> new RuntimeException("Upgrade not found"));
         existingUpgrade.setName(upgrade.getName());
-        existingUpgrade.setQuantity(upgrade.getQuantity());
         existingUpgrade.setPointsCost(upgrade.getPointsCost());
-        existingUpgrade.setSelected(upgrade.isSelected());
+        existingUpgrade.setDescription(upgrade.getDescription());
+        existingUpgrade.setUpgradeType(upgrade.getUpgradeType());
         upgradeRepository.save(existingUpgrade);
+    }
+
+    public Upgrade convertDtoToEntity(UpgradeDTO upgrade) {
+        Upgrade newUpgrade = new Upgrade();
+        newUpgrade.setName(upgrade.getName());
+        newUpgrade.setPointsCost(upgrade.getPointsCost());
+        newUpgrade.setUpgradeType(upgrade.getUpgradeType());
+        newUpgrade.setPointsCost(upgrade.getPointsCost());
+        return newUpgrade;
     }
 }
