@@ -19,4 +19,9 @@ public class SelectedUnitViewController {
         return selectedUnitViewService.getSelectedUnitView(unitId);
     }
 
+    @GetMapping("/view/unit/{unitId}")
+    public SelectedUnitView getSelectedSingleUnitView(@PathVariable int unitId) {
+        return selectedUnitViewService.getSelectedSingleUnitView(unitId);
+    }
+
 }

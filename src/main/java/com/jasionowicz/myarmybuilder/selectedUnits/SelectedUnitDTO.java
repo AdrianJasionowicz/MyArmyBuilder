@@ -18,6 +18,7 @@ import java.util.List;
 public class SelectedUnitDTO {
     private Integer id;
     private int quantity;
+    private String name;
     @Setter
     private SelectedStatsDTO selectedStatsDTO;
     @Setter

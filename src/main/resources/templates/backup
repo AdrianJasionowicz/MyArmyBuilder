@@ -1,0 +1,22 @@
+ <div class="units-wrapper">
+    <div class="units-container">
+        <h2>Available Units</h2>
+        <ul id="available-units">
+            <thead>
+        
+            </thead>
+            <tbody>
+            <tr th:each="unit : ${availableUnits}">
+                <td>
+                    <span th:text="${unit.name}"></span>
+                </td>
+                <td>
+                    <form th:action="@{/addUnit}" method="post">
+                        <input type="hidden" th:name="unitId" th:value="${unit.id}"/>
+                        <button type="submit">Add</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </ul>
+    </div>

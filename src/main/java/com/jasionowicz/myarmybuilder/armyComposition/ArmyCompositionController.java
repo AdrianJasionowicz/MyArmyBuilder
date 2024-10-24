@@ -7,9 +7,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-@Controller
+@RestController
 public class ArmyCompositionController {
     private ArmyCompositionService armyCompositionService;
 
@@ -41,4 +43,22 @@ public class ArmyCompositionController {
     }
 
 
+    @PostMapping("/setPointsRestriction")
+    public Map<String,Double> setPoints(@RequestParam("points") double newPoints) {
+       Map<String,Double> pointsRestriction;
+        pointsRestriction = armyCompositionService.calculatePointsLimitsByType(newPoints);
+        return pointsRestriction;
+    }
+
+@GetMapping("/usedPoints")
+public Map<String,Double> usedPoints() {
+        return armyCompositionService.calculateDedicatedPoints();
+}
+
+    @PostMapping("/saveRoaster")
+    public ResponseEntity<String> saveArmyComposition() {
+        armyCompositionService.saveSelectedUnitsList();
+
+        return ResponseEntity.ok().body("Army composition saved");
+    }
 }

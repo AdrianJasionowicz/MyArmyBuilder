@@ -32,7 +32,6 @@ public class ArmyCompositionService {
     private final ArmyCompositionRepository armyCompositionRepository;
     private final BuilderUserService builderUserService;
     private SelectedUnitService selectedUnitService;
-   //  private BuilderUser builderUser;
 
     @Autowired
     public ArmyCompositionService(SelectedUnit selectedUnit, SelectedUnitService selectedUnitService, SelectedUnitRepository selectedUnitRepository, SelectedUpgradeRepository selectedUpgradeRepository, ArmyCompositionRepository armyCompositionRepository, BuilderUserService builderUserService) {
@@ -43,26 +42,6 @@ public class ArmyCompositionService {
         this.armyCompositionRepository = armyCompositionRepository;
         this.builderUserService = builderUserService;
       //  this.builderUser = builderUser;
-    }
-
-
-    @Transactional(readOnly = true)
-    public double calculateTotalPoints() {
-        List<SelectedUnit> selectedUnitsList = selectedUnitRepository.findAll();
-        List<SelectedUpgrade> selectedUpgrades = selectedUpgradeRepository.findAll();
-
-        double totalPoints = 0.0;
-        for (SelectedUpgrade selectedUpgrade : selectedUpgrades) {
-            if (selectedUpgrade.isSelected()) {
-                totalPoints += selectedUpgrade.getUpgrade().getPointsCost() * selectedUpgrade.getQuantity();
-            }
-        }
-        for (SelectedUnit units : selectedUnitsList) {
-            totalPoints += units.getQuantity() * units.getUnit().getPointsCostPerUnit();
-        }
-
-
-        return totalPoints;
     }
 
 
@@ -97,12 +76,6 @@ public class ArmyCompositionService {
         pointsLimitsByType.put("Special", pointsRestriction * 0.5);
         pointsLimitsByType.put("Rare", pointsRestriction * 0.25);
         return pointsLimitsByType;
-    }
-
-    public Map<String, Double> calculateUtilizedPointsByType(Map<String, List<SelectedUnit>> unitsByType) {
-        Map<String, Double> utilizedPointsByType = new HashMap<>();
-        utilizedPointsByType = calculateDedicatedPoints();
-        return utilizedPointsByType;
     }
 
     public void addNewArmyTemplate(List<SelectedUnit> selectedUnits) {

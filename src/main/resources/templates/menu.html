@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warhammer Builder</title>
+    <link rel="stylesheet" href="/styles.css">
+
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar_container"></div>
+        
+        <a href="/" id="navbar_logo">Warhammer Builder</a>
+        <div class="navbar__toggle" id="mobile-menu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+
+        <ul class="navbar__menu">
+            <li class="navbar__item">
+                <a href="/template.html" class="navbar__links">
+                    Your Templates
+                </a>
+            </li>
+            <li class="navbar__btn">
+                <a href="/login.html" class="button">
+                    Login
+                </a>
+                
+            </li>
+            <li class="navbar__item">
+                <a href="/logout" class="exit_button">
+                    Logout
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <label for="nationSelect" class="nationSelect">Select Nation:</label>
+    <select id="nationSelect" name="nation">
+        <option value="All">All</option>
+        <option value="Beastmen">Beastmen</option>
+        <option value="Bretonnia">Bretonnia</option>
+        <option value="Chaos Dwarfs">Chaos Dwarfs</option>
+        <option value="Daemons of Chaos">Daemons of Chaos</option>
+        <option value="Dark Elves">Dark Elves</option>
+        <option value="Dwarfs">Dwarfs</option>
+        <option value="Empire">Empire</option>
+        <option value="High Elves">High Elves</option>
+        <option value="Kislev">Kislev</option>
+        <option value="Lizardmen">Lizardmen</option>
+        <option value="Ogre Kingdoms">Ogre Kingdoms</option>
+        <option value="Orcs and Goblins">Orcs and Goblins</option>
+        <option value="Skaven">Skaven</option>
+        <option value="Tomb Kings">Tomb Kings</option>
+        <option value="Vampire Counts">Vampire Counts</option>
+        <option value="Warriors of Chaos">Warriors of Chaos</option>
+        <option value="Wood Elves">Wood Elves</option>
+
+
+    </select>
+
+    <div class="units-wrapper">
+        <div class="units-container">
+            <h2>Available Units</h2>
+            <ul id="available-units">
+            </ul>
+        </div>
+
+
+
+        <div class="selectedUnits-container">
+            <h2>Selected Units</h2>
+            <ul>
+                <li th:each="unit : ${selectedUnits}" th:attr="data-unit-id=${unit.id}">
+                    <span class="unit-name" th:text="${unit.name}"></span>
+                    <button class="decrease-unit" th:attr="data-id=${unit.id}">Decrease</button>
+                    <span class="unit-quantity" th:text="${unit.quantity}"></span>
+                    <button class="increase-unit" th:attr="data-id=${unit.id}">Increase</button>
+                    <button class="select-upgrades" th:attr="data-id=${unit.id}">Select Upgrades</button>
+                    <button class="remove-unit" th:attr="data-id=${unit.id}">Remove</button>
+                </li>
+            </ul>
+        </div>
+        
+
+        <div class="unitsUpgrades-container">
+            <h2>Upgrades</h2>
+            <div id="unitsUpgrades-container"></div>
+            <ul>
+                <li th:each="upgrade : ${upgrades}">
+                    <div class="upgrade-item">
+                        <span th:text="${upgrade.name}">Upgrade Name</span>
+                        <div class="button-container">
+                            <button class="select-upgrade-button" th:data-upgrade-id="${upgrade.id}">Select</button>
+                            <button class="remove-upgrade-button" th:data-upgrade-id="${upgrade.id}" style="display:none;">Remove</button>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+    
+    
+        
+    </div>
+    
+
+    
+    <div id="pointsByCategory">
+        <div class="points-category" id="pointsLords">
+            Lords: <span class="category-points">0</span> pts / Limit: <span class="category-limit">0</span> pts
+        </div>
+        <div class="points-category" id="pointsHero">
+            Hero: <span class="category-points">0</span> pts / Limit: <span class="category-limit">0</span> pts
+        </div>
+        <div class="points-category" id="pointsCore">
+            Core: <span class="category-points">0</span> pts / Limit: <span class="category-limit">0</span> pts
+        </div>
+        <div class="points-category" id="pointsSpecial">
+            Special: <span class="category-points">0</span> pts / Limit: <span class="category-limit">0</span> pts
+        </div>
+        <div class="points-category" id="pointsRare">
+            Rare: <span class="category-points">0</span> pts / Limit: <span class="category-limit">0</span> pts
+        </div>
+    </div>
+    
+    <div>
+        Set Points Limit: 
+        <input type="number" id="pointsLimitInput" placeholder="Enter points limit" />
+        <button id="setPointsLimitButton">Set Limit</button>
+    </div>
+    
+    
+    
+    
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/app.js"></script>
+</body>
+</html>

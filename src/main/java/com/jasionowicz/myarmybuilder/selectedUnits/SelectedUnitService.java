@@ -2,6 +2,7 @@ package com.jasionowicz.myarmybuilder.selectedUnits;
 
 import com.jasionowicz.myarmybuilder.selectedStats.SelectedStatsRepository;
 import com.jasionowicz.myarmybuilder.selectedUpgrades.SelectedUpgrade;
+import com.jasionowicz.myarmybuilder.selectedUpgrades.SelectedUpgradeDTO;
 import com.jasionowicz.myarmybuilder.selectedUpgrades.SelectedUpgradeRepository;
 import com.jasionowicz.myarmybuilder.selectedUpgrades.SelectedUpgradeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -80,6 +82,7 @@ public class SelectedUnitService {
     }
 
 
+
     public void saveSelectedUnit(SelectedUnit selectedUnit) {
 
         if (selectedUnit.getSelectedStats() != null) {
@@ -96,5 +99,34 @@ public class SelectedUnitService {
             selectedUpgradeService.addFreeUpgradesAndSpecialRaceUpgrades(selectedUnit.getId());
             selectedUpgradeRepository.saveAll(selectedUpgradeList);
         }
+    }
+
+//    private List<SelectedUnitDTO> convertListToDTO(List<SelectedUnit> selectedUnits) {
+//        List<SelectedUnitDTO> selectedUnitDTOS = new ArrayList<>();
+//        for (SelectedUnit unit : selectedUnits) {
+//            if ( unit.getId() != null) {
+//            SelectedUnitDTO selectedUnitDTO = convertToDTO(unit);
+//            selectedUnitDTOS.add(selectedUnitDTO);
+//            }
+//        }
+//        return selectedUnitDTOS;
+//    }
+
+
+    public List<SelectedUnitDTO> convertListToDTO() {
+        List<SelectedUnit> selectedUnits = getSelectedUnits();
+        return selectedUnits.stream()
+                .filter(unit -> unit.getId() != null)
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+    }
+
+    public SelectedUnitDTO convertToDTO(SelectedUnit selectedUnit) {
+        SelectedUnitDTO selectedUnitDTO = new SelectedUnitDTO();
+        selectedUnitDTO.setId(selectedUnit.getId());
+        selectedUnitDTO.setName(selectedUnit.getUnit().getName());
+        selectedUnitDTO.setQuantity(selectedUnit.getQuantity());
+        selectedUnitDTO.setUnit(selectedUnit.getUnit());
+        return selectedUnitDTO;
     }
 }

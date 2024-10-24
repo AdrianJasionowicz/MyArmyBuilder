@@ -34,7 +34,13 @@ z-index: 999;
     margin: 0 auto;
     padding: 0 50px;
 }
+.normal {
+    color: green; 
+}
 
+.exceeded {
+    color: red; 
+}
 .fa-gem {
     margin-right: 0.5rem;
 }
@@ -116,6 +122,11 @@ z-index: 999;
     color: whitesmoke;
 }
 
+.upgrade-image {
+    width: 20px;
+    height: 20px;
+}
+
 .button:hover {
     background: rgb(207, 5, 5);
     transition: all 0.3 ease;
@@ -126,11 +137,144 @@ z-index: 999;
     transition: all 0,3 ease;
 }
 
+select {
+    display: inline-block;
+    margin-top: -10px;
+    margin-left: -10px;
+    width: 100px;
+    padding-left: 10px;
+    font-size: large;
+    border: 5px;
+    border-radius: 2px;
+    color: gold;
+    background-color: black;
+}
+
+.nationSelect {
+    display: inline-block;
+    margin-top: -10px;
+
+    font-weight: bold;
+    font-size: large;
+    color: gold;
+    background-color: black;
+}
+
+.points-category {
+    margin: 8px 0;
+    padding: 4px;
+    font-size: 14px;
+    display: box;
+    margin-left: 10px;
+    border: 2px solid red;
+    padding: 5px ; 
+    margin: 5px; 
+    display: inline-block;
+}
+
+#pointsLimitInput {
+    margin-top: 10px;
+    padding: 5px;
+    font-size: 16px;
+}
+
+#setPointsLimitButton {
+    margin-left: 5px;
+    padding: 5px 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px; 
+    cursor: pointer; 
+}
+
+#setPointsLimitButton:hover {
+    background-color: #45a049;
+}
+
+table {
+    width: 50%;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+.units-container {
+    border: 3px solid red;
+    padding-left: 1px;
+    max-width: 33%;
+}
+
+.selectedUnits-container {
+    border: 3px solid red;
+    padding-left: 1px;
+    max-width: 33%;
+}
+
+.unitsUpgrades-container{
+    border: 3px solid red;
+    padding-left: 1px;
+    max-width: 33%;
+}
+
+.units-wrapper {
+    display: flex; 
+    justify-content: space-between; 
+    gap: 0px; 
+    align-items: flex-start; 
+}
+
+.units-container, .selectedUnits-container, .unitsUpgrades-container {
+    flex: 1;
+    max-width: 33%; 
+}
+
+table {
+    width: 100%; 
+    border-collapse: collapse; 
+}
+
+.increase-unit {
+    margin: 5px;
+    width: 45px;
+}
+.decrease-unit{
+    margin: 5px;
+    width: 45px;
+}
+.remove-unit {
+    margin: 10px;
+    width: 60px;
+}
+#available-units {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#available-units th,
+#available-units td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: left;
+}
+
+#available-units th {
+    background-color: #f2f2f2;
+}
+
 @media screen and (max-width 960px) {
     .navbar__container {
         display: flex;
-        justify-content: space-between;
-        height: 80px;
+        gap: 0px ; 
+       height: 80px;
         z-index: 1;
         width: 100%;
         max-width: 1300px;
@@ -215,6 +359,8 @@ margin: 0;
 transform: translate(-8px) rotate(-45deg);  
 }
 
-
 }
+
+
+
 

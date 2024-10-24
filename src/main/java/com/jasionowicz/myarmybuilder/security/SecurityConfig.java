@@ -32,7 +32,7 @@ public class SecurityConfig {
         return httpSecurity.csrf(AbstractHttpConfigurer::disable)
                 .headers(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(
-                        registry -> registry.requestMatchers("/register/**", "/admin/h2-console/**","/dej").permitAll()
+                        registry -> registry.requestMatchers("/register/**", "/admin/h2-console/**","/units/1/upgrades").permitAll()
 
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                             .anyRequest().authenticated()

@@ -61,15 +61,14 @@ public class SelectedUpgradeService {
 
     public boolean checkWeaponTeams(Integer selectedId) {
         List<SelectedUpgrade> selectedUpgrades = selectedUpgradeRepository.findAllBySelectedUnitId(selectedId);
-
         for (SelectedUpgrade selectedUpgrade : selectedUpgrades) {
-            if (selectedUpgrade.isSelected()) {
+            if (selectedUpgrade.getUpgrade().getUpgradeType().equals("Weapon Team") && selectedUpgrade.isSelected()) {
 
-                if (selectedUpgrade.getUpgrade().getUpgradeType().equals("Weapon Team")) {
                     return true;
-                }
 
             }
+
+
 
         }
         return false;
@@ -158,13 +157,16 @@ public class SelectedUpgradeService {
 
         SelectedUpgrade selectedUpgrade = optionalSelectedUpgrade.get();
         SelectedUnit selectedUnit = selectedUpgrade.getSelectedUnit();
+        String upgradeType = selectedUpgrade.getUpgrade().getUpgradeType();
         int unitId = selectedUnit.getId();
 
-        if (checkWeaponTeams(unitId)) {
+        if (upgradeType.equals("Weapon Team")) {
+            if (checkWeaponTeams(unitId)) {
 
-            selectedUpgrade.setSelected(false);
-            selectedUpgradeRepository.save(selectedUpgrade);
-            throw new WeaponTeamException("Unit can take only one Weapon team");
+                selectedUpgrade.setSelected(false);
+                selectedUpgradeRepository.save(selectedUpgrade);
+                throw new WeaponTeamException("Unit can take only one Weapon team");
+            }
         }
 
         if (selectedUnit.getUnitType().equals("Lords")) {
